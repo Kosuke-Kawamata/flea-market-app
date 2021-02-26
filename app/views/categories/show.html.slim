@@ -1,0 +1,24 @@
+h2 カテゴリー別の商品リスト
+.container 
+  h4.text-center カテゴリリスト
+  ul.d-flex.justify-content-center.flex-wrap
+    - @categories.each do |category|
+      li.list-group-item 
+          = link_to category.name, category_path(category)
+.container 
+  h4.text-center 商品リスト
+  ul.d-flex.justify-content-center.flex-wrap 
+    - @category.items.each do |item|
+      li.list-group-item 
+        div 
+          - if item.img?
+            = link_to image_tag(item.img.url), item_path(item)
+          - else 
+            = link_to image_tag("/assets/default.png"), item_path(item)
+        = link_to item.name, item_path(item)
+
+/ .items が Nilclass とエラーが出たときには､その一個手前の､@category がおかしい場合がある｡@category がおかしいから､.items メソッドを実行できません｡という意味
+
+br
+= link_to 'マイページへ', homes_mypage_path, class:'ml-5'
+= link_to 'アイテム一覧へ', items_path , class:'ml-5'

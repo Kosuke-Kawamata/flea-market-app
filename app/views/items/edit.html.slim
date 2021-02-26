@@ -1,0 +1,29 @@
+h1 編集
+.container   
+  = form_with model: @item, local: true do |f|
+    .form-group
+      = f.label :name
+      = f.text_field :name, class: 'form-control', id: 'item_name'
+    .form_group 
+      = f.label :img, class: 'img_upload'
+      br
+      = f.file_field :img, id: :item_img
+      - if @item.img?
+        div
+          = image_tag(@item.img.url)
+      - else 
+        div
+          = image_tag("/assets/default.png")
+    .form-group 
+      = f.collection_select(:category_id, Category.all, :id, :name ) 
+    .form-group
+      = f.label :description
+      = f.text_area :description, class: 'form-control', id: 'item_description'
+    .form-group
+      = f.label :price
+      = f.number_field :price, class: 'form-control', id: 'item_price'
+    = f.submit '更新する', class: 'btn btn-primary'
+
+= link_to 'アイテム一覧へ', items_path 
+
+

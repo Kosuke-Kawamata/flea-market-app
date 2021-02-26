@@ -1,0 +1,38 @@
+
+.container 
+  h4.text-center カテゴリリスト
+  ul.d-flex.justify-content-center.flex-wrap
+    - @categories.each do |category|
+      li.list-group-item 
+          = link_to category.name, category_path(category)
+
+
+.container 
+  h4.text-center 商品リスト
+  ul.d-flex.justify-content-center.flex-wrap
+    - @items.each do |item|
+      li.list-group-item 
+        div 
+          - if item.img?
+            = link_to image_tag(item.img.url), item_path(item)
+          - else 
+            = link_to image_tag("default.png"), item_path(item)
+        = link_to item.name, item_path(item)
+br
+small.text-aligin-center
+  = link_to '会社概要', homes_company_description_path
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

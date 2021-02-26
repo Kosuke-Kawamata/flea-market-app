@@ -1,0 +1,54 @@
+h1 マイページ
+.container 
+  p ユーザー: #{current_user.name}
+  p email: #{current_user.email}
+  p プロフィール: #{current_user.profile}
+  br
+  p = link_to 'プロフィールの編集', edit_user_path(current_user)
+  p = link_to 'パスワードの編集', edit_user_registration_path
+
+.container.mb-5
+  h4.text-center 出品したものリスト  
+  ul.d-flex.justify-content-center.flex-wrap 
+    - current_user.items.where(sold_flag: false).each do |item|
+      li.list-group-item  
+        div 
+          - if item.img?
+            = link_to image_tag(item.img.url), item_path(item)
+          - else 
+            = link_to image_tag("/assets/default.png"), item_path(item)
+        = link_to item.name, item_path(item)
+.container
+  h4.text-center 購入済みリスト  
+  ul.d-flex.justify-content-center.flex-wrap 
+    - current_user.items.where(sold_flag: true).each do |item|
+      li.list-group-item  
+        div 
+          - if item.img?
+            = link_to image_tag(item.img.url), item_path(item)
+          - else 
+            = link_to image_tag("/assets/default.png"), item_path(item)
+        = link_to item.name, item_path(item)
+.container
+  h4.text-center 売却済みリスト  
+  ul.d-flex.justify-content-center.flex-wrap 
+    - current_user.items.where(sold_flag: true).each do |item|
+      li.list-group-item  
+        div 
+          - if item.img?
+            = link_to image_tag(item.img.url), item_path(item)
+          - else 
+            = link_to image_tag("/assets/default.png"), item_path(item)
+        = link_to item.name, item_path(item)
+br
+p.ml-5.btn = link_to '出品へ', new_item_path
+p = link_to 'トップページへ', root_path
+
+
+
+
+
+
+
+
+

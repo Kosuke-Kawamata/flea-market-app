@@ -1,0 +1,16 @@
+h2 管理者リスト
+.container 
+  table.table 
+    thead 
+      tr 
+        th 名前
+        th メールアドレス
+        th 
+        th 
+    tbody 
+      - @admins.each do |admin|  
+        tr 
+          td = link_to admin.name, admin_path(admin)
+          td = admin.email 
+          td = link_to '編集', edit_admin_path(admin)
+          td = link_to '削除', admin_path(admin), method: :delete, data: {confirm: "「#{admin.name}」を削除しますか？"}          
