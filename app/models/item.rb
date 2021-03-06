@@ -1,4 +1,6 @@
 class Item < ApplicationRecord
+  has_many :rooms
+  has_many :chats
   belongs_to :user
   belongs_to :category
 

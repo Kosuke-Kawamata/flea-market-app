@@ -21,7 +21,7 @@ h1 マイページ
 .container
   h4.text-center 購入済みリスト  
   ul.d-flex.justify-content-center.flex-wrap 
-    - current_user.items.where(sold_flag: true).each do |item|
+    - @items.where(buyer_id: current_user.id).each do |item|
       li.list-group-item  
         div 
           - if item.img?

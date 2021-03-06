@@ -4,11 +4,11 @@
   ul.d-flex.justify-content-center.flex-wrap
     - @categories.each do |category|
       li.list-group-item 
-          = link_to category.name, category_path(category)
+        = link_to category.name, category_path(category)
 
 
 .container 
-  h4.text-center 商品リスト
+  h4.text-center すべての商品
   ul.d-flex.justify-content-center.flex-wrap
     - @items.each do |item|
       li.list-group-item 
@@ -17,6 +17,17 @@
             = link_to image_tag(item.img.url), item_path(item)
           - else 
             = link_to image_tag("default.png"), item_path(item)
+        = link_to item.name, item_path(item)
+.container
+  h4.text-center 売り切れ
+  ul.d-flex.justify-content-center.flex-wrap 
+    - @items.where(sold_flag: true).each do |item|
+      li.list-group-item  
+        div 
+          - if item.img?
+            = link_to image_tag(item.img.url), item_path(item)
+          - else 
+            = link_to image_tag("/assets/default.png"), item_path(item)
         = link_to item.name, item_path(item)
 br
 small.text-aligin-center

@@ -26,15 +26,14 @@ Rails.application.routes.draw do
 # アイテムモデルのCRUDのルーティング
   
   resources :items do 
-    collection do       
-      get 'items/transaction', to: "items#transaction"
+    member do       
+      get :transaction
     end
-    resources :charges do 
-      collection do
-        post "items/:id/charge", to: "charges#create", as: "charge"        
-      end
-    end
+    resources :charges, only:[:create]
+    resources :chats, only:[:create, :destroy]
   end
+
+
 
 # カテゴリー別に表示するためのルーティング
   get 'categories/:id' => 'categories#show', as: 'category'

@@ -3,23 +3,21 @@ class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update, :destroy]
 
   def index
-    # if current_user   
-    #   @items = Item.where.not(user_id: current_user.id)
-    # else
-    #   @items = Item.all          
-    # end    
     @items = Item.all
     @categories = Category.all
   end
 
   def new
     @categories = Category.all
-    @item = Item.new
+    @item = Item.new    
   end
 
   def create
     @item = Item.new(item_params)
     if @item.save
+
+      @item.rooms.create! #アイテム作成時に､@itemに紐付いた､roomを作成・保存する
+
       redirect_to item_path(@item)
     else
       render :new
@@ -27,18 +25,20 @@ class ItemsController < ApplicationController
     
   end
   
-  
+  # items#showがchatのformを入力する場所
   def show
+    
+    @room = @item.rooms.first
+    @chat = Chat.new(room_id: @room.id, user_id: current_user.id)
+    @chats = @room.chats
+
+    UserRoom.create(room_id: @room.id, user_id: current_user.id)
+
   end
   
   def edit
     @categories = Category.all
   end
-  # def delete_img
-  #   @item.remove_img
-  #   @item.save
-  #   redirect_to :edit
-  # end
   
   def update
     @item.update(item_params)
@@ -51,6 +51,8 @@ class ItemsController < ApplicationController
   end
   
   def transaction
+    # charge_controllerで決済時に@item.room.newをしてsave｡一応､user_room とも紐付けとく｡
+    # そのあと､ここの transaction action にて､ room = @item.rooms.last でroom を引っ張ってくる｡
   end
   
   private
@@ -61,6 +63,11 @@ class ItemsController < ApplicationController
   
   def set_item
     @item = Item.find_by(id: params[:id])
+  end
+
+  def chat_params
+    # params.require(:chat).permit(:message)
+    params.require(:chat).permit(:message, :user_id, :room_id)
   end
   
 end
