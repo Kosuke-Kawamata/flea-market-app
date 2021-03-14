@@ -8,7 +8,7 @@ header
         li.list-group-item = link_to 'アイテム一覧へ', items_path        
         li.list-group-item = link_to '出品へ', new_item_path
       - elsif admin_signed_in?
-        li.list-group-item 管理者名: #{current_user.name}
+        li.list-group-item 管理者名: #{current_admin.name}
         li.list-group-item = link_to 'ログアウト', destroy_admin_session_path, method: :delete
       - else 
         li.list-group-item あなたはゲストユーザーです

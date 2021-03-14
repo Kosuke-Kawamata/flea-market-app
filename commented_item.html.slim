@@ -1,0 +1,12 @@
+.container
+  h4.text-center コメントした商品  
+  ul.d-flex.justify-content-center.flex-wrap 
+    - current_user.chats.distinct.pluck(:item_id).each do |item_id| 
+      - commented_item = @items.find_by(id: item_id)     
+      li.list-group-item  
+        div            
+          - if commented_item.img?
+            = link_to image_tag(commented_item.img.url), item_path(commented_item)
+          - else 
+            = link_to image_tag("/assets/default.png"), item_path(commented_item)
+          = link_to commented_item.name, item_path(commented_item)

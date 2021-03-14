@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 2021_03_01_141103) do
   create_table "chats", force: :cascade do |t|
     t.integer "user_id"
     t.integer "room_id"
+    t.integer "item_id"
     t.string "message"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -51,6 +52,7 @@ ActiveRecord::Schema.define(version: 2021_03_01_141103) do
     t.bigint "category_id"
     t.string "img"
     t.integer "price"
+    t.integer "status", default: 0, null: false
     t.boolean "sold_flag", default: false
     t.integer "buyer_id"
     t.index ["category_id"], name: "index_items_on_category_id"
@@ -59,6 +61,7 @@ ActiveRecord::Schema.define(version: 2021_03_01_141103) do
 
   create_table "rooms", force: :cascade do |t|
     t.integer "item_id"
+    t.integer "chat_type", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

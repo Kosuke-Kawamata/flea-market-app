@@ -1,1 +1,59 @@
-h1 取引画面 with チャット
+.container   
+  h1 取引画面
+  div 
+    - if @item.img?
+      = image_tag(@item.img.url)
+    - else 
+      = image_tag("/assets/default.png")
+  h5 商品名: #{@item.name}
+  p カテゴリ: #{@item.category.name}
+  p 詳細: #{@item.description}
+  p 価格: #{@item.price}円
+  p 出品者: #{@item.user.name}
+
+  - if @item.user_id == current_user.id 
+    - if @item.in_process?
+      h5 商品が購入されました！
+      h5 商品を発送してください｡      
+      button 
+        = link_to '発送通知', shipped_item_path(@item)  
+    - elsif @item.shipped?
+      h5 商品の発送を通知しました！
+      h5 購入者からの受け取り評価をお待ちください｡
+    - elsif @item.buyer_assessed?
+      h5 購入者からの受取評価が完了しました！
+      h5 購入者の評価を完了してください
+      button 
+        = link_to '購入者評価',  assess_buyer_item_path(@item)  
+    - elsif @item.seller_assessed?
+      h5 取引が完了しました！
+
+  - elsif @item.buyer_id == current_user.id
+    - if @item.in_process?
+      h5 商品が発送されるまでお待ちください｡ 
+    - elsif @item.shipped?
+      h5 商品が発送されました！
+      h5 商品の到着後､商品が確認してから受取評価をしてください｡
+      button 
+        = link_to '出品者評価', recieved_item_path(@item)  
+    -elsif @item.buyer_assessed?
+      h5 受け取り評価を送りました！
+      h5 出品者からの購入者評価をお待ちください｡
+    -elsif @item.seller_assessed?
+      h5 取引が完了しました！
+
+- unless @item.seller_assessed?
+  .container
+    = form_with  model: [@item, @chat] do |f|
+      = f.text_field :message
+      = f.hidden_field :room_id, value: @item.rooms.last.id
+      = f.hidden_field :item_id, value: @item.id
+      = f.submit 'コメントする', class: 'btn btn-primary ml-2'
+.container 
+  ul
+    - @chats.order(id: "DESC").each do |chat|    
+      li.mb-3         
+        p = chat.message        
+        small 投稿者: #{chat.user.name}
+        - if current_user.id == chat.user_id 
+            = link_to '削除', item_chat_path(@item,chat), method: :delete

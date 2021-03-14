@@ -10,7 +10,7 @@
 .container 
   h4.text-center すべての商品
   ul.d-flex.justify-content-center.flex-wrap
-    - @items.each do |item|
+    - @items.order(id: "DESC").each do |item|
       li.list-group-item 
         div 
           - if item.img?
@@ -21,7 +21,7 @@
 .container
   h4.text-center 売り切れ
   ul.d-flex.justify-content-center.flex-wrap 
-    - @items.where(sold_flag: true).each do |item|
+    - @items.where(sold_flag: true).order(id: "DESC").each do |item|
       li.list-group-item  
         div 
           - if item.img?

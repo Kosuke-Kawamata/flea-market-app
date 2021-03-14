@@ -28,6 +28,9 @@ Rails.application.routes.draw do
   resources :items do 
     member do       
       get :transaction
+      get :shipped
+      get :recieved
+      get :assess_buyer
     end
     resources :charges, only:[:create]
     resources :chats, only:[:create, :destroy]
@@ -40,11 +43,6 @@ Rails.application.routes.draw do
   
 # CarrierWaveの画像を削除するためのルーティング（途中）
   # get 'item/:id/delete_img/' => 'item#delete_img', as: 'delete_img'
-
-  
-  # strip決済サービスのルーティング
-
-# 決済後の取引画面へのルーティング
 end
 
 

@@ -1,10 +1,10 @@
-<mxfile host="65bd71144e" modified="2021-03-06T06:48:18.762Z" agent="5.0 (Macintosh; Intel Mac OS X 11_2_0) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.53.2 Chrome/87.0.4280.141 Electron/11.2.1 Safari/537.36" etag="oz14-LP8Jz6ttCv53CNf" version="14.2.4" type="embed">
+<mxfile host="65bd71144e" modified="2021-03-13T08:34:50.623Z" agent="5.0 (Macintosh; Intel Mac OS X 11_2_0) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.53.2 Chrome/87.0.4280.141 Electron/11.2.1 Safari/537.36" etag="5jmXbPTYYRsmIZ57V78F" version="14.2.4" type="embed">
     <diagram id="5_PsxuUctauhOo19xLV4" name="ページ1">
-        <mxGraphModel dx="946" dy="610" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="2154" dy="610" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
-                <mxCell id="9" value="Item_id&lt;br&gt;&lt;br&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                <mxCell id="9" value="初期データで一つルームを作る&lt;br&gt;Item_id&lt;br&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="360" y="70" width="220" height="120" as="geometry"/>
                 </mxCell>
                 <mxCell id="2" value="アイテム1" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
@@ -57,19 +57,19 @@
                 <mxCell id="8" value="Room.first" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="410" y="50" width="120" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="10" value="Item_id" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                <mxCell id="10" value="決済後に､もう一つルームを作る&lt;br&gt;Item_id" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="360" y="240" width="220" height="120" as="geometry"/>
                 </mxCell>
                 <mxCell id="11" value="Room.last" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="410" y="220" width="120" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="12" value="&lt;span&gt;オープンチャット&lt;/span&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                <mxCell id="12" value="&lt;span&gt;オープンチャット&lt;br&gt;item_id&lt;br&gt;&lt;/span&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="360" y="400" width="220" height="120" as="geometry"/>
                 </mxCell>
                 <mxCell id="13" value="Room.first" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="410" y="380" width="120" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="14" value="&lt;span&gt;プライベートチャット&lt;/span&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                <mxCell id="14" value="&lt;span&gt;プライベートチャット&lt;br&gt;item_id&lt;br&gt;&lt;/span&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="360" y="570" width="220" height="120" as="geometry"/>
                 </mxCell>
                 <mxCell id="15" value="Room.last" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
@@ -78,19 +78,215 @@
                 <mxCell id="20" value="&lt;span style=&quot;font-size: 18px&quot;&gt;出品時､item#create の最後に､@item.rooms.create!&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="1" vertex="1">
                     <mxGeometry x="530" y="30" width="430" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="21" value="&lt;font style=&quot;font-size: 18px&quot;&gt;決済後､charges_controller#create の最後に､@item.rooms.create!&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="1">
+                <mxCell id="21" value="&lt;font style=&quot;font-size: 18px&quot;&gt;決済後､charges_controller#create の最後に､@item.rooms.create!&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="1" vertex="1">
                     <mxGeometry x="530" y="210" width="540" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="24" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
+                <mxCell id="24" value="" style="endArrow=classic;html=1;" parent="1" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="690" y="250" as="sourcePoint"/>
                         <mxPoint x="600" y="290" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="25" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
+                <mxCell id="25" value="" style="endArrow=classic;html=1;" parent="1" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="680" y="60" as="sourcePoint"/>
                         <mxPoint x="590" y="100" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="26" value="一対多の場合､基本的にroomが持つitem_idは一つだけなので､中間テーブルはいらない" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="1" vertex="1">
+                    <mxGeometry x="-220" y="80" width="480" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="27" value="決済後に作られる､roomでは､ 出品者（@item.user_id） と 購入者（@item.buyer_id）だけがチャットをする｡&lt;br&gt;&lt;br&gt;だから､クローズチャットの場合､UserRoomモデルを作成して､user と room を結びつける必要がある｡" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="705" width="600" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="41" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="28" target="33" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1550" y="530"/>
+                            <mxPoint x="2290" y="530"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="28" value="&lt;span&gt;&lt;br&gt;has_many: items&lt;br&gt;&lt;/span&gt;&lt;br&gt;has_many: chats&lt;br&gt;&lt;br&gt;has_many: user_rooms&lt;br&gt;&lt;span&gt;&lt;br&gt;&lt;/span&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="1440" y="580" width="220" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="29" value="User" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="1490" y="560" width="120" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="54" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" source="30" target="32" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1555" y="990"/>
+                            <mxPoint x="2290" y="990"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="30" value="&lt;span&gt;&lt;br&gt;has_many: rooms&lt;br&gt;&lt;/span&gt;&lt;br&gt;has_many: chats&lt;br&gt;&lt;br&gt;belongs_to: user&lt;br&gt;&lt;br&gt;belongs_to: category&lt;br&gt;&lt;span&gt;&lt;br&gt;&lt;/span&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="1445" y="810" width="220" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="31" value="Item" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="1495" y="790" width="120" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="32" value="&lt;span&gt;&lt;br&gt;has_many: user_rooms&lt;br&gt;&lt;/span&gt;&lt;br&gt;has_many: chats&lt;br&gt;&lt;br&gt;has_many: users&amp;nbsp;&lt;br&gt;&lt;br&gt;belongs_to: item&lt;span&gt;&lt;br&gt;&lt;/span&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="2180" y="570" width="220" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="33" value="Room" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="2230" y="550" width="120" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="34" value="belongs_to: user&lt;br&gt;&lt;br&gt;belongs_to: room&lt;br&gt;&lt;span&gt;&lt;br&gt;belongs_to: item&lt;br&gt;&lt;/span&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="1830" y="810" width="220" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="35" value="Chat" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="1880" y="790" width="120" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="36" value="belongs_to: user&lt;br&gt;&lt;br&gt;belongs_to: room&lt;br&gt;&lt;span&gt;&lt;br&gt;&lt;/span&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="1810" y="570" width="220" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="37" value="User_Room" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="1860" y="550" width="120" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="38" value="&lt;span&gt;has_many: items&lt;br&gt;&lt;/span&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="1190" y="810" width="220" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="39" value="category" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="1240" y="790" width="120" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="45" value="" style="shape=link;html=1;" parent="1" edge="1">
+                    <mxGeometry width="100" relative="1" as="geometry">
+                        <mxPoint x="1660" y="640" as="sourcePoint"/>
+                        <mxPoint x="1810" y="640" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="46" value="" style="shape=link;html=1;" parent="1" edge="1">
+                    <mxGeometry width="100" relative="1" as="geometry">
+                        <mxPoint x="2030" y="639.5" as="sourcePoint"/>
+                        <mxPoint x="2180" y="639.5" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="47" value="" style="shape=link;html=1;width=-5;entryX=0.007;entryY=0.579;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" target="30" edge="1">
+                    <mxGeometry width="100" relative="1" as="geometry">
+                        <mxPoint x="1410" y="879" as="sourcePoint"/>
+                        <mxPoint x="1440" y="879" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="49" value="" style="shape=link;html=1;" parent="1" edge="1">
+                    <mxGeometry width="100" relative="1" as="geometry">
+                        <mxPoint x="1554.5" y="700" as="sourcePoint"/>
+                        <mxPoint x="1555" y="780" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="52" value="" style="shape=link;html=1;entryX=0;entryY=0;entryDx=0;entryDy=0;" parent="1" target="34" edge="1">
+                    <mxGeometry width="100" relative="1" as="geometry">
+                        <mxPoint x="1660" y="710" as="sourcePoint"/>
+                        <mxPoint x="1810" y="800" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="53" value="" style="shape=link;html=1;entryX=0;entryY=1;entryDx=0;entryDy=0;" parent="1" target="32" edge="1">
+                    <mxGeometry width="100" relative="1" as="geometry">
+                        <mxPoint x="2050" y="810" as="sourcePoint"/>
+                        <mxPoint x="2220" y="910" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="67" value="&lt;span style=&quot;font-size: 18px&quot;&gt;current_user.chats.select(:item_id).distinct&amp;nbsp; で､ item_id の配列ゲット&lt;/span&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="1" vertex="1">
+                    <mxGeometry x="50" y="890" width="560" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="69" value="" style="shape=link;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" target="34" edge="1">
+                    <mxGeometry width="100" relative="1" as="geometry">
+                        <mxPoint x="1665" y="869.5" as="sourcePoint"/>
+                        <mxPoint x="1815" y="869.5" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="100" value="&lt;span&gt;&lt;br&gt;has_many: items&lt;br&gt;&lt;/span&gt;&lt;br&gt;has_many: chats&lt;br&gt;&lt;br&gt;has_many: user_rooms&lt;br&gt;&lt;span&gt;&lt;br&gt;&lt;/span&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry y="960" width="220" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="101" value="User" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="50" y="940" width="120" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="102" value="&lt;br&gt;has_many: rooms&lt;br&gt;&lt;br&gt;belongs_to: user&lt;br&gt;&lt;br&gt;belongs_to: category" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="470" y="960" width="220" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="103" value="item" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="520" y="940" width="120" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="104" value="belongs_to: user&lt;br&gt;&lt;br&gt;belongs_to: room&lt;br&gt;&lt;br&gt;belongs_to: item&lt;span&gt;&lt;br&gt;&lt;/span&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="250" y="980" width="180" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="105" value="chat" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="300" y="960" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="106" value="" style="shape=link;html=1;width=6;" parent="1" edge="1">
+                    <mxGeometry width="100" relative="1" as="geometry">
+                        <mxPoint x="220" y="1024.5" as="sourcePoint"/>
+                        <mxPoint x="250" y="1025" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="107" value="" style="shape=link;html=1;width=6;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" target="102" edge="1">
+                    <mxGeometry width="100" relative="1" as="geometry">
+                        <mxPoint x="430" y="1020" as="sourcePoint"/>
+                        <mxPoint x="460" y="1020.5" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="112" value="&lt;font style=&quot;font-size: 18px&quot;&gt;&lt;br&gt;item_id 1&lt;br&gt;&lt;br&gt;item_id 2&lt;br&gt;&lt;br&gt;item_id 3&lt;br&gt;&lt;br&gt;item_id 4&lt;br&gt;&lt;br&gt;item_id 5&lt;br&gt;&lt;br&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="1" vertex="1">
+                    <mxGeometry x="820" y="930" width="90" height="170" as="geometry"/>
+                </mxCell>
+                <mxCell id="113" value="" style="shape=flexArrow;endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="700" y="1015" as="sourcePoint"/>
+                        <mxPoint x="790" y="1015" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="115" value="&lt;span&gt;&lt;br&gt;has_many: items&lt;br&gt;&lt;/span&gt;&lt;br&gt;has_many: chats&lt;br&gt;&lt;br&gt;has_many: user_rooms&lt;br&gt;&lt;span&gt;&lt;br&gt;&lt;/span&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="1300" width="220" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="116" value="User" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="70" y="1280" width="120" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="117" value="&lt;span&gt;&lt;br&gt;has_many: user_rooms&lt;br&gt;&lt;/span&gt;&lt;br&gt;has_many: chats&lt;br&gt;&lt;br&gt;has_many: users&amp;nbsp;&lt;br&gt;&lt;br&gt;belongs_to: item&lt;span&gt;&lt;br&gt;&lt;/span&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="490" y="1300" width="220" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="118" value="Room" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="540" y="1280" width="120" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="119" value="&lt;font style=&quot;font-size: 18px&quot;&gt;room_ids = current_user.rooms.distinct&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="1" vertex="1">
+                    <mxGeometry x="170" y="1240" width="330" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="120" value="belongs_to: user&lt;br&gt;&lt;br&gt;belongs_to: room" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="270" y="1320" width="180" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="121" value="User_Room" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="320" y="1300" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="122" value="&lt;font style=&quot;font-size: 18px&quot;&gt;&lt;br&gt;item_id 1&lt;br&gt;&lt;br&gt;item_id 2&lt;br&gt;&lt;br&gt;item_id 3&lt;br&gt;&lt;br&gt;item_id 4&lt;br&gt;&lt;br&gt;item_id 5&lt;br&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="1" vertex="1">
+                    <mxGeometry x="830" y="1280" width="90" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="123" value="" style="shape=flexArrow;endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="117" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="500" y="1320" as="sourcePoint"/>
+                        <mxPoint x="800" y="1360" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="125" value="" style="shape=link;html=1;width=6;" parent="1" edge="1">
+                    <mxGeometry width="100" relative="1" as="geometry">
+                        <mxPoint x="240" y="1364.5" as="sourcePoint"/>
+                        <mxPoint x="270" y="1365" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="126" value="" style="shape=link;html=1;width=6;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" target="117" edge="1">
+                    <mxGeometry width="100" relative="1" as="geometry">
+                        <mxPoint x="450" y="1360" as="sourcePoint"/>
+                        <mxPoint x="480" y="1360.5" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="127" value="&lt;span&gt;belongs_to: user&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;/span&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="1183.46" y="570" width="220" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="128" value="Assessmant" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="1233.46" y="550" width="120" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="129" value="" style="shape=link;html=1;width=-5;entryX=0.007;entryY=0.579;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1">
+                    <mxGeometry width="100" relative="1" as="geometry">
+                        <mxPoint x="1403.46" y="639" as="sourcePoint"/>
+                        <mxPoint x="1440" y="639.48" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
             </root>

@@ -4,7 +4,7 @@ class HomesController < ApplicationController
   end
 
   def mypage    
-    @items = Item.all
+    @items = Item.all    
   end
 
   def company_description    

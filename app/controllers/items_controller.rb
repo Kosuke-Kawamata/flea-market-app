@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   before_action  :authenticate_user!, only: [:new, :edit, :delete_img, :destroy]
-  before_action :set_item, only: [:show, :edit, :update, :destroy]
+  before_action :set_item, only: [:show, :edit, :update, :destroy, :transaction, :shipped, :recieved, :assess_buyer]
 
   def index
     @items = Item.all
@@ -27,13 +27,18 @@ class ItemsController < ApplicationController
   
   # items#showがchatのformを入力する場所
   def show
+    if current_user && @item.sold_flag == true
+      redirect_to action: :transaction
+    elsif current_user
+      @room = @item.rooms.first
+      @chat = Chat.new(room_id: @room.id, user_id: current_user.id, item_id: @item.id)
+      @chats = @room.chats
+  
+      unless current_user.user_rooms.pluck(:room_id).include?(@item.rooms.first.id)
+        UserRoom.create(room_id: @room.id, user_id: current_user.id)
+      end
+    end
     
-    @room = @item.rooms.first
-    @chat = Chat.new(room_id: @room.id, user_id: current_user.id)
-    @chats = @room.chats
-
-    UserRoom.create(room_id: @room.id, user_id: current_user.id)
-
   end
   
   def edit
@@ -51,12 +56,35 @@ class ItemsController < ApplicationController
   end
   
   def transaction
-    # charge_controllerで決済時に@item.room.newをしてsave｡一応､user_room とも紐付けとく｡
-    # そのあと､ここの transaction action にて､ room = @item.rooms.last でroom を引っ張ってくる｡
+    # charge_controllerで決済時に@item.room.create! user_roomモデルとも紐付け
+    # transaction action にて､ room = @item.rooms.last でプライベートチャットroomを引っ張ってくる｡
+    @room = @item.rooms.last
+    if @room.close_chat?
+      @chat = Chat.new(room_id: @room.id, user_id: current_user.id, item_id: @item.id)
+      @chats = @room.chats
+    else
+      redirect_to item_path(@item)
+    end  
+    
   end
   
+  def shipped
+    @item.shipped!
+    redirect_to transaction_item_path(@item)
+  end
+
+  def recieved
+    @item.buyer_assessed!
+    redirect_to transaction_item_path(@item)    
+  end
+
+  def assess_buyer
+    @item.seller_assessed!
+    redirect_to transaction_item_path(@item)    
+  end
+ 
+
   private
-  
   def item_params
     params.require(:item).permit(:name, :description, :category_id, :img, :price).merge(user_id: current_user.id)
   end

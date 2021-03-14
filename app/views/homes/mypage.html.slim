@@ -10,7 +10,40 @@ h1 マイページ
 .container.mb-5
   h4.text-center 出品したものリスト  
   ul.d-flex.justify-content-center.flex-wrap 
-    - current_user.items.where(sold_flag: false).each do |item|
+    - current_user.items.each do |item|
+      li.list-group-item  
+        div 
+          - if item.img?
+            = link_to image_tag(item.img.url), item_path(item)
+          - else 
+            = link_to image_tag("/assets/default.png"), item_path(item)
+        = link_to item.name, item_path(item)
+.container
+  h4.text-center 売却取引中の商品
+  ul.d-flex.justify-content-center.flex-wrap 
+    - current_user.items.where(sold_flag: true).where.not(status: :seller_assessed).each do |item|
+      li.list-group-item  
+        div 
+          - if item.img?
+            = link_to image_tag(item.img.url), item_path(item)
+          - else 
+            = link_to image_tag("/assets/default.png"), item_path(item)
+        = link_to item.name, item_path(item)
+.container
+  h4.text-center 売却済みの商品
+  ul.d-flex.justify-content-center.flex-wrap 
+    - current_user.items.where(sold_flag: true).seller_assessed.each do |item|
+      li.list-group-item  
+        div 
+          - if item.img?
+            = link_to image_tag(item.img.url), item_path(item)
+          - else 
+            = link_to image_tag("/assets/default.png"), item_path(item)
+        = link_to item.name, item_path(item)
+.container
+  h4.text-center 購入取引中の商品
+  ul.d-flex.justify-content-center.flex-wrap 
+    - @items.where(buyer_id: current_user.id).except(:seller_assessed).each do |item|
       li.list-group-item  
         div 
           - if item.img?
@@ -21,7 +54,7 @@ h1 マイページ
 .container
   h4.text-center 購入済みリスト  
   ul.d-flex.justify-content-center.flex-wrap 
-    - @items.where(buyer_id: current_user.id).each do |item|
+    - @items.where(buyer_id: current_user.id).seller_assessed.each do |item|
       li.list-group-item  
         div 
           - if item.img?
@@ -30,16 +63,30 @@ h1 マイページ
             = link_to image_tag("/assets/default.png"), item_path(item)
         = link_to item.name, item_path(item)
 .container
-  h4.text-center 売却済みリスト  
+  h4.text-center 全部のコメントした商品  
   ul.d-flex.justify-content-center.flex-wrap 
-    - current_user.items.where(sold_flag: true).each do |item|
+    - current_user.chats.distinct.pluck(:item_id).each do |item_id| 
+      - commented_item = @items.find_by(id: item_id)     
       li.list-group-item  
-        div 
-          - if item.img?
-            = link_to image_tag(item.img.url), item_path(item)
+        div            
+          - if commented_item.img?
+            = link_to image_tag(commented_item.img.url), item_path(commented_item)
           - else 
-            = link_to image_tag("/assets/default.png"), item_path(item)
-        = link_to item.name, item_path(item)
+            = link_to image_tag("/assets/default.png"), item_path(commented_item)
+        = link_to commented_item.name, item_path(commented_item)
+.container
+  h4.text-center 販売中のコメントした商品  
+  ul.d-flex.justify-content-center.flex-wrap 
+    - current_user.rooms.open_chat.each do |chat_room|
+      - chat_room.chats.distinct.pluck(:item_id).each do |item_id| 
+        - commented_item = @items.find_by(id: item_id)     
+        li.list-group-item  
+          div            
+            - if commented_item.img?
+              = link_to image_tag(commented_item.img.url), item_path(commented_item)
+            - else 
+              = link_to image_tag("/assets/default.png"), item_path(commented_item)
+          = link_to commented_item.name, item_path(commented_item)
 br
 p.ml-5.btn = link_to '出品へ', new_item_path
 p = link_to 'トップページへ', root_path
