@@ -14,7 +14,10 @@
  *= require_self
  */
  @import "bootstrap";
+ @import "font-awesome-sprockets";
+ @import "font-awesome";
 
+// alertのcss
  .notifications{
    color: whitesmoke;
    text-align: center;  
@@ -26,3 +29,123 @@
      background-color: rgb(235, 194, 117);
    }
  }
+
+// ヘッダーのcss
+$header-footer-color:rgb(230, 243, 243);
+
+.header{
+  display: flex;
+  align-items: center;
+  background-color: $header-footer-color;
+  height: 13vh;
+  
+  &__wrapper{
+    display: flex;
+
+    width: 90%;
+    margin: 0 auto;
+
+    .header__logo{
+      width: 20%;
+
+      .logo__img{
+        width: 100%;
+      }
+    }
+  }
+}
+// ナビゲーションのcss
+$nav-font-color:grey;
+
+.nav{
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+
+  &__ul{
+    display: flex;
+    align-items: center;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    
+    .nav__list{
+      background-color: #fff;
+      border: 1px rgb(143, 140, 140) solid;
+      color: $nav-font-color;
+      display: flex;
+      align-items: center;
+      height: 60%;
+      font-size: 20px;
+      font-weight: bold;
+      padding: 0 10px;
+      margin: 0 1px;
+      &:hover{
+        background-color: rgb(230, 227, 227);
+      }
+
+      a{
+        display: inline-block;
+        text-decoration: none;
+        color: $nav-font-color;
+      }
+    }
+  }
+}
+
+// footerを一番下に持ってくるcss
+body{
+  display: flex;
+  flex-flow: column;
+  min-height: 100vh;
+}
+.main{
+  flex: 1;
+}
+
+// footerのcss
+.footer{
+  background-color: $header-footer-color;
+  height: auto;
+  width: 100%;
+  .footer__wrapper{
+    width: 80%;
+    margin: 0 auto;
+
+    .footer__detail{
+      display: flex;
+      justify-content: space-around;
+      padding: 20px 0;
+
+      .footer__ul{
+        padding: 0;
+        margin: 0;
+
+        .footer__list{
+          list-style-type: none;
+        }
+        .footer__list:nth-child(1){
+          font-weight: bold;
+        }
+      }
+    }
+    .footer__icon{
+      width: 82%;
+      margin: 0 auto;
+      padding-bottom: 5px;
+      .icon{
+        font-size: 2.5rem;
+        margin: 10px 20px;
+      }
+    }
+    small{
+      display: block;
+      text-align: center;
+      padding-bottom: 20px;
+    }
+  }
+}
+
+
+
+

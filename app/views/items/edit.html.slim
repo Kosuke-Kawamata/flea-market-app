@@ -1,5 +1,4 @@
-h1 編集
-.container   
+.top_container   
   = form_with model: @item, local: true do |f|
     .form-group
       = f.label :name
@@ -24,6 +23,5 @@ h1 編集
       = f.number_field :price, class: 'form-control', id: 'item_price'
     = f.submit '更新する', class: 'btn btn-primary'
 
-= link_to 'アイテム一覧へ', items_path 
 
 

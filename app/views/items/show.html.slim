@@ -1,52 +1,52 @@
+.top__container   
+  .item-list__container
+    div 
+      - if @item.img?
+        = image_tag(@item.img.url)
+      - else 
+        = image_tag("/assets/default.png")
+    h5 商品名: #{@item.name}
+    p カテゴリ: #{@item.category.name}
+    p 詳細: #{@item.description}
+    p 価格: #{@item.price}円
+    p 出品者: #{@item.user.name}
 
-.container   
-  div 
-    - if @item.img?
-      = image_tag(@item.img.url)
-    - else 
-      = image_tag("/assets/default.png")
-  h5 商品名: #{@item.name}
-  p カテゴリ: #{@item.category.name}
-  p 詳細: #{@item.description}
-  p 価格: #{@item.price}円
-  p 出品者: #{@item.user.name}
-
-  -if current_user
-    - if @item.buyer_id == current_user.id || @item.user_id == current_user.id && @item.sold_flag == true
-      button  
-        = link_to '取引画面へ', transaction_item_path
-    - elsif @item.sold_flag == true 
-      h5.border.border-dange.rounded 売り切れました
-    - elsif @item.user_id == current_user.id 
-      button  
-        = link_to '編集する', edit_item_path 
-    - else
-      = form_tag item_charges_path(@item) do
-        script.stripe-button data-amount="#{@item.price}\
-        " data-currency="jpy" data-description="クレジット決済\
-        " data-key="#{Rails.configuration.stripe[:publishable_key]}" data-locale="auto" data-name="#{@item.name}を購入\
-        " data-email="#{current_user.email}" data-label="購入する\
-        " data-allow-remember-me="false" src="https://checkout.stripe.com/checkout.js"
-  - else  
-    - if @item.sold_flag == false 
-      button  
-        = link_to '購入する', new_user_session_path 
-    - else 
-      h5 売り切れました
-      
-- if current_user
-  .container
-    - if @item.sold_flag == false
-      = form_with  model: [@item, @chat] do |f|
-        = f.text_field :message
-        = f.hidden_field :room_id, value: @item.rooms.first.id
-        = f.hidden_field :item_id, value: @item.id
-        = f.submit 'コメントする', class: 'btn btn-primary ml-2'
-  .container 
-    ul
-      - @chats.order(id: "DESC").each do |chat|    
-        li.mb-3         
-          p = chat.message        
-          small 投稿者: #{chat.user.name}
-          - if current_user.id == chat.user_id
-            = link_to '削除', item_chat_path(@item,chat), method: :delete
+    -if current_user
+      - if @item.buyer_id == current_user.id || @item.user_id == current_user.id && @item.sold_flag == true
+        button  
+          = link_to '取引画面へ', transaction_item_path
+      - elsif @item.sold_flag == true 
+        h5.border.border-dange.rounded 売り切れました
+      - elsif @item.user_id == current_user.id 
+        button  
+          = link_to '編集する', edit_item_path 
+      - else
+        = form_tag item_charges_path(@item) do
+          script.stripe-button data-amount="#{@item.price}\
+          " data-currency="jpy" data-description="クレジット決済\
+          " data-key="#{Rails.configuration.stripe[:publishable_key]}" data-locale="auto" data-name="#{@item.name}を購入\
+          " data-email="#{current_user.email}" data-label="購入する\
+          " data-allow-remember-me="false" src="https://checkout.stripe.com/checkout.js"
+    - else  
+      - if @item.sold_flag == false 
+        button  
+          = link_to '購入する', new_user_session_path 
+      - else 
+        h5 売り切れました
+        
+    - if current_user
+      .container
+        - if @item.sold_flag == false
+          = form_with  model: [@item, @chat] do |f|
+            = f.text_field :message
+            = f.hidden_field :room_id, value: @item.rooms.first.id
+            = f.hidden_field :item_id, value: @item.id
+            = f.submit 'コメントする', class: 'btn btn-primary ml-2'
+      .container 
+        ul
+          - @chats.order(id: "DESC").each do |chat|    
+            li.mb-3         
+              p = chat.message        
+              small 投稿者: #{chat.user.name}
+              - if current_user.id == chat.user_id
+                = link_to '削除', item_chat_path(@item,chat), method: :delete

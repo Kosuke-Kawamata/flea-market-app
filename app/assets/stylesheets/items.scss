@@ -2,6 +2,39 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.top__container{
+  margin-top: 40px;
+}
+.category-list__container {
+  width: 85%;
+  margin: 0 auto;
+
+  ul{
+    padding: 0;
+  }
+}
+.item-list__container{
+  width: 85%;
+  margin: 0 auto;
+  text-align: center;
+  margin-bottom: 50px;
+
+  ul{
+    padding: 0;
+
+    .item-list__item{
+      width: 342px;
+      height: 217px;
+
+      img{
+        width: 300px;
+        height: 170px;
+      }
+    }
+  }
+}
+
+
 
 
 

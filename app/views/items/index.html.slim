@@ -1,37 +1,35 @@
+.top__container
+  .category-list__contain
+    h4.text-center カテゴリリスト
+    ul.d-flex.justify-content-center.flex-wrap
+      - @categories.each do |category|
+        li.list-group-item 
+          = link_to category.name, category_path(category)
 
-.container 
-  h4.text-center カテゴリリスト
-  ul.d-flex.justify-content-center.flex-wrap
-    - @categories.each do |category|
-      li.list-group-item 
-        = link_to category.name, category_path(category)
 
-
-.container 
+.item-list__container 
   h4.text-center すべての商品
   ul.d-flex.justify-content-center.flex-wrap
     - @items.order(id: "DESC").each do |item|
-      li.list-group-item 
+      li.list-group-item.item-list__item
         div 
           - if item.img?
             = link_to image_tag(item.img.url), item_path(item)
           - else 
             = link_to image_tag("default.png"), item_path(item)
         = link_to item.name, item_path(item)
-.container
+.item-list__container
   h4.text-center 売り切れ
   ul.d-flex.justify-content-center.flex-wrap 
     - @items.where(sold_flag: true).order(id: "DESC").each do |item|
-      li.list-group-item  
+      li.list-group-item.item-list__item  
         div 
           - if item.img?
             = link_to image_tag(item.img.url), item_path(item)
           - else 
             = link_to image_tag("/assets/default.png"), item_path(item)
         = link_to item.name, item_path(item)
-br
-small.text-aligin-center
-  = link_to '会社概要', homes_company_description_path
+        
 
 
 

@@ -1,17 +1,20 @@
-header 
-  nav
-    ul.d-flex 
-      - if user_signed_in?
-        li.list-group-item #{current_user.name}でログイン中
-        li.list-group-item = link_to 'ログアウト', destroy_user_session_path, method: :delete
-        li.list-group-item = link_to 'マイページへ', homes_mypage_path
-        li.list-group-item = link_to 'アイテム一覧へ', items_path        
-        li.list-group-item = link_to '出品へ', new_item_path
-      - elsif admin_signed_in?
-        li.list-group-item 管理者名: #{current_admin.name}
-        li.list-group-item = link_to 'ログアウト', destroy_admin_session_path, method: :delete
-      - else 
-        li.list-group-item あなたはゲストユーザーです
-        li.list-group-item = link_to 'ログイン', new_user_session_path 
-        li.list-group-item = link_to '新規登録', new_user_registration_path 
-        li.list-group-item = link_to 'アイテム一覧へ', items_path
+header.header 
+  .header__wrapper
+    .header__logo
+      = link_to image_tag('logo_copy_mercari', class: 'logo__img'), root_path
+    nav.nav
+      ul.nav__ul 
+        - if user_signed_in?
+          li.nav__list #{current_user.name}でログイン中
+          li.nav__list = link_to 'ログアウト', destroy_user_session_path, method: :delete
+          li.nav__list = link_to 'マイページへ', homes_mypage_path
+          li.nav__list = link_to 'アイテム一覧へ', items_path        
+          li.nav__list = link_to '出品へ', new_item_path
+        - elsif admin_signed_in?
+          li.nav__list 管理者名: #{current_admin.name}
+          li.nav__list = link_to 'ログアウト', destroy_admin_session_path, method: :delete
+        - else 
+          li.nav__list あなたはゲストユーザーです
+          li.nav__list = link_to 'ログイン', new_user_session_path 
+          li.nav__list = link_to '新規登録', new_user_registration_path 
+          li.nav__list = link_to 'アイテム一覧へ', items_path
