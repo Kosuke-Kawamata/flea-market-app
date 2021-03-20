@@ -6,10 +6,12 @@
       - else 
         = image_tag("/assets/default.png")
     h5 商品名: #{@item.name}
+    p = link_to "出品者: #{@item.user.name}", user_path(@item.user.id)
     p カテゴリ: #{@item.category.name}
     p 詳細: #{@item.description}
-    p 価格: #{@item.price}円
-    p 出品者: #{@item.user.name}
+    p.mb-0 価格: #{@item.price}円
+    = render 'likes/like-button', item: @item
+    br
 
     -if current_user
       - if @item.buyer_id == current_user.id || @item.user_id == current_user.id && @item.sold_flag == true

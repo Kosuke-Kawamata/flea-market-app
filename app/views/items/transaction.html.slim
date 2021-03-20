@@ -23,8 +23,18 @@
     - elsif @item.buyer_assessed?
       h5 購入者からの受取評価が完了しました！
       h5 購入者の評価を完了してください
-      button 
-        = link_to '購入者評価',  assess_buyer_item_path(@item)  
+      .container
+        = form_with  model: [@item, @assessment] do |f|
+          = f.label :良い
+          = f.radio_button :user_rank, :良い      
+          = f.label :ふつう
+          = f.radio_button :user_rank, :ふつう      
+          = f.label :悪い
+          = f.radio_button :user_rank, :悪い
+          = f.text_field :message          
+          = f.hidden_field :user_id, value: current_user.id
+          = f.hidden_field :trading_partner_id, value: @item.buyer_id
+          = f.submit '受け取り評価を送信する', class: 'btn btn-primary ml-2'
     - elsif @item.seller_assessed?
       h5 取引が完了しました！
 
@@ -34,8 +44,20 @@
     - elsif @item.shipped?
       h5 商品が発送されました！
       h5 商品の到着後､商品が確認してから受取評価をしてください｡
-      button 
-        = link_to '出品者評価', recieved_item_path(@item)  
+      .container
+        = form_with  model: [@item, @assessment] do |f|
+          = f.label :item_checked, '商品の中身を確認しました'
+          = f.check_box :item_checked
+          = f.label :良い
+          = f.radio_button :user_rank, :良い      
+          = f.label :ふつう
+          = f.radio_button :user_rank, :ふつう      
+          = f.label :悪い
+          = f.radio_button :user_rank, :悪い
+          = f.text_field :message          
+          = f.hidden_field :user_id, value: current_user.id
+          = f.hidden_field :trading_partner_id, value: @item.user_id
+          = f.submit '受け取り評価を送信する', class: 'btn btn-primary ml-2'
     -elsif @item.buyer_assessed?
       h5 受け取り評価を送りました！
       h5 出品者からの購入者評価をお待ちください｡

@@ -1,0 +1,53 @@
+.top__container
+  .container 
+    = search_form_for @q , url:search_items_path do |f|
+      = f.label :name_cont, '商品名'
+      = f.search_field :name_cont
+      = f.submit '検索'
+      
+  .category-list__contain
+    h4.text-center カテゴリリスト
+    ul.d-flex.justify-content-center.flex-wrap
+      - @categories.each do |category|
+        li.list-group-item 
+          = link_to category.name, category_path(category)
+
+
+.item-list__container 
+  h4.text-center すべての商品
+  ul.d-flex.justify-content-center.flex-wrap
+    - @results.order(id: "DESC").each do |item|
+      li.list-group-item.item-list__item
+        div 
+          - if item.img?
+            = link_to image_tag(item.img.url), item_path(item)
+          - else 
+            = link_to image_tag("default.png"), item_path(item)
+        = link_to item.name, item_path(item)
+.item-list__container
+  h4.text-center 売り切れ
+  ul.d-flex.justify-content-center.flex-wrap 
+    - @results.where(sold_flag: true).order(id: "DESC").each do |item|
+      li.list-group-item.item-list__item  
+        div 
+          - if item.img?
+            = link_to image_tag(item.img.url), item_path(item)
+          - else 
+            = link_to image_tag("/assets/default.png"), item_path(item)
+        = link_to item.name, item_path(item)
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,30 @@
+.top__container
+  h1 = "#{@user.name}のページ"
+  .container 
+    p ユーザー: #{@user.name}
+    - if current_user != @user
+      - if current_user.following?(@user)
+        = button_to 'フォロー解除', user_relationship_path(@user, current_user.relationships.find_by(follower_id: @user.id)), method: :delete
+      - else
+        = button_to 'フォロー', user_relationships_path(@user, follower_id: @user.id, hoge: "hoge")
+    i.fas.fa-smile-beam style='color: red;'
+    = "良い: #{@user_assessments.where(user_rank: "良い").count}"
+    br
+    i.fas.fa-meh style='color: gray'
+    = "ふつう: #{@user_assessments.where(user_rank: "ふつう").count}"
+    br
+    i.fas.fa-sad-tear style='color: blue;'
+    = "悪い: #{@user_assessments.where(user_rank: "悪い").count}"
+    p プロフィール: #{@user.profile}
+
+  .container.mb-5
+    h4.text-center 商品一覧
+    ul.d-flex.justify-content-center.flex-wrap 
+      - @user_items.each do |item|
+        li.list-group-item  
+          div 
+            - if item.img?
+              = link_to image_tag(item.img.url), item_path(item)
+            - else 
+              = link_to image_tag("/assets/default.png"), item_path(item)
+          = link_to item.name, item_path(item)

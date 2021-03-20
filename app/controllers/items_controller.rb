@@ -1,6 +1,7 @@
 class ItemsController < ApplicationController
   before_action  :authenticate_user!, only: [:new, :edit, :delete_img, :destroy]
   before_action :set_item, only: [:show, :edit, :update, :destroy, :transaction, :shipped, :recieved, :assess_buyer]
+  before_action :set_q, only: [:index, :search]
 
   def index
     @items = Item.all
@@ -25,11 +26,9 @@ class ItemsController < ApplicationController
     
   end
   
-  # items#showがchatのformを入力する場所
-  def show
-    if current_user && @item.sold_flag == true
-      redirect_to action: :transaction
-    elsif current_user
+  # items#showがchatのformを入力する場所でもある
+  def show   
+    if current_user
       @room = @item.rooms.first
       @chat = Chat.new(room_id: @room.id, user_id: current_user.id, item_id: @item.id)
       @chats = @room.chats
@@ -65,6 +64,10 @@ class ItemsController < ApplicationController
     else
       redirect_to item_path(@item)
     end  
+
+    if @item.shipped? || @item.buyer_assessed?
+      @assessment = Assessment.new
+    end
     
   end
   
@@ -73,16 +76,12 @@ class ItemsController < ApplicationController
     redirect_to transaction_item_path(@item)
   end
 
-  def recieved
-    @item.buyer_assessed!
-    redirect_to transaction_item_path(@item)    
-  end
 
-  def assess_buyer
-    @item.seller_assessed!
-    redirect_to transaction_item_path(@item)    
+  def search
+    @results = @q.result
+    @items = Item.all
+    @categories = Category.all
   end
- 
 
   private
   def item_params
@@ -96,6 +95,10 @@ class ItemsController < ApplicationController
   def chat_params
     # params.require(:chat).permit(:message)
     params.require(:chat).permit(:message, :user_id, :room_id)
+  end
+
+  def set_q
+    @q = Item.ransack(params[:q])
   end
   
 end

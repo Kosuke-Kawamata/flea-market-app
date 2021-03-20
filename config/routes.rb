@@ -2,19 +2,20 @@ Rails.application.routes.draw do
 
   root to: 'items#index'
   
-# トップページ・マイページのルーティング
-  get 'homes/top' => 'homes#top'
+# トップページ・マイページのルーティング 
   get 'homes/mypage' => 'homes#mypage'
   get 'homes/company_description' => 'homes#company_description'
-  
 # ユーザーログイン・サインイン
   devise_for :users, controllers: {
     sessions: 'users/sessions',
     registrations: 'users/registrations',
   }
-  resources :users
+  resources :users, only:[:edit, :show, :update] do
+    resources :relationships, only:[:create, :destroy]
+    
+  end
   
-# 管理者のログイン・サインイン
+  # 管理者のログイン・サインイン
   devise_for :admins, controllers: {
     sessions: 'admins/sessions'
   }
@@ -22,18 +23,21 @@ Rails.application.routes.draw do
     resources :users
   end
   resources :admins
-
-# アイテムモデルのCRUDのルーティング
+  
+  # アイテムモデルのCRUDのルーティング
   
   resources :items do 
     member do       
       get :transaction
       get :shipped
-      get :recieved
-      get :assess_buyer
+    end
+    collection do
+      get 'search'
     end
     resources :charges, only:[:create]
     resources :chats, only:[:create, :destroy]
+    resources :assessments, only:[:create]
+    resources :likes, only:[:create, :destroy]
   end
 
 
@@ -41,8 +45,8 @@ Rails.application.routes.draw do
 # カテゴリー別に表示するためのルーティング
   get 'categories/:id' => 'categories#show', as: 'category'
   
-# CarrierWaveの画像を削除するためのルーティング（途中）
-  # get 'item/:id/delete_img/' => 'item#delete_img', as: 'delete_img'
+
+
 end
 
 

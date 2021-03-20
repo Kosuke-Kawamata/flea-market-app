@@ -1,5 +1,5 @@
 .container
-  h4.text-center コメントした商品  
+  h4.text-center すべてのコメントした商品
   ul.d-flex.justify-content-center.flex-wrap 
     - current_user.chats.distinct.pluck(:item_id).each do |item_id| 
       - commented_item = @items.find_by(id: item_id)     
@@ -10,3 +10,77 @@
           - else 
             = link_to image_tag("/assets/default.png"), item_path(commented_item)
           = link_to commented_item.name, item_path(commented_item)
+
+// 1番目は反映されるけど､li の下に､ if sold_falg があるから空白の無駄なli が生成されてしまう｡
+.container
+  h4.text-center 販売中のコメントした商品1  
+  ul.d-flex.justify-content-center.flex-wrap 
+    - current_user.rooms.open_chat.each do |chat_room|
+      - chat_room.chats.distinct.pluck(:item_id).each do |item_id| 
+        - commented_item = @items.find_by(id: item_id)
+        li.list-group-item  
+          - if commented_item.sold_flag == false
+            div            
+              - if commented_item.img?
+                = link_to image_tag(commented_item.img.url), item_path(commented_item)
+              - else 
+                = link_to image_tag("/assets/default.png"), item_path(commented_item)
+            = link_to commented_item.name, item_path(commented_item)
+// 2番目は li の上に - if sold_flag を持ってきていて､正しそうだけど反映されない｡
+.container
+  h4.text-center 販売中のコメントした商品2
+  ul.d-flex.justify-content-center.flex-wrap 
+    - current_user.rooms.open_chat.each do |chat_room|
+      - chat_room.chats.distinct.pluck(:item_id).each do |item_id| 
+        - commented_item = @items.find_by(id: item_id)
+          - if commented_item.sold_flag == false
+            li.list-group-item  
+              div            
+                - if commented_item.img?
+                  = link_to image_tag(commented_item.img.url), item_path(commented_item)
+                - else 
+                  = link_to image_tag("/assets/default.png"), item_path(commented_item)
+              = link_to commented_item.name, item_path(commented_item)
+// 3番目は find_by(id: item_id, sold_flag:false) としてみたけど反映されない｡ 反映されればこの書き方が一番良さげ
+.container
+  h4.text-center 販売中のコメントした商品3
+  ul.d-flex.justify-content-center.flex-wrap 
+    - current_user.rooms.open_chat.each do |chat_room|
+      - chat_room.chats.distinct.pluck(:item_id).each do |item_id| 
+        - commented_item = @items.find_by(id: item_id, sold_flag:false)          
+          li.list-group-item  
+            div            
+              - if commented_item.img?
+                = link_to image_tag(commented_item.img.url), item_path(commented_item)
+              - else 
+                = link_to image_tag("/assets/default.png"), item_path(commented_item)
+            = link_to commented_item.name, item_path(commented_item)
+// 4番目は､ - commented_item のから下のインデントがおかしい｡ でも､反映されている｡ なぞ｡
+.container
+  h4.text-center 販売中のコメントした商品4
+  ul.d-flex.justify-content-center.flex-wrap 
+    - current_user.rooms.open_chat.each do |chat_room|
+      - chat_room.chats.distinct.pluck(:item_id).each do |item_id| 
+        - commented_item = @items.find_by(id: item_id)
+        li.list-group-item  
+          div            
+            - if commented_item.img?
+              = link_to image_tag(commented_item.img.url), item_path(commented_item)
+            - else 
+              = link_to image_tag("/assets/default.png"), item_path(commented_item)
+          = link_to commented_item.name, item_path(commented_item)
+// 5番目は､4番目のおかしいインデントを直してみたが､反映されなくなった｡
+.container
+  h4.text-center 販売中のコメントした商品5
+  ul.d-flex.justify-content-center.flex-wrap 
+    - current_user.rooms.open_chat.each do |chat_room|
+      - chat_room.chats.distinct.pluck(:item_id).each do |item_id| 
+        - commented_item = @items.find_by(id: item_id)
+          - if commented_item.sold_flag == false
+            li.list-group-item  
+              div            
+                - if commented_item.img?
+                  = link_to image_tag(commented_item.img.url), item_path(commented_item)
+                - else 
+                  = link_to image_tag("/assets/default.png"), item_path(commented_item)
+              = link_to commented_item.name, item_path(commented_item)

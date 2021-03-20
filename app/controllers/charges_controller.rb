@@ -30,6 +30,7 @@ class ChargesController < ApplicationController
     @room.close_chat!
     UserRoom.create(room_id: @room.id, user_id: @item.buyer_id)
     UserRoom.create(room_id: @room.id, user_id: @item.user_id)
+    
   rescue Stripe::CardError => e
     flash[:error] = e.message
     redirect_to new_charge_path

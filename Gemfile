@@ -79,3 +79,5 @@ gem "stripe", groups: [:development, :test]
 gem 'dotenv-rails'
 
 gem 'font-awesome-sass', '~> 5.13.0'
+
+gem 'ransack'

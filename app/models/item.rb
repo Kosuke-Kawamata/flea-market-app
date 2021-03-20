@@ -1,6 +1,9 @@
 class Item < ApplicationRecord
   has_many :rooms, dependent: :destroy
   has_many :chats, dependent: :destroy
+  
+  has_many :likes, dependent: :destroy
+
   belongs_to :user
   belongs_to :category
 
@@ -12,6 +15,10 @@ class Item < ApplicationRecord
   validates :price, presence: true
 
   mount_uploader :img, ImgUploader
+
+  def liked_by?(user)
+    self.likes.where(user_id: user.id).exists?
+  end
 end
 
 

@@ -1,0 +1,13 @@
+- if current_user
+  - if item.liked_by?(current_user)
+    = link_to item_like_path(item), method: :delete, id:'like_button', remote: true do
+      i.fas.fa-heart style='color: red;'
+      / いいね数
+      = item.likes.count
+
+  - else
+    = link_to item_likes_path(item), method: :post, id:'like_button', remote: true do
+      i.far.fa-heart
+      = item.likes.count
+
+// エラーが起こったときには､まず複数形・単数形をチェックしてみる｡あと､routes.rbも
