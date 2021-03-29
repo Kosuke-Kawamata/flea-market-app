@@ -13,8 +13,10 @@ class ItemsController < ApplicationController
     @item = Item.new    
   end
 
-  def create
+  def create   
+
     @item = Item.new(item_params)
+
     if @item.save
 
       @item.rooms.create! #アイテム作成時に､@itemに紐付いた､roomを作成・保存する
@@ -23,15 +25,18 @@ class ItemsController < ApplicationController
     else
       render :new
     end
+      
     
   end
   
   # items#showがchatのformを入力する場所でもある
   def show   
+    @user_assessments = Assessment.where(trading_partner_id: @item.user_id)
+    @room = @item.rooms.first
+    @chats = @room.chats
+    
     if current_user
-      @room = @item.rooms.first
       @chat = Chat.new(room_id: @room.id, user_id: current_user.id, item_id: @item.id)
-      @chats = @room.chats
   
       unless current_user.user_rooms.pluck(:room_id).include?(@item.rooms.first.id)
         UserRoom.create(room_id: @room.id, user_id: current_user.id)
@@ -51,10 +56,12 @@ class ItemsController < ApplicationController
   
   def destroy    
     @item.destroy
-    redirect_to homes_mypage_path
+    redirect_to user_mypage_path(current_user)
   end
   
   def transaction
+    @user_assessments = Assessment.where(trading_partner_id: @item.user_id)
+
     # charge_controllerで決済時に@item.room.create! user_roomモデルとも紐付け
     # transaction action にて､ room = @item.rooms.last でプライベートチャットroomを引っ張ってくる｡
     @room = @item.rooms.last
@@ -82,6 +89,8 @@ class ItemsController < ApplicationController
     @items = Item.all
     @categories = Category.all
   end
+
+  
 
   private
   def item_params

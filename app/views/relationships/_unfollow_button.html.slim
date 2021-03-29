@@ -1,0 +1,5 @@
+= button_to 'フォロー解除', relationship_path(current_user.relationships.find_by(follower: user)), method: :delete, remote: true
+
+/ 結局は､フォロー解除する＝その関係を保存しているrelationshipのレコードを削除する → relationshipのレコードを送る必要がある
+
+/ 変数userに入るのは､フォロー相手のuserのレコード

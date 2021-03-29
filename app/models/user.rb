@@ -22,7 +22,8 @@ class User < ApplicationRecord
   # class_nameで指定しているのは､そうしなきゃ､フォローする側とフォローされる側の区別がつかなくなるから
 
   # また､foreign_key を指定しているのは､そういなきゃ､いつもどおり､user_idを参照してしまうから｡
-
+  
+  mount_uploader :img, ImgUploader
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable

@@ -27,7 +27,22 @@ class ImgUploader < CarrierWave::Uploader::Base
   # def scale(width, height)
   #   # do something
   # end
-  process resize_to_limit(300, 300)      #←これがリサイズするときの指定方法だった！
+  # process resize_to_limit(188, 188)      #←これがリサイズするときの指定方法だった！
+  # process resize_to_fit(188, 188)      #←これがリサイズするときの指定方法だった！
+  process resize_to_fill: [188, 188, "Center"] #←これが出品と相性いいっぽい
+
+  version :thumb30 do
+    process resize_to_fit: [30, 30]
+  end
+  
+  version :thumb50 do
+    process resize_to_fit: [50, 50]
+  end
+
+  version :thumb300 do
+    process resize_to_fit: [300, 300]
+  end
+  # .img.thumb30.url、.img.thumb50.urlで呼び出すことができます。32行目のprocess resize_to がベースの大きさで､version :〜〜〜 do が別のサイズ指定をする方法
 
   # Create different versions of your uploaded files:
   # version :thumb do

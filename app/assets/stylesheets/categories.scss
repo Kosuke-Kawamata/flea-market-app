@@ -1,3 +1,43 @@
 // Place all the styles related to the categories controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.category-list__container {
+  display: none;
+  width: 70%;
+  margin: 5px auto 0;
+
+  ul{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    
+    li a{
+      text-decoration: none;
+      display: inline-block;
+      background-color: rgb(255, 255, 255);  
+      box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+      color: rgb(34, 34, 34);
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 40px;
+      padding: 0px 30px;
+      margin: 5px;
+
+      &:hover{
+        background-color: rgb(245, 245, 245);
+        box-shadow: rgba(0, 0, 0, 0.18) 0px 1px 2px;
+      }
+      &:active{
+        box-shadow: none;
+      }
+    }    
+  }
+
+}
+
+// あとから付け加えるcssは後に書かないと読み込まれる順番がおかしくなるから注意！
+.open_category-list{
+  display: block;
+}

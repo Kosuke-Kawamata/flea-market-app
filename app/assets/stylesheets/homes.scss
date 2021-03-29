@@ -1,3 +1,60 @@
 // Place all the styles related to the homes controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.assessment-container, .follow-list-container, .profile-container {
+  width: 75%;
+}
+
+.top__container{
+  display: flex;
+  width: 60%;
+  margin: 0 auto;
+  padding-top: 30px;
+  padding-bottom: 30px;
+
+  .mypege-nav{
+    width: 25%;
+    min-width: 222px;
+    font-size: 15px;
+    padding: 15px;
+    ul{    
+      .nav__list{
+        display: flex;
+        color: #333;
+        background-color: #ffffff;
+        border-top: 1px solid #eee;
+        
+        a{
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          color: #333333;
+          text-decoration: none;
+          padding: 13px;
+  
+          div{
+            display: block;
+          }
+          .fa-chevron-right{
+            display: block;
+          }
+        }    
+  
+        &:hover{
+          background-color: rgb(245, 245, 245);
+    
+        }
+        &:active{
+          box-shadow: none;
+        }
+      }
+       
+    }
+  }
+
+  
+}
+
+

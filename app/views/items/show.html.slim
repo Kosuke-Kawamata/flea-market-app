@@ -1,54 +1,201 @@
-.top__container   
-  .item-list__container
-    div 
-      - if @item.img?
-        = image_tag(@item.img.url)
-      - else 
-        = image_tag("/assets/default.png")
-    h5 商品名: #{@item.name}
-    p = link_to "出品者: #{@item.user.name}", user_path(@item.user.id)
-    p カテゴリ: #{@item.category.name}
-    p 詳細: #{@item.description}
-    p.mb-0 価格: #{@item.price}円
-    = render 'likes/like-button', item: @item
-    br
+.top-wrapper
+  .item_main
+    h5.item_name = @item.name
+    .item_main_content 
+      .top-img_wrapper
+        .img-wrapper
+          - if @item.img?
+            = image_tag(@item.img.thumb300.url)
+          - else 
+            = image_tag("item_img/default.png")
+          - if @item.sold_flag == true
+            .sold-badge-show 
+            p SOLD
+      table
+        tbody 
+          tr 
+            th 出品者
+            td
+              = link_to @item.user.name, user_path(@item.user.id) 
+              .assessment_container
+                .assessment-icon 
+                  i.fas.fa-smile-beam style='color: red;'
+                  p = @user_assessments.where(user_rank: "良い").count
+                .assessment-icon 
+                  i.fas.fa-meh style='color: gray'
+                  p = @user_assessments.where(user_rank: "ふつう").count
+                .assessment-icon 
+                  i.fas.fa-sad-tear style='color: blue;'
+                  p = @user_assessments.where(user_rank: "悪い").count
+          tr
+            th カテゴリ
+            td = @item.category.name
+          tr
+            th 商品の状態
+            td = @item.category.name
+          tr
+            th 配送料の負担
+            td = @item.category.name
+          tr
+            th 配送の方法
+            td = @item.category.name
+          tr
+            th 配送元地域
+            td = @item.category.name
+          tr
+            th 発送日の目安
+            td = @item.category.name
+  .item_price 
+    h5 ￥#{@item.price} 
+    p （税込み）
 
+  .various-btn
     -if current_user
       - if @item.buyer_id == current_user.id || @item.user_id == current_user.id && @item.sold_flag == true
         button  
-          = link_to '取引画面へ', transaction_item_path
+          = link_to '取引画面へ', transaction_item_path, class: 'transaction-btn'
       - elsif @item.sold_flag == true 
         h5.border.border-dange.rounded 売り切れました
       - elsif @item.user_id == current_user.id 
         button  
-          = link_to '編集する', edit_item_path 
+          = link_to '商品の編集', edit_item_path, class: 'edit-btn' 
+        p.or or 
+        button 
+          = link_to '出品を一旦停止する', item_path(@item),class:'gray-btn', method: :gray, data: { confirm: '本当に削除しますか？' }
+        button 
+          = link_to 'この商品を削除する', item_path(@item),class:'gray-btn', method: :delete, data: { confirm: '本当に削除しますか？' }
       - else
         = form_tag item_charges_path(@item) do
           script.stripe-button data-amount="#{@item.price}\
           " data-currency="jpy" data-description="クレジット決済\
           " data-key="#{Rails.configuration.stripe[:publishable_key]}" data-locale="auto" data-name="#{@item.name}を購入\
-          " data-email="#{current_user.email}" data-label="購入する\
+          " data-email="#{current_user.email}" data-label="購入画面に進む\
           " data-allow-remember-me="false" src="https://checkout.stripe.com/checkout.js"
     - else  
       - if @item.sold_flag == false 
         button  
-          = link_to '購入する', new_user_session_path 
+          = link_to '購入画面に進む', new_user_session_path, class: 'guest-buy-btn'
       - else 
-        h5 売り切れました
-        
-    - if current_user
-      .container
-        - if @item.sold_flag == false
-          = form_with  model: [@item, @chat] do |f|
-            = f.text_field :message
-            = f.hidden_field :room_id, value: @item.rooms.first.id
-            = f.hidden_field :item_id, value: @item.id
-            = f.submit 'コメントする', class: 'btn btn-primary ml-2'
-      .container 
-        ul
+        p.sold-out-btn 売り切れました
+  .item_description        
+    p = @item.description
+  - if user_signed_in?
+    .like_btn_container
+      = render 'likes/like-button', item: @item
+      .wrong-item-flag
+        i.far.fa-flag
+        div 不適切な商品の報告
+      .security-policy
+        i.fas.fa-unlock-alt
+        div あんしん・あんぜんへの取り組み
+  - unless user_signed_in?
+    .like_btn_container
+      = link_to new_user_session_path, class:'fake-like_button',method: :get  do 
+        i.fas.fa-heart
+        div いいね！
+        div = @item.likes.count
+      .wrong-item-flag
+        i.far.fa-flag
+        div 不適切な商品の報告
+      .security-policy
+        i.fas.fa-unlock-alt
+        div あんしん・あんぜんへの取り組み
+
+.middle-wrapper 
+  p.attention 相手のことを考え丁寧なコメントを心がけましょう。不快な言葉遣いなどは利用制限や退会処分となることがあります。
+  .comment-container
+    .comment_history
+      ul
+        - if @chats 
           - @chats.order(id: "DESC").each do |chat|    
-            li.mb-3         
-              p = chat.message        
-              small 投稿者: #{chat.user.name}
-              - if current_user.id == chat.user_id
-                = link_to '削除', item_chat_path(@item,chat), method: :delete
+            - if chat.user != current_user
+              li
+                = link_to user_path(chat.user), class:'user-link-left', method: :get do 
+                  i.fas.fa-user-circle
+                  p = chat.user.name
+                .balloon-left
+                  p.message = chat.message
+                  .time-trash
+                    .create-time                      
+                      i.far.fa-clock
+                      div = chat.created_at.to_s(:datetime_jp)
+                    - if current_user && current_user.id == chat.user_id
+                      = link_to item_chat_path(@item,chat), method: :delete do
+                        i.far.fa-trash-alt    
+            - elsif chat.user == current_user
+              li
+                = link_to user_path(chat.user), class:'user-link-right', method: :get do 
+                  i.fas.fa-user-circle
+                  p = chat.user.name
+                .balloon-right
+                  p.message = chat.message
+                  .time-trash
+                    .create-time                      
+                      i.far.fa-clock
+                      div = chat.created_at.to_s(:datetime_jp)
+                    - if current_user && current_user.id == chat.user_id
+                      = link_to item_chat_path(@item,chat), method: :delete do
+                        i.far.fa-trash-alt    
+    - if current_user
+      - if @item.sold_flag == false
+        .comment-area
+            = form_with  model: [@item, @chat] do |f|
+              = f.text_area :message
+              = f.hidden_field :room_id, value: @item.rooms.first.id
+              = f.hidden_field :item_id, value: @item.id
+              = f.submit 'コメントする', class: 'submit-btn'
+      - else
+        .comment-area
+            = form_with  model: [@item, @chat] do |f|
+              = f.text_area :message ,style:'pointer-events: none;'
+              p.cannot-submit-btn 売り切れのためコメントできません
+
+/ .limit(3) みたいにして､取得数を制限したい｡
+.bottom-wrapper
+  .top-list-wrapper
+    .item-list__container
+      h4 = "#{@item.user.name}さんのその他の出品"
+      ul
+        - @item.user.items.where(sold_flag: false).order(id: "DESC").each do |item|
+          li.item-box
+            = link_to item_path(item) do 
+              div.img-wrapper
+                - if item.img?
+                  = image_tag(item.img.url)
+                - else 
+                  = image_tag("item_img/default.png")
+              - if item.sold_flag == true 
+                div.sold-badge
+                p sold
+              div.price_tag
+                = "¥#{item.price}"
+              .item-box-bottom
+                h5 = item.name
+                - if item.likes.count >= 1
+                  i.far.fa-heart
+                  div.heart_count
+                    = item.likes.count
+.bottom-wrapper
+  .top-list-wrapper
+    .item-list__container
+      h4 = "\"#{@item.category.name}\"のその他の出品"
+      ul
+        - @item.category.items.where(sold_flag: false).limit(3).order(id: "DESC").each do |item|
+          li.item-box
+            = link_to item_path(item) do 
+              div.img-wrapper
+                - if item.img?
+                  = image_tag(item.img.url)
+                - else 
+                  = image_tag("item_img/default.png")
+              - if item.sold_flag == true 
+                div.sold-badge
+                p sold
+              div.price_tag
+                = "¥#{item.price}"
+              .item-box-bottom
+                h5 = item.name
+                - if item.likes.count >= 1
+                  i.far.fa-heart
+                  div.heart_count
+                    = item.likes.count

@@ -1,3 +1,155 @@
+.top-wrapper
+  .item_main
+    h5.item_name = @item.name
+    .item_main_content 
+      .top-img_wrapper
+        .img-wrapper
+          - if @item.img?
+            = image_tag(@item.img.thumb300.url)
+          - else 
+            = image_tag("item_img/default.png")
+          - if @item.sold_flag == true
+            .sold-badge-show 
+            p SOLD
+      table
+        tbody 
+          tr 
+            th 出品者
+            td
+              = link_to @item.user.name, user_path(@item.user.id) 
+              .assessment_container
+                .assessment-icon 
+                  i.fas.fa-smile-beam style='color: red;'
+                  p = @user_assessments.where(user_rank: "良い").count
+                .assessment-icon 
+                  i.fas.fa-meh style='color: gray'
+                  p = @user_assessments.where(user_rank: "ふつう").count
+                .assessment-icon 
+                  i.fas.fa-sad-tear style='color: blue;'
+                  p = @user_assessments.where(user_rank: "悪い").count
+          tr
+            th カテゴリ
+            td = @item.category.name
+          tr
+            th 商品の状態
+            td = @item.category.name
+          tr
+            th 配送料の負担
+            td = @item.category.name
+          tr
+            th 配送の方法
+            td = @item.category.name
+          tr
+            th 配送元地域
+            td = @item.category.name
+          tr
+            th 発送日の目安
+            td = @item.category.name
+  .item_price 
+    h5 ￥#{@item.price} 
+    p （税込み）
+
+  .various-btn
+    -if current_user
+      - if @item.buyer_id == current_user.id || @item.user_id == current_user.id && @item.sold_flag == true
+        button  
+          = link_to '取引画面へ', transaction_item_path, class: 'transaction-btn'
+      - elsif @item.sold_flag == true 
+        h5.border.border-dange.rounded 売り切れました
+      - elsif @item.user_id == current_user.id 
+        button  
+          = link_to '商品の編集', edit_item_path, class: 'edit-btn' 
+        p.or or 
+        button 
+          = link_to '出品を一旦停止する', item_path(@item),class:'gray-btn', method: :gray, data: { confirm: '本当に削除しますか？' }
+        button 
+          = link_to 'この商品を削除する', item_path(@item),class:'gray-btn', method: :delete, data: { confirm: '本当に削除しますか？' }
+      - else
+        = form_tag item_charges_path(@item) do
+          script.stripe-button data-amount="#{@item.price}\
+          " data-currency="jpy" data-description="クレジット決済\
+          " data-key="#{Rails.configuration.stripe[:publishable_key]}" data-locale="auto" data-name="#{@item.name}を購入\
+          " data-email="#{current_user.email}" data-label="購入画面に進む\
+          " data-allow-remember-me="false" src="https://checkout.stripe.com/checkout.js"
+    - else  
+      - if @item.sold_flag == false 
+        button  
+          = link_to '購入画面に進む', new_user_session_path, class: 'guest-buy-btn'
+      - else 
+        p.sold-out-btn 売り切れました
+  .item_description        
+    p = @item.description
+  - if user_signed_in?
+    .like_btn_container
+      = render 'likes/like-button', item: @item
+      .wrong-item-flag
+        i.far.fa-flag
+        div 不適切な商品の報告
+      .security-policy
+        i.fas.fa-unlock-alt
+        div あんしん・あんぜんへの取り組み
+  - unless user_signed_in?
+    .like_btn_container
+      = link_to new_user_session_path, class:'fake-like_button',method: :get  do 
+        i.fas.fa-heart
+        div いいね！
+        div = @item.likes.count
+      .wrong-item-flag
+        i.far.fa-flag
+        div 不適切な商品の報告
+      .security-policy
+        i.fas.fa-unlock-alt
+        div あんしん・あんぜんへの取り組み
+
+.middle-wrapper 
+  p.attention 相手のことを考え丁寧なコメントを心がけましょう。不快な言葉遣いなどは利用制限や退会処分となることがあります。
+  .comment-container
+    .comment_history
+      ul
+        - if @chats 
+          - @chats.order(id: "DESC").each do |chat|    
+            - if chat.user != current_user
+              li
+                = link_to user_path(chat.user), class:'user-link-left', method: :get do 
+                  i.fas.fa-user-circle
+                  p = chat.user.name
+                .balloon-left
+                  p.message = chat.message
+                  .time-trash
+                    .create-time                      
+                      i.far.fa-clock
+                      div = chat.created_at.to_s(:datetime_jp)
+                    - if current_user && current_user.id == chat.user_id
+                      = link_to item_chat_path(@item,chat), method: :delete do
+                        i.far.fa-trash-alt    
+            - elsif chat.user == current_user
+              li
+                = link_to user_path(chat.user), class:'user-link-right', method: :get do 
+                  i.fas.fa-user-circle
+                  p = chat.user.name
+                .balloon-right
+                  p.message = chat.message
+                  .time-trash
+                    .create-time                      
+                      i.far.fa-clock
+                      div = chat.created_at.to_s(:datetime_jp)
+                    - if current_user && current_user.id == chat.user_id
+                      = link_to item_chat_path(@item,chat), method: :delete do
+                        i.far.fa-trash-alt    
+    - if current_user
+      - if @item.sold_flag == false
+        .comment-area
+            = form_with  model: [@item, @chat] do |f|
+              = f.text_area :message
+              = f.hidden_field :room_id, value: @item.rooms.first.id
+              = f.hidden_field :item_id, value: @item.id
+              = f.submit 'コメントする', class: 'submit-btn'
+      - else
+        .comment-area
+            = form_with  model: [@item, @chat] do |f|
+              = f.text_area :message ,style:'pointer-events: none;'
+              p.cannot-submit-btn 売り切れのためコメントできません
+
 .container   
   h1 取引画面
   div 
@@ -23,7 +175,7 @@
     - elsif @item.buyer_assessed?
       h5 購入者からの受取評価が完了しました！
       h5 購入者の評価を完了してください
-      .container
+      div.assessment__wrapper
         = form_with  model: [@item, @assessment] do |f|
           = f.label :良い
           = f.radio_button :user_rank, :良い      
@@ -43,20 +195,23 @@
       h5 商品が発送されるまでお待ちください｡ 
     - elsif @item.shipped?
       h5 商品が発送されました！
-      h5 商品の到着後､商品が確認してから受取評価をしてください｡
-      .container
+      h5 商品の到着後､商品が確認してから受取評価をしてください｡      
+      .checkbox__container.d-flex
+        p 商品を確認しました
+        input#checkbox type='checkbox'
+      div#assessment__wrapper
         = form_with  model: [@item, @assessment] do |f|
-          = f.label :item_checked, '商品の中身を確認しました'
-          = f.check_box :item_checked
           = f.label :良い
           = f.radio_button :user_rank, :良い      
           = f.label :ふつう
           = f.radio_button :user_rank, :ふつう      
           = f.label :悪い
           = f.radio_button :user_rank, :悪い
+          br
           = f.text_field :message          
           = f.hidden_field :user_id, value: current_user.id
           = f.hidden_field :trading_partner_id, value: @item.user_id
+          br
           = f.submit '受け取り評価を送信する', class: 'btn btn-primary ml-2'
     -elsif @item.buyer_assessed?
       h5 受け取り評価を送りました！

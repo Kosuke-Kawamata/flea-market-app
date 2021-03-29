@@ -1,12 +1,18 @@
-.top__container
-  h1 = "#{@user.name}のページ"
+.container
   .container 
     p ユーザー: #{@user.name}
-    - if current_user != @user
-      - if current_user.following?(@user)
-        = button_to 'フォロー解除', user_relationship_path(@user, current_user.relationships.find_by(follower_id: @user.id)), method: :delete
-      - else
-        = button_to 'フォロー', user_relationships_path(@user, follower_id: @user.id, hoge: "hoge")
+    / div 
+    /   - if @user.img?
+    /     = image_tag(@user.img.url.thumb50)
+    /   - else 
+    /     = image_tag("user_img/defalut.jpg")
+    div id="follow-button"
+      - if current_user && current_user != @user
+        - if current_user.following?(@user)
+          = render 'relationships/unfollow_button', user:@user
+        - else
+          = render 'relationships/follow_button', user:@user
+
     i.fas.fa-smile-beam style='color: red;'
     = "良い: #{@user_assessments.where(user_rank: "良い").count}"
     br
@@ -17,14 +23,26 @@
     = "悪い: #{@user_assessments.where(user_rank: "悪い").count}"
     p プロフィール: #{@user.profile}
 
-  .container.mb-5
-    h4.text-center 商品一覧
-    ul.d-flex.justify-content-center.flex-wrap 
+.top-list-wrapper
+  .item-list__container 
+    h4 = "#{@user.name}さんの商品"
+    ul
       - @user_items.each do |item|
-        li.list-group-item  
-          div 
-            - if item.img?
-              = link_to image_tag(item.img.url), item_path(item)
-            - else 
-              = link_to image_tag("/assets/default.png"), item_path(item)
-          = link_to item.name, item_path(item)
+        li.item-box
+          = link_to item_path(item) do 
+            div.img-wrapper
+              - if item.img?
+                = image_tag(item.img.url)
+              - else 
+                = image_tag("item_img/default.png")
+            - if item.sold_flag == true 
+              div.sold-badge 
+              p sold
+            div.price_tag
+              = "¥#{item.price}"
+            .item-box-bottom
+              h5 = item.name
+              - if item.likes.count >= 1
+                i.far.fa-heart
+                div.heart_count
+                  = item.likes.count

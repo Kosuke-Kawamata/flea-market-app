@@ -9,10 +9,14 @@ h2 プロフィール編集
     .form-group 
       = f.label :name
       = f.text_field :name, class: 'form-control', id: 'user_name'
+    .form_group 
+      = f.label :img, class: 'img_upload'
+      br
+      = f.file_field :img, id: :user_img_field
     .form-group
       = f.label :profile
       = f.text_area :profile, rows: 5, class: 'form-control', id: 'user_profile'
     = f.submit '更新',class: 'btn btn-primary'
   br
-  p.mt-5 = link_to '戻る', homes_mypage_path 
+  p.mt-5 = link_to '戻る', user_mypage_path(current_user)
 

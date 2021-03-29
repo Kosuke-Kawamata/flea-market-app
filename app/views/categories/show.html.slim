@@ -1,24 +1,38 @@
-h2 カテゴリー別の商品リスト
-.container 
-  h4.text-center カテゴリリスト
-  ul.d-flex.justify-content-center.flex-wrap
-    - @categories.each do |category|
-      li.list-group-item 
-          = link_to category.name, category_path(category)
-.container 
-  h4.text-center 商品リスト
-  ul.d-flex.justify-content-center.flex-wrap 
-    - @category.items.each do |item|
-      li.list-group-item 
-        div 
-          - if item.img?
-            = link_to image_tag(item.img.url), item_path(item)
-          - else 
-            = link_to image_tag("/assets/default.png"), item_path(item)
-        = link_to item.name, item_path(item)
+
+.top-list-wrapper
+  .item-list__container 
+    h4 = @category.name
+    ul
+      - @category.items.order(id: "DESC").each do |item|
+        li.item-box
+          = link_to item_path(item) do 
+            div.img-wrapper
+              - if item.img?
+                = image_tag(item.img.url)
+              - else 
+                = image_tag("item_img/default.png")
+            - if item.sold_flag == true 
+              div.sold-badge 
+              p sold
+            div.price_tag
+              = "¥#{item.price}"
+            .item-box-bottom
+              h5 = item.name
+              - if item.likes.count >= 1
+                i.far.fa-heart
+                div.heart_count
+                  = item.likes.count
 
 / .items が Nilclass とエラーが出たときには､その一個手前の､@category がおかしい場合がある｡@category がおかしいから､.items メソッドを実行できません｡という意味
 
-br
-= link_to 'マイページへ', homes_mypage_path, class:'ml-5'
-= link_to 'アイテム一覧へ', items_path , class:'ml-5'
+
+.footer-sell-button 
+  - if user_signed_in?
+    = link_to new_item_path ,method: :get  do 
+      div 出品
+      i.fas.fa-camera
+  - unless user_signed_in?   
+    = link_to new_user_session_path ,method: :get  do 
+      div 出品
+      i.fas.fa-camera
+

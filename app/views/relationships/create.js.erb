@@ -1,0 +1,7 @@
+$("#follow-button").html("<%= j(render 'unfollow_button', user: @other_user) %>")
+
+<%# このjsファイルはrelationships_controllerのcreateアクションの後に呼び出される %>
+
+<%# だから､relationships_controllerのcreateアクションで定義されたインスタンス変数がここでは使えるので､ %>
+
+<%# ここで使えるインスタンス変数は､@other_user %>

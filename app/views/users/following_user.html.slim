@@ -1,0 +1,82 @@
+.top__container
+  .mypege-nav
+    ul
+      li.nav__list
+        = link_to user_mypage_path, method: :get do 
+          div マイページ
+          i.fas.fa-chevron-right
+      li.nav__list
+        = link_to user_like_items_path, method: :get do 
+          div いいね！一覧
+          i.fas.fa-chevron-right
+      li.nav__list
+        = link_to user_commented_items_path, method: :get do 
+          div コメントした商品一覧-販売中
+          i.fas.fa-chevron-right
+      li.nav__list
+        = link_to new_item_path, method: :get do 
+          div 出品する
+          i.fas.fa-chevron-right
+      li.nav__list
+        = link_to user_pre_published_items_path, method: :get do 
+          div 下書き一覧
+          i.fas.fa-chevron-right
+      li.nav__list
+        = link_to user_published_items_path, method: :get do 
+          div 出品した商品-出品中
+          i.fas.fa-chevron-right
+      li.nav__list
+        = link_to user_selling_items_path, method: :get do 
+          div 出品した商品-取引中
+          i.fas.fa-chevron-right
+      li.nav__list
+        = link_to user_sold_items_path, method: :get do 
+          div 出品した商品-売却済み
+          i.fas.fa-chevron-right
+      li.nav__list
+        = link_to user_buying_items_path, method: :get do 
+          div 購入した商品-取引中
+          i.fas.fa-chevron-right
+      li.nav__list
+        = link_to user_bought_items_path, method: :get do 
+          div 購入した商品-購入済み
+          i.fas.fa-chevron-right
+      li.nav__list
+        = link_to user_following_user_path, method: :get do 
+          div フォロー一覧
+          i.fas.fa-chevron-right
+      li.nav__list
+        = link_to user_assessments_list_path, method: :get do 
+          div 評価一覧
+          i.fas.fa-chevron-right
+      li.nav__list
+        = link_to user_profile_page_path, method: :get do 
+          div プロフィール設定
+          i.fas.fa-chevron-right
+
+
+  .follow-list-container 
+    h4 フォローリスト
+    ul
+      - current_user.followings.each do |following|
+        li.item-box
+          = link_to following.name, user_path(following)
+  .footer-sell-button 
+    - if user_signed_in?
+      = link_to new_item_path ,method: :get  do 
+        div 出品
+        i.fas.fa-camera
+    - unless user_signed_in?   
+      = link_to new_user_session_path ,method: :get  do 
+        div 出品
+        i.fas.fa-camera
+    
+.footer-sell-button 
+  - if user_signed_in?
+    = link_to new_item_path ,method: :get  do 
+      div 出品
+      i.fas.fa-camera
+  - unless user_signed_in?   
+    = link_to new_user_session_path ,method: :get  do 
+      div 出品
+      i.fas.fa-camera    

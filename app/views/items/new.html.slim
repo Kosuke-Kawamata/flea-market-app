@@ -22,6 +22,7 @@
         = f.label :price
         = f.number_field :price, class: 'form-control', id: 'item_price'
       = f.submit '出品する', class: 'btn btn-primary'
-
+  .container 
+    = link_to 'もどる', user_mypage_path(current_user)
 
     

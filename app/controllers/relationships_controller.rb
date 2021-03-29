@@ -1,17 +1,17 @@
 class RelationshipsController < ApplicationController  
   def create
-    @user = User.find(params[:user_id])
-    @other_user = User.find(params[:follower_id])
+    # @user = User.find(params[:user_id])
+    @other_user = User.find(params[:follower]) # @userにフォロー相手をいれている
     current_user.follow(@other_user)
-    redirect_to user_path(@user)
+    # redirect_to user_path(@user)
   end
 
   def destroy
-    @user = User.find(params[:user_id])
+    # @user = User.find(params[:user_id])
 
-    # @user = current_user.relationships.find(params[:id]).follower_id # ←これの役割がわからない､
+    @user = current_user.relationships.find(params[:id]).follower # @userにフォロー相手をいれている
     current_user.unfollow(params[:id])
-    redirect_to user_path(@user)
+    # redirect_to user_path(@user)
   end
 end
 

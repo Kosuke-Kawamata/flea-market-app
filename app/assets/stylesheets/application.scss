@@ -17,84 +17,253 @@
  @import "font-awesome-sprockets";
  @import "font-awesome";
 
-// alertのcss
+// alertのcss   _と-の違いには要注意！！！ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
  .notifications{
    color: whitesmoke;
    text-align: center;  
    font-size: 30px;
    .notice{
-     background-color:lightBlue;
+     background-color:darkgrey;
    }
    .alert{
-     background-color: rgb(235, 194, 117);
+     background-color: red;
    }
  }
-
-// ヘッダーのcss
-$header-footer-color:rgb(230, 243, 243);
-
-.header{
-  display: flex;
-  align-items: center;
-  background-color: $header-footer-color;
-  height: 13vh;
-  
-  &__wrapper{
-    display: flex;
-
-    width: 90%;
-    margin: 0 auto;
-
-    .header__logo{
-      width: 20%;
-
-      .logo__img{
-        width: 100%;
-      }
-    }
-  }
+// リセットcssーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+*, *:before, *:after { -webkit-box-sizing: border-box; -moz-box-sizing: border-box;-o-box-sizing: border-box;  -ms-box-sizing: border-box;box-sizing: border-box;}
+a{
+  display: block;
+  text-decoration: none;  
 }
-// ナビゲーションのcss
-$nav-font-color:grey;
+p{
+  padding: 0;
+  margin: 0;
+}
+h5{
+  margin: 0;
+  padding: 0;
+}
+button,input{
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+  appearance: none;
+}
+ul{
+  padding: 0;
+  margin: 0;
 
-.nav{
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-
-  &__ul{
-    display: flex;
-    align-items: center;
-    list-style-type: none;
+  li{
     padding: 0;
     margin: 0;
-    
-    .nav__list{
-      background-color: #fff;
-      border: 1px rgb(143, 140, 140) solid;
-      color: $nav-font-color;
-      display: flex;
-      align-items: center;
-      height: 60%;
-      font-size: 20px;
-      font-weight: bold;
-      padding: 0 10px;
-      margin: 0 1px;
-      &:hover{
-        background-color: rgb(230, 227, 227);
-      }
+    list-style-type: none;
 
-      a{
-        display: inline-block;
-        text-decoration: none;
-        color: $nav-font-color;
-      }
+    a{
+      text-decoration: none;
+      display: block;
+      color: #333333;
     }
   }
 }
+textarea{
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-height: 104px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  background: #fff;
+  font-size: 16px;
+  line-height: 1.5;
+}
 
-// footerを一番下に持ってくるcss
+// ヘッダーのcssーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+
+.header{
+  min-width: 558px;
+  background-color: #ffffff;
+  box-shadow: 0px 5px 5px -5px gray;
+  position:relative;
+  height: auto;
+  padding-bottom: 10px;
+  
+  &__wrapper{
+    min-width: 558px;
+    width: 60%;
+    margin: 20px auto 0;
+
+    .header__top{
+      display: flex;
+      min-width: 558px;
+
+      
+      .logo__img{
+        height: 80px;
+        width: 200px;
+      }      
+      
+      form{
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+        height: 0;   
+        margin-top: 25px;     
+
+        .search_window{
+          background-color: rgb(245, 245, 245);
+          border: 1px solid rgb(204, 204, 204);
+          border-top-left-radius: 4px;
+          border-bottom-left-radius: 4px;
+          border-right: rgb(245, 245, 245);
+          border-radius: 4px;
+          font-size: 16px;          
+          height: 40px;
+          width: 90%;
+          padding: 0px 10px 0px 10px;    
+          // margin-left: 90px;    
+        }
+        .submit_button{          
+          border-left: transparent;
+          
+          .fa-search{
+            display: flex;
+            align-items: center;
+            height: 40px;
+            width: 40px;
+            background-color: rgb(245, 245, 245);
+            border: 1px solid rgb(204, 204, 204);
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+            border-left: rgb(245, 245, 245);
+
+          }
+        }      
+      }
+
+    }
+    
+    .header_bottom{
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+        
+      #category_button{
+        display: flex;
+        align-items: center;
+        min-width: 157px;
+        padding: 5px;
+        margin-left: 25px;
+        user-select: none;
+        
+        div{
+          display: inline-block;
+          margin-left: 3px;
+        }
+        &:hover{
+          background-color: rgb(245, 245, 245);
+          box-shadow: rgba(0, 0, 0, 0.18) 0px 1px 2px;
+          border-radius: 5px;
+        }
+        &:active{
+          box-shadow: none;
+        }
+      }      
+    
+      
+// header__navーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+      nav{
+        display: flex;
+        justify-content: flex-end;
+      
+        ul{
+          display: flex;
+          justify-content: flex-end;
+          min-width: 287px;
+
+          .nav__list{
+            display: flex;
+            align-items: center;
+            padding: 0 7px;
+            margin-left: 25px;  
+            a{
+              color: #333333;
+            }    
+          }
+          .active-btn{
+            &:hover{
+              background-color: rgb(245, 245, 245);
+              box-shadow: rgba(0, 0, 0, 0.18) 0px 1px 2px;
+              border-radius: 5px;
+
+            }
+            &:active{
+              box-shadow: none;
+            }
+          }
+          .user-page-button{
+            display: flex;         
+            div{
+              display: inline-block;
+              margin-left: 3px;
+            }
+          }          
+          .likes-page-button{
+            display: flex;   
+            min-width: 113px;
+            div{
+              display: inline-block;
+              margin-left: 3px;
+
+            }
+          }
+          .log-out-button{
+            display: flex;       
+            min-width: 113px;  
+            div{
+              display: inline-block;
+              margin-left: 3px;
+            }
+          }
+// ゲストユーザーの場合のnavーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+          .sign-up-button a{
+            text-decoration: none;
+            background-color: rgb(238, 143, 60);
+            border: 1px solid rgb(238, 143, 60);
+            border-radius: 4px;
+            color: rgb(255, 255, 255);
+            display: block;
+            font-size: 14px;
+            padding: 8px 10px;
+          }  
+          .login_button a{
+            text-decoration: none;
+            background-color: rgb(255, 255, 255);
+            border: 1px solid rgb(0, 149, 238);
+            border-radius: 4px;
+            color: rgb(0, 149, 238);
+            display: block;
+            font-size: 14px;
+            padding: 8px 10px;
+            transition: all 0.3s ease-out 0s;
+      
+            &:hover{
+              background-color:rgb(0, 149, 238);
+              color: rgb(255, 255, 255);
+            }
+          }
+        }
+      }
+    }
+
+  }
+}
+
+// footerを一番下に持ってくるcssーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 body{
+  font-family: "Arial", "游ゴシック体", "YuGothic", "メイリオ", "Meiryo", sans-serif;
+  color: #3a3a3a;  
   display: flex;
   flex-flow: column;
   min-height: 100vh;
@@ -104,13 +273,18 @@ body{
 }
 .main{
   flex: 1;
+  background-color: rgb(245, 245, 245);
 }
 
 // footerのcss
 .footer{
-  background-color: $header-footer-color;
+  background-color: #222222;
+  position:relative;
+  box-shadow: 0 -10px 10px -5px gray;
+  color: #FFFFFF;
   height: auto;
   width: 100%;
+
   .footer__wrapper{
     width: 80%;
     margin: 0 auto;
@@ -118,7 +292,7 @@ body{
     .footer__detail{
       display: flex;
       justify-content: space-around;
-      padding: 20px 0;
+      padding: 40px 0;
 
       .footer__ul{
         padding: 0;
@@ -134,21 +308,54 @@ body{
     }
     .footer__icon{
       width: 82%;
-      margin: 0 auto;
+      margin: 40px auto 20px;
       padding-bottom: 5px;
       .icon{
         font-size: 2.5rem;
         margin: 10px 20px;
       }
     }
-    small{
+    a{
       display: block;
       text-align: center;
-      padding-bottom: 20px;
+      text-decoration: none;
+      padding: 20px 37px 10px;
+      color: #FFFFFF;
+
     }
+
+    
   }
 }
 
+// 出品ボタンーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+.footer-sell-button{
+  position: fixed;
+  z-index: 5;
+  bottom: 30px;
+  right: 30px;
+  width: 100px;
+  height: 100px;
+  background-color: rgb(238, 143, 60);  
+  border-radius: 50%;
+
+  a{
+    display: block;
+    margin-top: 10px;
+    text-align: center;
+    text-decoration: none;
+    color: #FFFFFF;
+    font-weight: bold;
+    font-size: 20px;    
+  }
+  .fa-camera{
+    display: block;
+    text-align: center;
+    color: #FFFFFF;
+    font-weight: bold;
+    font-size: 38px;
+  }
+}
 
 
 
