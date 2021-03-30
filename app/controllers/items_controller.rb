@@ -61,7 +61,7 @@ class ItemsController < ApplicationController
   
   def transaction
     @user_assessments = Assessment.where(trading_partner_id: @item.user_id)
-
+    @buyer = User.find_by(id: @item.buyer_id)
     # charge_controllerで決済時に@item.room.create! user_roomモデルとも紐付け
     # transaction action にて､ room = @item.rooms.last でプライベートチャットroomを引っ張ってくる｡
     @room = @item.rooms.last

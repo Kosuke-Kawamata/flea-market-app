@@ -49,65 +49,108 @@
     h5 ￥#{@item.price} 
     p （税込み）
 
-  .various-btn
-    -if current_user
-      - if @item.buyer_id == current_user.id || @item.user_id == current_user.id && @item.sold_flag == true
-        button  
-          = link_to '取引画面へ', transaction_item_path, class: 'transaction-btn'
-      - elsif @item.sold_flag == true 
-        h5.border.border-dange.rounded 売り切れました
-      - elsif @item.user_id == current_user.id 
-        button  
-          = link_to '商品の編集', edit_item_path, class: 'edit-btn' 
-        p.or or 
-        button 
-          = link_to '出品を一旦停止する', item_path(@item),class:'gray-btn', method: :gray, data: { confirm: '本当に削除しますか？' }
-        button 
-          = link_to 'この商品を削除する', item_path(@item),class:'gray-btn', method: :delete, data: { confirm: '本当に削除しますか？' }
-      - else
-        = form_tag item_charges_path(@item) do
-          script.stripe-button data-amount="#{@item.price}\
-          " data-currency="jpy" data-description="クレジット決済\
-          " data-key="#{Rails.configuration.stripe[:publishable_key]}" data-locale="auto" data-name="#{@item.name}を購入\
-          " data-email="#{current_user.email}" data-label="購入画面に進む\
-          " data-allow-remember-me="false" src="https://checkout.stripe.com/checkout.js"
-    - else  
-      - if @item.sold_flag == false 
-        button  
-          = link_to '購入画面に進む', new_user_session_path, class: 'guest-buy-btn'
-      - else 
-        p.sold-out-btn 売り切れました
-  .item_description        
-    p = @item.description
-  - if user_signed_in?
-    .like_btn_container
-      = render 'likes/like-button', item: @item
-      .wrong-item-flag
-        i.far.fa-flag
-        div 不適切な商品の報告
-      .security-policy
-        i.fas.fa-unlock-alt
-        div あんしん・あんぜんへの取り組み
-  - unless user_signed_in?
-    .like_btn_container
-      = link_to new_user_session_path, class:'fake-like_button',method: :get  do 
-        i.fas.fa-heart
-        div いいね！
-        div = @item.likes.count
-      .wrong-item-flag
-        i.far.fa-flag
-        div 不適切な商品の報告
-      .security-policy
-        i.fas.fa-unlock-alt
-        div あんしん・あんぜんへの取り組み
+  - if @item.user_id == current_user.id
+    - if @item.in_process?
+      .message-container 
+        .top-message
+          i.fas.fa-truck
+          h5 発送をしてください
+        p 商品が購入されました｡ 商品の発送を行ってください｡
+      button
+        = link_to '商品を発送したので､発送通知を送る', shipped_item_path(@item), class:'shipped-btn'
+    - elsif @item.shipped?
+      .message-container 
+        .top-message
+          i.fas.fa-check
+          h5 商品の発送を通知しました！
+        p = "#{@buyer.name}さんからの受け取り評価をお待ちください｡"
+    - elsif @item.buyer_assessed?
+      .message-container 
+        .top-message
+          i.fas.fa-check
+          h5 = "#{@buyer.name}さんからの受取評価が完了しました！"
+        p = "#{@buyer.name}さんの評価を完了してください"
+      .assessment__wrapper
+        = form_with  model: [@item, @assessment] do |f|
+          .top-radio-container
+            .radio-btn-container
+              i.fas.fa-smile-beam style='color: red;'
+              = f.label :良い, class:'radio-label'
+              = f.radio_button :user_rank, :良い, class:'radio-btn'      
+            .radio-btn-container          
+              i.fas.fa-meh style='color: gray'
+              = f.label :ふつう, class:'radio-label'
+              = f.radio_button :user_rank, :ふつう, class:'radio-btn'
+            .radio-btn-container
+              i.fas.fa-sad-tear style='color: blue;'
+              = f.label :悪い, class:'radio-label'
+              = f.radio_button :user_rank, :悪い, class:'radio-btn'
+          = f.text_area :message          
+          = f.hidden_field :user_id, value: current_user.id
+          = f.hidden_field :trading_partner_id, value: @item.buyer_id
+          = f.submit '評価を投稿する', class: 'submit-btn'
+    - elsif @item.seller_assessed?
+      .message-container 
+        .top-message.color-red
+          i.far.fa-check-circle
+          h5 取引が完了しました
+        p この度ははコピーメルカリのご利用ありがとうございました
+  - elsif @item.buyer_id == current_user.id
+    - if @item.in_process?
+      .message-container 
+        .top-message  
+          i.far.fa-clock
+          h5 発送をお待ちください
+        p 出品者からの発送通知をお待ちください｡
+    - elsif @item.shipped?
+      .message-container 
+        .top-message
+          i.far.fa-edit
+          h5 受取評価をしてください
+        p 商品が発送されました｡ 商品が到着したら､出品者の評価をしてください｡
+      .checkbox__container
+        input#checkbox type='checkbox'
+        p 商品の中身を確認しました
+      #assessment__wrapper
+        = form_with  model: [@item, @assessment] do |f|
+          .top-radio-container
+            .radio-btn-container
+              i.fas.fa-smile-beam style='color: red;'
+              = f.label :良い, class:'radio-label'
+              = f.radio_button :user_rank, :良い, class:'radio-btn'
+            .radio-btn-container          
+              i.fas.fa-meh style='color: gray'
+              = f.label :ふつう, class:'radio-label'
+              = f.radio_button :user_rank, :ふつう, class:'radio-btn'
+            .radio-btn-container
+              i.fas.fa-sad-tear style='color: blue;'
+              = f.label :悪い, class:'radio-label'
+              = f.radio_button :user_rank, :悪い, class:'radio-btn'
+          p 評価のコメントを記入しましょう
+          = f.text_area :message, placeholder: 'このコメントは取引完了後に評価一覧で公開されます｡商品に問題がある場合は評価をせずに､取引メッセージで伝えましょう｡'
+          = f.hidden_field :user_id, value: current_user.id
+          = f.hidden_field :trading_partner_id, value: @item.user_id
+          = f.submit '評価を投稿する', class: 'submit-btn'
+    -elsif @item.buyer_assessed?
+      .message-container 
+        .top-message
+          i.fas.fa-check
+          h5 受け取り評価を送りました！
+        h5 出品者からの購入者評価をお待ちください｡
+    -elsif @item.seller_assessed?
+      .message-container 
+        .top-message.color-red
+          i.far.fa-check-circle
+          h5 取引が完了しました
+        p この度はコピーメルカリのご利用ありがとうございました
 
 .middle-wrapper 
-  p.attention 相手のことを考え丁寧なコメントを心がけましょう。不快な言葉遣いなどは利用制限や退会処分となることがあります。
+  p.attention 取引メッセージの内容は、必要に応じて事務局で確認しています
   .comment-container
     .comment_history
       ul
         - if @chats 
-          - @chats.order(id: "DESC").each do |chat|    
+          - @chats.each do |chat|    
             - if chat.user != current_user
               li
                 = link_to user_path(chat.user), class:'user-link-left', method: :get do 
@@ -121,7 +164,7 @@
                       div = chat.created_at.to_s(:datetime_jp)
                     - if current_user && current_user.id == chat.user_id
                       = link_to item_chat_path(@item,chat), method: :delete do
-                        i.far.fa-trash-alt    
+                        i.far.fa-trash-alt 
             - elsif chat.user == current_user
               li
                 = link_to user_path(chat.user), class:'user-link-right', method: :get do 
@@ -135,102 +178,11 @@
                       div = chat.created_at.to_s(:datetime_jp)
                     - if current_user && current_user.id == chat.user_id
                       = link_to item_chat_path(@item,chat), method: :delete do
-                        i.far.fa-trash-alt    
-    - if current_user
-      - if @item.sold_flag == false
-        .comment-area
-            = form_with  model: [@item, @chat] do |f|
-              = f.text_area :message
-              = f.hidden_field :room_id, value: @item.rooms.first.id
-              = f.hidden_field :item_id, value: @item.id
-              = f.submit 'コメントする', class: 'submit-btn'
-      - else
-        .comment-area
-            = form_with  model: [@item, @chat] do |f|
-              = f.text_area :message ,style:'pointer-events: none;'
-              p.cannot-submit-btn 売り切れのためコメントできません
-
-.container   
-  h1 取引画面
-  div 
-    - if @item.img?
-      = image_tag(@item.img.url)
-    - else 
-      = image_tag("/assets/default.png")
-  h5 商品名: #{@item.name}
-  p カテゴリ: #{@item.category.name}
-  p 詳細: #{@item.description}
-  p 価格: #{@item.price}円
-  p 出品者: #{@item.user.name}
-
-  - if @item.user_id == current_user.id 
-    - if @item.in_process?
-      h5 商品が購入されました！
-      h5 商品を発送してください｡      
-      button 
-        = link_to '発送通知', shipped_item_path(@item)  
-    - elsif @item.shipped?
-      h5 商品の発送を通知しました！
-      h5 購入者からの受け取り評価をお待ちください｡
-    - elsif @item.buyer_assessed?
-      h5 購入者からの受取評価が完了しました！
-      h5 購入者の評価を完了してください
-      div.assessment__wrapper
-        = form_with  model: [@item, @assessment] do |f|
-          = f.label :良い
-          = f.radio_button :user_rank, :良い      
-          = f.label :ふつう
-          = f.radio_button :user_rank, :ふつう      
-          = f.label :悪い
-          = f.radio_button :user_rank, :悪い
-          = f.text_field :message          
-          = f.hidden_field :user_id, value: current_user.id
-          = f.hidden_field :trading_partner_id, value: @item.buyer_id
-          = f.submit '受け取り評価を送信する', class: 'btn btn-primary ml-2'
-    - elsif @item.seller_assessed?
-      h5 取引が完了しました！
-
-  - elsif @item.buyer_id == current_user.id
-    - if @item.in_process?
-      h5 商品が発送されるまでお待ちください｡ 
-    - elsif @item.shipped?
-      h5 商品が発送されました！
-      h5 商品の到着後､商品が確認してから受取評価をしてください｡      
-      .checkbox__container.d-flex
-        p 商品を確認しました
-        input#checkbox type='checkbox'
-      div#assessment__wrapper
-        = form_with  model: [@item, @assessment] do |f|
-          = f.label :良い
-          = f.radio_button :user_rank, :良い      
-          = f.label :ふつう
-          = f.radio_button :user_rank, :ふつう      
-          = f.label :悪い
-          = f.radio_button :user_rank, :悪い
-          br
-          = f.text_field :message          
-          = f.hidden_field :user_id, value: current_user.id
-          = f.hidden_field :trading_partner_id, value: @item.user_id
-          br
-          = f.submit '受け取り評価を送信する', class: 'btn btn-primary ml-2'
-    -elsif @item.buyer_assessed?
-      h5 受け取り評価を送りました！
-      h5 出品者からの購入者評価をお待ちください｡
-    -elsif @item.seller_assessed?
-      h5 取引が完了しました！
-
-- unless @item.seller_assessed?
-  .container
-    = form_with  model: [@item, @chat] do |f|
-      = f.text_field :message
-      = f.hidden_field :room_id, value: @item.rooms.last.id
-      = f.hidden_field :item_id, value: @item.id
-      = f.submit 'コメントする', class: 'btn btn-primary ml-2'
-.container 
-  ul
-    - @chats.order(id: "DESC").each do |chat|    
-      li.mb-3         
-        p = chat.message        
-        small 投稿者: #{chat.user.name}
-        - if current_user.id == chat.user_id 
-            = link_to '削除', item_chat_path(@item,chat), method: :delete
+                        i.far.fa-trash-alt     
+      / - unless @item.seller_assessed?
+      .comment-area
+        = form_with  model: [@item, @chat] do |f|
+          = f.text_area :message
+          = f.hidden_field :room_id, value: @item.rooms.last.id
+          = f.hidden_field :item_id, value: @item.id
+          = f.submit '取引メッセージを送る', class: 'submit-btn'

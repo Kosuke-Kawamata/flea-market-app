@@ -1,0 +1,71 @@
+// Place all the styles related to the charges controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+// footerを一番下に持ってくるcssーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+body{
+  font-family: "Arial", "游ゴシック体", "YuGothic", "メイリオ", "Meiryo", sans-serif;
+  color: #3a3a3a;  
+  display: flex;
+  flex-flow: column;
+  min-height: 100vh;
+  a{
+    text-decoration: none;
+  }
+}
+.main{
+  flex: 1;
+  background-color: rgb(245, 245, 245);
+}
+
+// footerのcss
+.footer{
+  background-color: #222222;
+  position:relative;
+  box-shadow: 0 -10px 10px -5px gray;
+  color: #FFFFFF;
+  height: auto;
+  width: 100%;
+
+  .footer__wrapper{
+    width: 80%;
+    margin: 0 auto;
+
+    .footer__detail{
+      display: flex;
+      justify-content: space-around;
+      padding: 40px 0;
+
+      .footer__ul{
+        padding: 0;
+        margin: 0;
+
+        .footer__list{
+          list-style-type: none;
+        }
+        .footer__list:nth-child(1){
+          font-weight: bold;
+        }
+      }
+    }
+    .footer__icon{
+      width: 82%;
+      margin: 40px auto 20px;
+      padding-bottom: 5px;
+      .icon{
+        font-size: 2.5rem;
+        margin: 10px 20px;
+      }
+    }
+    a{
+      display: block;
+      text-align: center;
+      text-decoration: none;
+      padding: 20px 37px 10px;
+      color: #FFFFFF;
+
+    }
+
+    
+  }
+}

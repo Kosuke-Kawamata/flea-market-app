@@ -58,7 +58,7 @@
     .item-list__container
       h4 出品中の商品 
       ul
-        - current_user.items.where(sold_flag: false).order(id: "DESC").each do |item|
+        - current_user.items.order(id: "DESC").each do |item|
           li.item-box
             = link_to item_path(item) do 
               div.img-wrapper

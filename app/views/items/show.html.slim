@@ -55,7 +55,7 @@
         button  
           = link_to '取引画面へ', transaction_item_path, class: 'transaction-btn'
       - elsif @item.sold_flag == true 
-        h5.border.border-dange.rounded 売り切れました
+        h5.sold-out-btn 売り切れました
       - elsif @item.user_id == current_user.id 
         button  
           = link_to '商品の編集', edit_item_path, class: 'edit-btn' 
@@ -107,7 +107,7 @@
     .comment_history
       ul
         - if @chats 
-          - @chats.order(id: "DESC").each do |chat|    
+          - @chats.each do |chat|    
             - if chat.user != current_user
               li
                 = link_to user_path(chat.user), class:'user-link-left', method: :get do 

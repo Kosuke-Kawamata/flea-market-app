@@ -30,7 +30,7 @@ User.seed(
   
   {id: 5, 
   email: "user@1.com", 
-  name: "user1", 
+  name: "user14", 
   img: "app/assets/images/user_img/defalut_person.jpg",
   profile: "こんにちは！\n私の名前は「user1」と申します｡\nよろしくおねがい申し上げます｡！",
   password: "qqqqqq"},
