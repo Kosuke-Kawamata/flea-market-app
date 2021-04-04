@@ -1,17 +1,15 @@
 class UsersController < ApplicationController
+  before_action :set_user
 
   def show
-    @user = User.find_by(id: params[:id])
     @user_items = @user.items
     @user_assessments = Assessment.all.where(trading_partner_id: @user.id)
   end
 
   def edit
-    @user = User.find_by(id: params[:id])
   end
 
   def update
-    @user = User.find_by(id: params[:id])
     @user.update(user_params)
     redirect_to user_mypage_path(current_user)
   end
@@ -60,6 +58,10 @@ class UsersController < ApplicationController
   private
   def user_params
     params.require(:user).permit(:name,:profile,:img)
+  end
+
+  def set_user
+    @user = User.find_by(id: params[:id])
   end
 
 end

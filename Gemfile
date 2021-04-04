@@ -81,3 +81,7 @@ gem 'dotenv-rails'
 gem 'font-awesome-sass', '~> 5.13.0'
 
 gem 'ransack'
+
+gem 'active_hash'
+
+gem 'enum_help' 

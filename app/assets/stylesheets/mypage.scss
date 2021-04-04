@@ -54,7 +54,51 @@
     }
   }
 
-  
+  .mypage-top-wrapper{
+    min-width: 700px;
+    .mypage-item-list{
+      background-color: #ffffff;
+      h4{
+        
+      }
+      ul{
+        .mypage-item-box{
+          padding: 0 16px;
+          a{
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            .img-wrapper{
+              width: 48px;
+              height: 48px;
+              img{
+                width: 100%;
+              }
+            }
+            .sold-badge{
+
+            }
+            p{
+              
+            }
+            .mypage-info{
+              margin: 0 40px 0 20px;
+              overflow: hidden;
+              flex: 1;
+              .mypage-item-text{
+                line-height: 1.5;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                word-break: break-all;
+              }     
+            }
+          }
+        }
+      }      
+    }
+  }
+
 }
 
 

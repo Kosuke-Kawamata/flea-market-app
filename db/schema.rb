@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_23_020400) do
+ActiveRecord::Schema.define(version: 2021_04_01_021556) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,12 @@ ActiveRecord::Schema.define(version: 2021_03_23_020400) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_assessments_on_user_id"
+  end
+
+  create_table "brands", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "categories", force: :cascade do |t|
@@ -66,6 +72,13 @@ ActiveRecord::Schema.define(version: 2021_03_23_020400) do
     t.integer "status", default: 0, null: false
     t.boolean "sold_flag", default: false
     t.integer "buyer_id"
+    t.bigint "brand_id"
+    t.integer "prefecture_id"
+    t.integer "item_condition_id"
+    t.integer "shipping_fee"
+    t.integer "shipping_date"
+    t.integer "shipping_way_id"
+    t.index ["brand_id"], name: "index_items_on_brand_id"
     t.index ["category_id"], name: "index_items_on_category_id"
     t.index ["user_id"], name: "index_items_on_user_id"
   end
@@ -94,6 +107,12 @@ ActiveRecord::Schema.define(version: 2021_03_23_020400) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "shipping_areas", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "user_rooms", force: :cascade do |t|
     t.integer "user_id"
     t.integer "room_id"
@@ -117,6 +136,7 @@ ActiveRecord::Schema.define(version: 2021_03_23_020400) do
   end
 
   add_foreign_key "assessments", "users"
+  add_foreign_key "items", "brands"
   add_foreign_key "items", "categories"
   add_foreign_key "items", "users"
   add_foreign_key "relationships", "users"

@@ -57,13 +57,13 @@
   .profile-container 
     p ユーザー: #{current_user.name}
     i.fas.fa-smile-beam style='color: red;'
-    = "良い: #{@user_assessments.where(user_rank: "良い").count}"
+    = "良い: #{@user_assessments.where(user_rank: "good").count}"
     br
     i.fas.fa-meh style='color: gray'
-    = "ふつう: #{@user_assessments.where(user_rank: "ふつう").count}"
+    = "ふつう: #{@user_assessments.where(user_rank: "nomall").count}"
     br
     i.fas.fa-sad-tear style='color: blue;'
-    = "悪い: #{@user_assessments.where(user_rank: "悪い").count}"
+    = "悪い: #{@user_assessments.where(user_rank: "bad").count}"
     p email: #{current_user.email}
     p プロフィール: #{current_user.profile}
     br

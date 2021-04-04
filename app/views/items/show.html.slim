@@ -1,7 +1,7 @@
 .top-wrapper
   .item_main
     h5.item_name = @item.name
-    .item_main_content 
+    .item_main_content
       .top-img_wrapper
         .img-wrapper
           - if @item.img?
@@ -9,10 +9,10 @@
           - else 
             = image_tag("item_img/default.png")
           - if @item.sold_flag == true
-            .sold-badge-show 
+            .sold-badge-show
             p SOLD
       table
-        tbody 
+        tbody
           tr 
             th 出品者
             td
@@ -20,31 +20,35 @@
               .assessment_container
                 .assessment-icon 
                   i.fas.fa-smile-beam style='color: red;'
-                  p = @user_assessments.where(user_rank: "良い").count
+                  p = @user_assessments.where(user_rank: "good").count
                 .assessment-icon 
                   i.fas.fa-meh style='color: gray'
-                  p = @user_assessments.where(user_rank: "ふつう").count
+                  p = @user_assessments.where(user_rank: "nomall").count
                 .assessment-icon 
                   i.fas.fa-sad-tear style='color: blue;'
-                  p = @user_assessments.where(user_rank: "悪い").count
+                  p = @user_assessments.where(user_rank: "bad").count
           tr
             th カテゴリ
             td = @item.category.name
           tr
+            th ブランド
+            - if @item.brand
+              td = @item.brand.name
+          tr
             th 商品の状態
-            td = @item.category.name
+            td = @item.item_condition.condition
           tr
             th 配送料の負担
-            td = @item.category.name
+            td = @item.shipping_fee_i18n
           tr
             th 配送の方法
-            td = @item.category.name
+            td = @item.shipping_way.name
           tr
             th 配送元地域
-            td = @item.category.name
+            td = @item.prefecture.name
           tr
             th 発送日の目安
-            td = @item.category.name
+            td = @item.shipping_date_i18n
   .item_price 
     h5 ￥#{@item.price} 
     p （税込み）
@@ -60,8 +64,12 @@
         button  
           = link_to '商品の編集', edit_item_path, class: 'edit-btn' 
         p.or or 
-        button 
-          = link_to '出品を一旦停止する', item_path(@item),class:'gray-btn', method: :gray, data: { confirm: '本当に削除しますか？' }
+        - if @item.published?
+          button 
+            = link_to '出品を一旦停止する', stop_publish_item_path(@item),class:'gray-btn', method: :get,class:'gray-btn', data: { confirm: '本当に公開停止しますか？' }
+        - else
+          button 
+            = link_to '商品の公開を再開する', restart_publish_item_path(@item),class:'gray-btn', method: :get,class:'republish-btn', data: { confirm: '本当に公開停止しますか？' }
         button 
           = link_to 'この商品を削除する', item_path(@item),class:'gray-btn', method: :delete, data: { confirm: '本当に削除しますか？' }
       - else
@@ -71,13 +79,13 @@
           " data-key="#{Rails.configuration.stripe[:publishable_key]}" data-locale="auto" data-name="#{@item.name}を購入\
           " data-email="#{current_user.email}" data-label="購入画面に進む\
           " data-allow-remember-me="false" src="https://checkout.stripe.com/checkout.js"
-    - else  
-      - if @item.sold_flag == false 
-        button  
+    - else
+      - if @item.sold_flag == false
+        button
           = link_to '購入画面に進む', new_user_session_path, class: 'guest-buy-btn'
-      - else 
+      - else
         p.sold-out-btn 売り切れました
-  .item_description        
+  .item_description
     p = @item.description
   - if user_signed_in?
     .like_btn_container
@@ -90,7 +98,7 @@
         div あんしん・あんぜんへの取り組み
   - unless user_signed_in?
     .like_btn_container
-      = link_to new_user_session_path, class:'fake-like_button',method: :get  do 
+      = link_to new_user_session_path, class:'fake-like_button',method: :get  do
         i.fas.fa-heart
         div いいね！
         div = @item.likes.count
@@ -106,36 +114,36 @@
   .comment-container
     .comment_history
       ul
-        - if @chats 
-          - @chats.each do |chat|    
+        - if @chats
+          - @chats.each do |chat|
             - if chat.user != current_user
               li
-                = link_to user_path(chat.user), class:'user-link-left', method: :get do 
+                = link_to user_path(chat.user), class:'user-link-left', method: :get do
                   i.fas.fa-user-circle
                   p = chat.user.name
                 .balloon-left
                   p.message = chat.message
                   .time-trash
-                    .create-time                      
+                    .create-time
                       i.far.fa-clock
                       div = chat.created_at.to_s(:datetime_jp)
                     - if current_user && current_user.id == chat.user_id
                       = link_to item_chat_path(@item,chat), method: :delete do
-                        i.far.fa-trash-alt    
+                        i.far.fa-trash-alt
             - elsif chat.user == current_user
               li
-                = link_to user_path(chat.user), class:'user-link-right', method: :get do 
+                = link_to user_path(chat.user), class:'user-link-right', method: :get do
                   i.fas.fa-user-circle
                   p = chat.user.name
                 .balloon-right
                   p.message = chat.message
                   .time-trash
-                    .create-time                      
+                    .create-time
                       i.far.fa-clock
                       div = chat.created_at.to_s(:datetime_jp)
                     - if current_user && current_user.id == chat.user_id
                       = link_to item_chat_path(@item,chat), method: :delete do
-                        i.far.fa-trash-alt    
+                        i.far.fa-trash-alt
     - if current_user
       - if @item.sold_flag == false
         .comment-area
@@ -156,15 +164,15 @@
     .item-list__container
       h4 = "#{@item.user.name}さんのその他の出品"
       ul
-        - @item.user.items.where(sold_flag: false).order(id: "DESC").each do |item|
+        - @item.user.items.where(sold_flag: false).order(id: "DESC").limit(3).each do |item|
           li.item-box
-            = link_to item_path(item) do 
+            = link_to item_path(item) do
               div.img-wrapper
                 - if item.img?
                   = image_tag(item.img.url)
-                - else 
+                - else
                   = image_tag("item_img/default.png")
-              - if item.sold_flag == true 
+              - if item.sold_flag == true
                 div.sold-badge
                 p sold
               div.price_tag
@@ -182,13 +190,13 @@
       ul
         - @item.category.items.where(sold_flag: false).limit(3).order(id: "DESC").each do |item|
           li.item-box
-            = link_to item_path(item) do 
+            = link_to item_path(item) do
               div.img-wrapper
                 - if item.img?
                   = image_tag(item.img.url)
-                - else 
+                - else
                   = image_tag("item_img/default.png")
-              - if item.sold_flag == true 
+              - if item.sold_flag == true
                 div.sold-badge
                 p sold
               div.price_tag

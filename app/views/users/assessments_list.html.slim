@@ -60,29 +60,29 @@
         li.item-box
           div
             - if assessment.for_seller?
-              - if assessment.user_rank == '良い'
+              - if assessment.user_rank == 'good'
                 .container--icon.d-flex
                   p 出品者:
                   i.fas.fa-smile-beam style='color: red;'
-              - elsif assessment.user_rank == 'ふつう'
+              - elsif assessment.user_rank == 'nomall'
                 .container--icon.d-flex
                   p 出品者:
                   i.fas.fa-meh style='color: gray'
-              - elsif assessment.user_rank == '悪い'
+              - elsif assessment.user_rank == 'bad'
                 .container--icon.d-flex
                   p 出品者:
                   i.fas.fa-sad-tear style='color: blue;'
                 
             - elsif assessment.for_buyer?
-              - if assessment.user_rank == '良い'
+              - if assessment.user_rank == 'good'
                 .container--icon.d-flex
                   p 購入者: 
                   i.fas.fa-smile-beam style='color: red;'
-              - elsif assessment.user_rank == 'ふつう'
+              - elsif assessment.user_rank == 'nomall'
                 .container--icon.d-flex
                   p 購入者:
                   i.fas.fa-meh style='color: gray'
-              - elsif assessment.user_rank == '悪い'
+              - elsif assessment.user_rank == 'bad'
                 .container--icon.d-flex
                   p 購入者:
                   i.fas.fa-sad-tear style='color: blue;'

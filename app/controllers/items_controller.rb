@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   before_action  :authenticate_user!, only: [:new, :edit, :delete_img, :destroy]
-  before_action :set_item, only: [:show, :edit, :update, :destroy, :transaction, :shipped, :recieved, :assess_buyer]
+  before_action :set_item, only: [:show, :edit, :update, :destroy, :transaction, :shipped, :recieved, :assess_buyer, :stop_publish, :restart_publish]
   before_action :set_q, only: [:index, :search]
 
   def index
@@ -12,20 +12,26 @@ class ItemsController < ApplicationController
     @categories = Category.all
     @item = Item.new    
   end
-
-  def create   
-
+  
+  def create
     @item = Item.new(item_params)
-
-    if @item.save
-
-      @item.rooms.create! #アイテム作成時に､@itemに紐付いた､roomを作成・保存する
-
-      redirect_to item_path(@item)
-    else
-      render :new
+    
+    if params[:pre_published]
+      if @item.save
+        @item.pre_published!
+        @item.rooms.create! #アイテム作成時に､@itemに紐付いた､roomを作成・保存する
+        redirect_to user_pre_published_items_path(@item)
+      else
+        render :new
+      end
+    else      
+      if @item.save  
+        @item.rooms.create! #アイテム作成時に､@itemに紐付いた､roomを作成・保存する  
+        redirect_to item_path(@item)
+      else
+        render :new
+      end
     end
-      
     
   end
   
@@ -50,8 +56,24 @@ class ItemsController < ApplicationController
   end
   
   def update
-    @item.update(item_params)
-    redirect_to item_path(@item)
+    if params[:pre_published]
+      if @item.update!(item_params)
+        @item.pre_published!  
+        redirect_to item_path(@item)
+      else
+        render :edit
+      end
+    else      
+      if @item.update!(item_params)
+        @item.published!  
+        redirect_to item_path(@item)
+      else
+        render :edit
+      end
+    end
+
+    # @item.update!(item_params)
+    # redirect_to item_path(@item)
   end
   
   def destroy    
@@ -62,6 +84,8 @@ class ItemsController < ApplicationController
   def transaction
     @user_assessments = Assessment.where(trading_partner_id: @item.user_id)
     @buyer = User.find_by(id: @item.buyer_id)
+    @seller = User.find_by(id: @item.user_id)
+
     # charge_controllerで決済時に@item.room.create! user_roomモデルとも紐付け
     # transaction action にて､ room = @item.rooms.last でプライベートチャットroomを引っ張ってくる｡
     @room = @item.rooms.last
@@ -90,11 +114,18 @@ class ItemsController < ApplicationController
     @categories = Category.all
   end
 
-  
+  def stop_publish
+    @item.pre_published!
+    redirect_to user_pre_published_items_path(current_user)
+  end
+  def restart_publish
+    @item.published!
+    redirect_to user_mypage_path(current_user)
+  end
 
   private
   def item_params
-    params.require(:item).permit(:name, :description, :category_id, :img, :price).merge(user_id: current_user.id)
+    params.require(:item).permit(:name, :description, :category_id, :img, :price, :prefecture_id, :item_condition_id, :brand_id, :shipping_fee, :shipping_date, :shipping_way_id).merge(user_id: current_user.id)
   end
   
   def set_item

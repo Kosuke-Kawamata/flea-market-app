@@ -52,6 +52,8 @@ Rails.application.routes.draw do
     member do       
       get :transaction
       get :shipped
+      get :stop_publish
+      get :restart_publish
     end
     collection do
       get 'search'

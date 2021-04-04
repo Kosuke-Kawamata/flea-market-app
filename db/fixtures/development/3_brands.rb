@@ -1,0 +1,23 @@
+Brand.seed(
+  {id:1, name:''},
+  {id:2, name:'NIKE'},
+  {id:3, name:'new balance'},
+  {id:4, name:'CHANEL'},
+  {id:5, name:'Louis Vuitton'},
+  {id:6, name:'coach'},
+  {id:7, name:'PRADA'},
+  {id:8, name:'sony'},
+  {id:9, name:'UNIQLO'},
+  {id:10, name:'KENZO'},
+  {id:11, name:'Dunhill'},
+  {id:12, name:'Coach'},
+  {id:13, name:'dior'},
+  {id:14, name:'Orobianco'},
+  {id:15, name:'PORTER'},
+  {id:16, name:'KENZO'},
+  {id:17, name:'FENDI'},
+  {id:18, name:'Ralph Lauren'},
+  {id:19, name:'Salvatore Ferragamo'},
+  {id:20, name:'Dolce & Gabbana'},
+  {id:21, name:'GUCCI'}
+)

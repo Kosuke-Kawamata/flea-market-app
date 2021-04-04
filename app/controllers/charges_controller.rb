@@ -23,6 +23,8 @@ class ChargesController < ApplicationController
       @item.in_process!
       redirect_to item_path(params[:item_id]), notice: "商品を購入しました！"
     end
+    
+    # binding.pry
     # formから情報を贈り､パラメーターで取得する際には､require・permitとかを定義する必要がある｡ でも､今回のupdateはparams から情報を受け取っているわけではなく､"sold_flag: true"という固定の値を"sold_flag"に上書きしているだけだから､permitとかはいらない｡
     
     # チャット機能（取引画面用のroomを作成・出品者と購入者をUserRoomに紐付け）

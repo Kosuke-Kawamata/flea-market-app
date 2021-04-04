@@ -20,31 +20,31 @@
               .assessment_container
                 .assessment-icon 
                   i.fas.fa-smile-beam style='color: red;'
-                  p = @user_assessments.where(user_rank: "良い").count
+                  p = @user_assessments.where(user_rank: "good").count
                 .assessment-icon 
                   i.fas.fa-meh style='color: gray'
-                  p = @user_assessments.where(user_rank: "ふつう").count
+                  p = @user_assessments.where(user_rank: "nomall").count
                 .assessment-icon 
                   i.fas.fa-sad-tear style='color: blue;'
-                  p = @user_assessments.where(user_rank: "悪い").count
+                  p = @user_assessments.where(user_rank: "bad").count
           tr
             th カテゴリ
             td = @item.category.name
           tr
             th 商品の状態
-            td = @item.category.name
+            td = @item.item_condition.condition
           tr
             th 配送料の負担
-            td = @item.category.name
+            td = @item.shipping_fee
           tr
             th 配送の方法
-            td = @item.category.name
+            td = @item.shipping_fee
           tr
             th 配送元地域
-            td = @item.category.name
+            td = @item.prefecture.name
           tr
             th 発送日の目安
-            td = @item.category.name
+            td = @item.shipping_date
   .item_price 
     h5 ￥#{@item.price} 
     p （税込み）
@@ -55,7 +55,7 @@
         .top-message
           i.fas.fa-truck
           h5 発送をしてください
-        p 商品が購入されました｡ 商品の発送を行ってください｡
+        p = "#{@buyer.name}さんが商品を購入しました｡ 商品の発送を行ってください｡"
       button
         = link_to '商品を発送したので､発送通知を送る', shipped_item_path(@item), class:'shipped-btn'
     - elsif @item.shipped?
@@ -75,39 +75,39 @@
           .top-radio-container
             .radio-btn-container
               i.fas.fa-smile-beam style='color: red;'
-              = f.label :良い, class:'radio-label'
-              = f.radio_button :user_rank, :良い, class:'radio-btn'      
+              = f.label :good, class:'radio-label'
+              = f.radio_button :user_rank, :good, class:'radio-btn'      
             .radio-btn-container          
               i.fas.fa-meh style='color: gray'
-              = f.label :ふつう, class:'radio-label'
-              = f.radio_button :user_rank, :ふつう, class:'radio-btn'
+              = f.label :nomall, class:'radio-label'
+              = f.radio_button :user_rank, :nomall, class:'radio-btn'
             .radio-btn-container
               i.fas.fa-sad-tear style='color: blue;'
-              = f.label :悪い, class:'radio-label'
-              = f.radio_button :user_rank, :悪い, class:'radio-btn'
+              = f.label :bad, class:'radio-label'
+              = f.radio_button :user_rank, :bad, class:'radio-btn'
           = f.text_area :message          
           = f.hidden_field :user_id, value: current_user.id
           = f.hidden_field :trading_partner_id, value: @item.buyer_id
           = f.submit '評価を投稿する', class: 'submit-btn'
     - elsif @item.seller_assessed?
       .message-container 
-        .top-message.color-red
+        .top-message.last-message
           i.far.fa-check-circle
           h5 取引が完了しました
-        p この度ははコピーメルカリのご利用ありがとうございました
+        p この度はコピーメルカリのご利用ありがとうございました
   - elsif @item.buyer_id == current_user.id
     - if @item.in_process?
       .message-container 
         .top-message  
           i.far.fa-clock
           h5 発送をお待ちください
-        p 出品者からの発送通知をお待ちください｡
+        p = "#{@seller.name}さんからの発送通知をお待ちください｡"
     - elsif @item.shipped?
       .message-container 
         .top-message
           i.far.fa-edit
           h5 受取評価をしてください
-        p 商品が発送されました｡ 商品が到着したら､出品者の評価をしてください｡
+        p = "商品が発送されました｡ 商品が到着したら､#{@seller.name}さんの評価をしてください｡"
       .checkbox__container
         input#checkbox type='checkbox'
         p 商品の中身を確認しました
@@ -116,16 +116,16 @@
           .top-radio-container
             .radio-btn-container
               i.fas.fa-smile-beam style='color: red;'
-              = f.label :良い, class:'radio-label'
-              = f.radio_button :user_rank, :良い, class:'radio-btn'
+              = f.label :good, class:'radio-label'
+              = f.radio_button :user_rank, :good, class:'radio-btn'
             .radio-btn-container          
               i.fas.fa-meh style='color: gray'
-              = f.label :ふつう, class:'radio-label'
-              = f.radio_button :user_rank, :ふつう, class:'radio-btn'
+              = f.label :nomall, class:'radio-label'
+              = f.radio_button :user_rank, :nomall, class:'radio-btn'
             .radio-btn-container
               i.fas.fa-sad-tear style='color: blue;'
-              = f.label :悪い, class:'radio-label'
-              = f.radio_button :user_rank, :悪い, class:'radio-btn'
+              = f.label :bad, class:'radio-label'
+              = f.radio_button :user_rank, :bad, class:'radio-btn'
           p 評価のコメントを記入しましょう
           = f.text_area :message, placeholder: 'このコメントは取引完了後に評価一覧で公開されます｡商品に問題がある場合は評価をせずに､取引メッセージで伝えましょう｡'
           = f.hidden_field :user_id, value: current_user.id
@@ -136,12 +136,12 @@
         .top-message
           i.fas.fa-check
           h5 受け取り評価を送りました！
-        h5 出品者からの購入者評価をお待ちください｡
+        p = "#{@seller.name}さんからの購入者評価をお待ちください｡"
     -elsif @item.seller_assessed?
       .message-container 
-        .top-message.color-red
+        .top-message.last-message
           i.far.fa-check-circle
-          h5 取引が完了しました
+          h5 = "#{@seller.name}さんとの取引が完了しました"
         p この度はコピーメルカリのご利用ありがとうございました
 
 .middle-wrapper 
