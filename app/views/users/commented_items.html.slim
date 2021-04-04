@@ -54,30 +54,23 @@
           div プロフィール設定
           i.fas.fa-chevron-right
 
-  .top-list-wrapper
-    .item-list__container 
+  .mypage-top-wrapper
+    .mypage-item-list
       h4 販売中のコメントした商品一覧
       ul
-        - current_user.commented_items.where(sold_flag: false).distinct.each do |item|
-          li.item-box
-            = link_to item_path(item) do 
-              div.img-wrapper
-                - if item.img?
+        - if current_user.commented_items
+          - current_user.commented_items.where(sold_flag: false).distinct.each do |item|
+            li.mypage-item-box
+              = link_to item_path(item) do 
+                .img-wrapper
                   = image_tag(item.img.url)
-                - else 
-                  = image_tag("item_img/default.png")
-              - if item.sold_flag == true 
-                div.sold-badge 
-                p sold
-              div.price_tag
-                = "¥#{item.price}"
-              .item-box-bottom
-                h5 = item.name
-                - if item.likes.count >= 1
-                  i.far.fa-heart
-                  div.heart_count
-                    = item.likes.count
-
+                  - if item.sold_flag == true 
+                    .sold-badge-mypage
+                    p.sold-text SOLD
+                .mypage-info
+                  p.mypage-item-text = item.name                
+                  p.mypage-item-text = "¥#{item.price}"              
+                i.fas.fa-chevron-right
 .footer-sell-button 
   - if user_signed_in?
     = link_to new_item_path ,method: :get  do 

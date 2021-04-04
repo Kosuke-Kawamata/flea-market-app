@@ -56,16 +56,16 @@
 
   .mypage-top-wrapper
     .mypage-item-list
-      h4 いいね一覧
+      h4 いいね！一覧
       ul
         - current_user.liked_items.each do |item|
           li.mypage-item-box
             = link_to item_path(item) do 
               .img-wrapper
                 = image_tag(item.img.url)
-              - if item.sold_flag == true 
-                .sold-badge
-                p sold
+                - if item.sold_flag == true 
+                  .sold-badge-mypage
+                  p.sold-text SOLD
               .mypage-info
                 p.mypage-item-text = item.name                
                 p.mypage-item-text = "¥#{item.price}"              
