@@ -75,15 +75,15 @@
           .top-radio-container
             .radio-btn-container
               i.fas.fa-smile-beam style='color: red;'
-              = f.label :good, class:'radio-label'
+              = f.label :good,'よかった', class:'radio-label'
               = f.radio_button :user_rank, :good, class:'radio-btn'      
             .radio-btn-container          
               i.fas.fa-meh style='color: gray'
-              = f.label :nomall, class:'radio-label'
+              = f.label :nomall,'ふつう', class:'radio-label'
               = f.radio_button :user_rank, :nomall, class:'radio-btn'
             .radio-btn-container
               i.fas.fa-sad-tear style='color: blue;'
-              = f.label :bad, class:'radio-label'
+              = f.label :bad,'ざんねん', class:'radio-label'
               = f.radio_button :user_rank, :bad, class:'radio-btn'
           = f.text_area :message          
           = f.hidden_field :user_id, value: current_user.id
@@ -116,15 +116,15 @@
           .top-radio-container
             .radio-btn-container
               i.fas.fa-smile-beam style='color: red;'
-              = f.label :good, class:'radio-label'
+              = f.label :good,'よかった', class:'radio-label'
               = f.radio_button :user_rank, :good, class:'radio-btn'
             .radio-btn-container          
               i.fas.fa-meh style='color: gray'
-              = f.label :nomall, class:'radio-label'
+              = f.label :nomall,'ふつう', class:'radio-label'
               = f.radio_button :user_rank, :nomall, class:'radio-btn'
             .radio-btn-container
               i.fas.fa-sad-tear style='color: blue;'
-              = f.label :bad, class:'radio-label'
+              = f.label :bad,'ざんねん', class:'radio-label'
               = f.radio_button :user_rank, :bad, class:'radio-btn'
           p 評価のコメントを記入しましょう
           = f.text_area :message, placeholder: 'このコメントは取引完了後に評価一覧で公開されます｡商品に問題がある場合は評価をせずに､取引メッセージで伝えましょう｡'
