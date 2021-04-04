@@ -55,37 +55,65 @@
   }
 
   .mypage-top-wrapper{
-    min-width: 700px;
+    width: 75%;
+    min-width: 500px;
+    padding: 15px;
+    margin-left: 15px;
     .mypage-item-list{
       background-color: #ffffff;
       h4{
-        
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+        line-height: 1.4;
+        letter-spacing: 1px;
+        border-bottom: 1px solid #eee;
+        padding: 8px 24px;
+        margin: 0;
       }
       ul{
-        .mypage-item-box{
-          padding: 0 16px;
+        .mypage-item-box{          
+          padding: 15px 16px;
+          border-bottom: 1px solid #eee;
           a{
             display: flex;
             align-items: center;
             text-decoration: none;
             .img-wrapper{
+              position: relative;
               width: 48px;
               height: 48px;
               img{
                 width: 100%;
               }
-            }
-            .sold-badge{
-
-            }
-            p{
-              
+              .sold-badge-mypage{
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 0;
+                z-index: 1;
+                border: solid;
+                border-color:#FC0101 transparent transparent transparent;
+                border-width: 40px 40px 0 0;
+              }
+              .sold-text{
+                position: absolute;
+                top: 7px;
+                left: -1px;
+                z-index: 2;
+                color: #FFF;
+                font-size: 11px;
+                padding: 0;
+                font-weight: 600;
+                transform: rotate(-45deg);
+              }
             }
             .mypage-info{
               margin: 0 40px 0 20px;
               overflow: hidden;
               flex: 1;
               .mypage-item-text{
+                font-size: 14px;
                 line-height: 1.5;
                 overflow: hidden;
                 text-overflow: ellipsis;

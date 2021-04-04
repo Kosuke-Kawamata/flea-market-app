@@ -3,7 +3,7 @@
   .item-list__container 
     h4 すべての商品
     ul
-      - @items.order(id: "DESC").each do |item|
+      - @items.where.not(status: 'pre_published').order(id: "DESC").each do |item|
         li.item-box
           = link_to item_path(item) do 
             div.img-wrapper
