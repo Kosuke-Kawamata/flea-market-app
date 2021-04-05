@@ -10,7 +10,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user.update(user_params)
+    @user.update!(user_params)
     redirect_to user_mypage_path(current_user)
   end
 

@@ -58,7 +58,8 @@
     .mypage-item-list
       h4 購入取引中の商品
       ul
-        - @items.where(buyer_id: current_user.id).where.not(status: :seller_assessed).each do |item|
+        - if @items.where(buyer_id: current_user.id).where.not(status: :seller_assessed) == nil
+          - @items.where(buyer_id: current_user.id).where.not(status: :seller_assessed).each do |item|
           li.mypage-item-box
             = link_to item_path(item) do 
               .img-wrapper
@@ -70,7 +71,8 @@
                 p.mypage-item-text = item.name                
                 p.mypage-item-text = "¥#{item.price}"              
               i.fas.fa-chevron-right
-
+        - else
+          p 該当する商品はありません
 .footer-sell-button 
   - if user_signed_in?
     = link_to new_item_path ,method: :get  do 

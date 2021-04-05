@@ -23,7 +23,7 @@ class User < ApplicationRecord
 
   # また､foreign_key を指定しているのは､そういなきゃ､いつもどおり､user_idを参照してしまうから｡
   
-  mount_uploader :img, ImgUploader
+  mount_uploader :img, UserImgUploader
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable

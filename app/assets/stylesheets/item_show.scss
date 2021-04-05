@@ -248,7 +248,15 @@
         padding-bottom: 20px;
         .user-link-left{
           display: flex;
-          text-decoration: none;          
+          text-decoration: none;
+          .user-icon{
+            width: 30px;
+            height: 30px;
+            img{
+              border-radius: 50%;
+              width: 100%;
+            }
+          }       
           .fa-user-circle{
             position: absolute;
             top: 19px;
@@ -262,6 +270,14 @@
           display: flex;
           flex-direction: row-reverse;
           text-decoration: none;          
+          .user-icon{
+            width: 30px;
+            height: 30px;
+            img{
+              border-radius: 50%;
+              width: 100%;
+            }
+          }       
           .fa-user-circle{
             position: absolute;
             top: 19px;

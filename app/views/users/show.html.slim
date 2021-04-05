@@ -1,11 +1,9 @@
 .container
   .container 
     p ユーザー: #{@user.name}
-    / div 
-    /   - if @user.img?
-    /     = image_tag(@user.img.url.thumb50)
-    /   - else 
-    /     = image_tag("user_img/defalut.jpg")
+    - if current_user.img?
+      .user-icon
+        = image_tag(current_user.img.url)
     div id="follow-button"
       - if current_user && current_user != @user
         - if current_user.following?(@user)
