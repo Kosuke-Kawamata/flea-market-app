@@ -124,7 +124,15 @@
             }
           }
           .user-page-button{
-            display: flex;         
+            display: flex;
+            .user-icon{
+              width: 30px;
+              height: 30px;
+              img{
+                border-radius: 50%;
+                width: 100%;
+              }
+            }
             div{
               display: inline-block;
               margin-left: 3px;

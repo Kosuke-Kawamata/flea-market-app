@@ -119,7 +119,11 @@
             - if chat.user != current_user
               li
                 = link_to user_path(chat.user), class:'user-link-left', method: :get do
-                  i.fas.fa-user-circle
+                  - if chat.user.img?
+                    .user-icon
+                      = image_tag(chat.user.img.url)
+                  - else 
+                    i.fas.fa-user-circle                    
                   p = chat.user.name
                 .balloon-left
                   p.message = chat.message
@@ -133,7 +137,11 @@
             - elsif chat.user == current_user
               li
                 = link_to user_path(chat.user), class:'user-link-right', method: :get do
-                  i.fas.fa-user-circle
+                  - if chat.user.img?
+                    .user-icon
+                      = image_tag(chat.user.img.url)
+                  - else 
+                    i.fas.fa-user-circle  
                   p = chat.user.name
                 .balloon-right
                   p.message = chat.message
@@ -158,7 +166,6 @@
               = f.text_area :message ,style:'pointer-events: none;'
               p.cannot-submit-btn 売り切れのためコメントできません
 
-/ .limit(3) みたいにして､取得数を制限したい｡
 .bottom-wrapper
   .top-list-wrapper
     .item-list__container

@@ -2,7 +2,9 @@ h2 プロフィール編集
 .container 
   p = "ユーザー名: #{current_user.name}"
   p = "プロフィール: #{current_user.profile}"
-  br
+  - if current_user.img?
+    .user-icon
+      = image_tag(current_user.img.url)
 
   / ちゃんと model: の部分には何のインスタンスが入っているのかを明確にした上で､model: 〜 を使わないとrouting がおかしなことになるから注意!! 
   = form_with model: @user do |f|
@@ -10,8 +12,6 @@ h2 プロフィール編集
       = f.label :name
       = f.text_field :name, class: 'form-control', id: 'user_name'
     .form_group 
-      = f.label :img, class: 'img_upload'
-      br
       = f.file_field :img, id: :user_img_field
     .form-group
       = f.label :profile

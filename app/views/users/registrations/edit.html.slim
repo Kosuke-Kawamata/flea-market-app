@@ -40,6 +40,6 @@
   p
     | Unhappy? 
     = button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete
-  = link_to "Back", homes_mypage_path 
+  = link_to "Back", user_mypage_path(current_user)
 
 

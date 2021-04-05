@@ -66,7 +66,9 @@
     = "悪い: #{@user_assessments.where(user_rank: "bad").count}"
     p email: #{current_user.email}
     p プロフィール: #{current_user.profile}
-    br
+    - if current_user.img?
+      .user-icon
+        = image_tag(current_user.img.thumb.url)
     p = link_to 'プロフィールの編集', edit_user_path(current_user)
     p = link_to 'パスワードの編集', edit_user_registration_path      
 

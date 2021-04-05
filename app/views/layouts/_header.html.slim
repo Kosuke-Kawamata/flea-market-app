@@ -19,7 +19,11 @@ header.header
                 div いいね一覧
             li.nav__list.user-page-button.active-btn
               = link_to user_mypage_path(current_user), method: :get do 
-                i.fas.fa-user-circle
+                - if current_user.img?
+                  .user-icon
+                    = image_tag(current_user.img.url)
+                - else
+                  i.fas.fa-user-circle                
                 div = current_user.name
             li.nav__list.log-out-button.active-btn
               = link_to destroy_user_session_path, method: :delete do 
