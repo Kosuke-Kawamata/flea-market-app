@@ -5,6 +5,7 @@ class ItemsController < ApplicationController
 
   def index
     @items = Item.all
+    @items = Item.all.page(params[:page]).per(20)
     @categories = Category.all
   end
 

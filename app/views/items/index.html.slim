@@ -22,7 +22,7 @@
                 i.far.fa-heart
                 div.heart_count
                   = item.likes.count
-                                
+  = paginate @items
 .footer-sell-button 
   - if user_signed_in?
     = link_to new_item_path ,method: :get  do 
