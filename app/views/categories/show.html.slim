@@ -3,7 +3,7 @@
   .item-list__container 
     h4 = @category.name
     ul
-      - @category.items.order(id: "DESC").each do |item|
+      - @category_items.order(id: "DESC").each do |item|
         li.item-box
           = link_to item_path(item) do 
             div.img-wrapper
@@ -22,7 +22,7 @@
                 i.far.fa-heart
                 div.heart_count
                   = item.likes.count
-
+    = paginate @category_items
 / .items が Nilclass とエラーが出たときには､その一個手前の､@category がおかしい場合がある｡@category がおかしいから､.items メソッドを実行できません｡という意味
 
 

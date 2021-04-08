@@ -134,7 +134,6 @@ class ItemsController < ApplicationController
   end
 
   def chat_params
-    # params.require(:chat).permit(:message)
     params.require(:chat).permit(:message, :user_id, :room_id)
   end
 

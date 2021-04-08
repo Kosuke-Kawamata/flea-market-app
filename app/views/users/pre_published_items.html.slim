@@ -69,6 +69,11 @@
                 p.mypage-item-text = item.name                
                 p.mypage-item-text = "¥#{item.price}"              
               i.fas.fa-chevron-right
+      .paging-link
+        = link_to path_to_prev_page(@pre_published_items) do 
+          i.fas.fa-chevron-left
+        = link_to path_to_next_page(@pre_published_items) do 
+          i.fas.fa-chevron-right
 .footer-sell-button 
   - if user_signed_in?
     = link_to new_item_path ,method: :get  do 

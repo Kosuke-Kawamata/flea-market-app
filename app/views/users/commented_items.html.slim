@@ -58,8 +58,8 @@
     .mypage-item-list
       h4 販売中のコメントした商品一覧
       ul
-        - if current_user.commented_items == nil
-          - current_user.commented_items.where(sold_flag: false).distinct.each do |item|
+        - if @commented_items
+          - @commented_items.where(sold_flag: false).distinct.each do |item|
             li.mypage-item-box
               = link_to item_path(item) do 
                 .img-wrapper
@@ -73,6 +73,12 @@
                 i.fas.fa-chevron-right
         - else
           p 該当する商品はありません
+      .paging-link
+        = link_to path_to_prev_page(@commented_items) do 
+          i.fas.fa-chevron-left
+        = link_to path_to_next_page(@commented_items) do 
+          i.fas.fa-chevron-right
+
 .footer-sell-button 
   - if user_signed_in?
     = link_to new_item_path ,method: :get  do 

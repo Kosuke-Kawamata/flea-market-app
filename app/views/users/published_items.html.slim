@@ -58,7 +58,7 @@
     .mypage-item-list
       h4 出品中の商品 
       ul
-        - current_user.items.published.order(id: "DESC").each do |item|
+        - @published_items.order(id: "DESC").each do |item|
           li.mypage-item-box
             = link_to item_path(item) do 
               .img-wrapper
@@ -71,6 +71,11 @@
                 .price-tag
                   = "¥#{item.price}"              
               i.fas.fa-chevron-right
+      .paging-link
+        = link_to path_to_prev_page(@published_items) do 
+          i.fas.fa-chevron-left
+        = link_to path_to_next_page(@published_items) do 
+          i.fas.fa-chevron-right
 
 .footer-sell-button 
   - if user_signed_in?

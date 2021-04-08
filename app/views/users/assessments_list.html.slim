@@ -53,41 +53,123 @@
         = link_to user_profile_page_path, method: :get do 
           div プロフィール設定
           i.fas.fa-chevron-right
-  .assessment-container
-    h4 評価一覧
-    ul
-      - @assessments.where(trading_partner_id: current_user.id).each do |assessment|      
-        li.item-box
-          div
-            - if assessment.for_seller?
-              - if assessment.user_rank == 'good'
-                .container--icon.d-flex
-                  p 出品者:
-                  i.fas.fa-smile-beam style='color: red;'
-              - elsif assessment.user_rank == 'nomall'
-                .container--icon.d-flex
-                  p 出品者:
-                  i.fas.fa-meh style='color: gray'
-              - elsif assessment.user_rank == 'bad'
-                .container--icon.d-flex
-                  p 出品者:
-                  i.fas.fa-sad-tear style='color: blue;'
-                
-            - elsif assessment.for_buyer?
-              - if assessment.user_rank == 'good'
-                .container--icon.d-flex
-                  p 購入者: 
-                  i.fas.fa-smile-beam style='color: red;'
-              - elsif assessment.user_rank == 'nomall'
-                .container--icon.d-flex
-                  p 購入者:
-                  i.fas.fa-meh style='color: gray'
-              - elsif assessment.user_rank == 'bad'
-                .container--icon.d-flex
-                  p 購入者:
-                  i.fas.fa-sad-tear style='color: blue;'
-            p = assessment.message 
-            p = assessment.user.name
+  .assessment-top
+    .assessment-list
+      h4 評価一覧
+      ul
+        - @current_user_assessment.each do |assessment|      
+          li.assessment-box
+            = link_to user_path(assessment.user_id) do
+              - if assessment.for_seller?
+                - if assessment.user_rank == 'good'
+                  - if assessment.user.img?
+                    .img-wrapper
+                      = image_tag(assessment.user.img.url)
+                  - else 
+                    .img-wrapper
+                      = image_tag("user_img/defalut.jpg")
+                  .assessment-info
+                    .container-icon
+                      i.fas.fa-smile-beam style='color: red;'
+                      p 出品者
+                    p.assessmenter = assessment.user.name              
+                    p.assessment-message = assessment.message
+                    .create-time
+                      i.far.fa-clock
+                      div = assessment.created_at.to_s(:datetime_jp)
+                  i.fas.fa-chevron-right
+                - elsif assessment.user_rank == 'nomall'
+                  - if assessment.user.img?
+                    .img-wrapper
+                      = image_tag(assessment.user.img.url)
+                  - else 
+                    .img-wrapper
+                      = image_tag("user_img/defalut.jpg")
+                  .assessment-info
+                    .container-icon
+                      i.fas.fa-meh style='color: gray'
+                      p 出品者
+                    p.assessmenter = assessment.user.name              
+                    p.assessment-message = assessment.message
+                    .create-time
+                      i.far.fa-clock
+                      div = assessment.created_at.to_s(:datetime_jp)
+                  i.fas.fa-chevron-right
+                - elsif assessment.user_rank == 'bad'
+                  - if assessment.user.img?
+                    .img-wrapper
+                      = image_tag(assessment.user.img.url)
+                  - else 
+                    .img-wrapper
+                      = image_tag("user_img/defalut.jpg")
+                  .assessment-info
+                    .container-icon
+                      i.fas.fa-sad-tear style='color: blue;'
+                      p 出品者
+                    p.assessmenter = assessment.user.name              
+                    p.assessment-message = assessment.message
+                    .create-time
+                      i.far.fa-clock
+                      div = assessment.created_at.to_s(:datetime_jp)
+                  i.fas.fa-chevron-right
+
+              - elsif assessment.for_buyer?
+                - if assessment.user_rank == 'good'
+                  - if assessment.user.img?
+                    .img-wrapper
+                      = image_tag(assessment.user.img.url)
+                  - else 
+                    .img-wrapper
+                      = image_tag("user_img/defalut.jpg")
+                  .assessment-info
+                    .container-icon
+                      i.fas.fa-smile-beam style='color: red;'
+                      p 購入者
+                    p.assessmenter = assessment.user.name              
+                    p.assessment-message = assessment.message
+                    .create-time
+                      i.far.fa-clock
+                      div = assessment.created_at.to_s(:datetime_jp)
+                  i.fas.fa-chevron-right
+                - elsif assessment.user_rank == 'nomall'
+                  - if assessment.user.img?
+                    .img-wrapper
+                      = image_tag(assessment.user.img.url)
+                  - else 
+                    .img-wrapper
+                      = image_tag("user_img/defalut.jpg")
+                  .assessment-info
+                    .container-icon
+                      i.fas.fa-meh style='color: gray'
+                      p 購入者
+                    p.assessmenter = assessment.user.name              
+                    p.assessment-message = assessment.message
+                    .create-time
+                      i.far.fa-clock
+                      div = assessment.created_at.to_s(:datetime_jp)
+                  i.fas.fa-chevron-right
+                - elsif assessment.user_rank == 'bad'
+                  - if assessment.user.img?
+                    .img-wrapper
+                      = image_tag(assessment.user.img.url)
+                  - else 
+                    .img-wrapper
+                      = image_tag("user_img/defalut.jpg")
+                  .assessment-info
+                    .container-icon
+                      i.fas.fa-sad-tear style='color: blue;'
+                      p 購入者
+                    p.assessmenter = assessment.user.name              
+                    p.assessment-message = assessment.message
+                    .create-time
+                      i.far.fa-clock
+                      div = assessment.created_at.to_s(:datetime_jp)
+                  i.fas.fa-chevron-right
+      .paging-link
+        = link_to path_to_prev_page(@current_user_assessment) do 
+          i.fas.fa-chevron-left
+        = link_to path_to_next_page(@current_user_assessment) do 
+          i.fas.fa-chevron-right
             
 .footer-sell-button 
   - if user_signed_in?

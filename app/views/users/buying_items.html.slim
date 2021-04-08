@@ -58,21 +58,26 @@
     .mypage-item-list
       h4 購入取引中の商品
       ul
-        - if @items.where(buyer_id: current_user.id).where.not(status: :seller_assessed) == nil
-          - @items.where(buyer_id: current_user.id).where.not(status: :seller_assessed).each do |item|
-          li.mypage-item-box
-            = link_to item_path(item) do 
-              .img-wrapper
-                = image_tag(item.img.url)
-                - if item.sold_flag == true 
-                  .sold-badge-mypage
-                  p.sold-text SOLD
-              .mypage-info
-                p.mypage-item-text = item.name                
-                p.mypage-item-text = "¥#{item.price}"              
-              i.fas.fa-chevron-right
+        - if @buying_items
+          - @buying_items.each do |item|
+            li.mypage-item-box
+              = link_to item_path(item) do 
+                .img-wrapper
+                  = image_tag(item.img.url)
+                  - if item.sold_flag == true 
+                    .sold-badge-mypage
+                    p.sold-text SOLD
+                .mypage-info
+                  p.mypage-item-text = item.name                
+                  p.mypage-item-text = "¥#{item.price}"              
+                i.fas.fa-chevron-right
         - else
           p 該当する商品はありません
+      .paging-link
+        = link_to path_to_prev_page(@buying_items) do 
+          i.fas.fa-chevron-left
+        = link_to path_to_next_page(@buying_items) do 
+          i.fas.fa-chevron-right
 .footer-sell-button 
   - if user_signed_in?
     = link_to new_item_path ,method: :get  do 

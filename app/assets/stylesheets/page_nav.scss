@@ -1,0 +1,52 @@
+// Place all the styles related to the likes controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+nav{
+  margin-top: 30px; 
+  .pagination{
+    display: flex;
+    justify-content: center;
+    .page-item{    
+      .page-link{
+        color: #696969;
+        -webkit-box-align: center;
+        align-items: center;
+        background-color: rgb(255, 255, 255);
+        border: 1px solid rgb(204, 204, 204);
+        border-radius: 4px;
+        cursor: pointer;
+        display: flex;
+        font-size: 18px;
+        height: 44px;
+        -webkit-box-pack: center;
+        justify-content: center;
+        width: 44px;
+        &:hover{
+          background-color: rgb(240, 238, 238);
+        }
+      }
+    }
+    .page-item.active .page-link{
+      background-color: #ea352d;
+      border-color: #ea352d;
+      color: #fff;
+    }
+  }
+}
+
+.paging-link{
+  display: flex;
+  justify-content: space-between;
+  a{
+    text-decoration: none;
+    color: #333333;
+    opacity: 0.5;
+    padding: 10px 14px;
+    margin: 0 15px;
+    &:hover{
+      color: #333333;
+      opacity: 1;
+    }
+  }
+}

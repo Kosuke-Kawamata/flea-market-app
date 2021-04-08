@@ -58,7 +58,7 @@
     .mypage-item-list
       h4 売却取引中の商品
       ul
-        - current_user.items.where(sold_flag: true).where.not(status: :seller_assessed).each do |item|
+        - @selling_items.each do |item|
           li.mypage-item-box
             = link_to item_path(item) do 
               .img-wrapper
@@ -70,6 +70,11 @@
                 p.mypage-item-text = item.name                
                 p.mypage-item-text = "¥#{item.price}"              
               i.fas.fa-chevron-right
+      .paging-link
+        = link_to path_to_prev_page(@selling_items) do 
+          i.fas.fa-chevron-left
+        = link_to path_to_next_page(@selling_items) do 
+          i.fas.fa-chevron-right
         
 .footer-sell-button 
   - if user_signed_in?
