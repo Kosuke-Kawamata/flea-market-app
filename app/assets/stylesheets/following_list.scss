@@ -1,0 +1,56 @@
+// Place all the styles related to the likes controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.following-list-container{
+  height: fit-content;
+  width: 75%;
+  min-width: 500px;
+  padding: 15px;
+  margin-left: 15px;
+  background-color: #ffffff;
+  h4{
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 1.4;
+    letter-spacing: 1px;
+    border-bottom: 1px solid #eee;
+    padding: 8px 24px;
+    margin: 0;
+  }
+  ul{
+    .following-box{
+      padding: 15px 16px;
+      border-bottom: 1px solid #eee;
+      a{
+        display: flex;
+        align-items: center;
+        width: 100%;
+        text-decoration: none;
+        color: #333333;
+        .img-wrapper{
+          width: 48px;
+          height: 48px;
+          margin-right: 40px;
+          img{
+            width: 100%;
+          }
+        }
+        .following-name{
+          font-size: 14px;
+          line-height: 1.5;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          word-break: break-all;
+          margin-left: 20px;
+        }
+        .fa-chevron-right{
+          margin-left: auto;
+          margin-right: 15px;
+        }
+      }
+    }
+  }
+}

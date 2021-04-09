@@ -15,8 +15,8 @@ class UsersController < ApplicationController
   end
 
   def mypage    
-    @my_items = current_user.items
-    @my_items = current_user.items.page(params[:page]).per(3)
+    @my_items = current_user.items.where.not(status: :pre_published)
+    @my_items = current_user.items.where.not(status: :pre_published).page(params[:page]).per(3)
   end
 
   def like_items
@@ -66,12 +66,19 @@ class UsersController < ApplicationController
     @current_user_assessment = @assessments.where(trading_partner_id: current_user.id)
     @current_user_assessment = @assessments.where(trading_partner_id: current_user.id).page(params[:page]).per(3)
   end
+
+  def following_user
+    @following_persons = current_user.followings
+    @following_persons = current_user.followings.page(params[:page]).per(4)
+  end
   
   def profile_page
     @user_assessments = Assessment.all.where(trading_partner_id: current_user.id)
   end
   
+
   private
+
   def user_params
     params.require(:user).permit(:name,:profile,:img)
   end

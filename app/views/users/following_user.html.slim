@@ -55,22 +55,27 @@
           i.fas.fa-chevron-right
 
 
-  .follow-list-container 
+  .following-list-container 
     h4 フォローリスト
     ul
-      - current_user.followings.each do |following|
-        li.item-box
-          = link_to following.name, user_path(following)
-  .footer-sell-button 
-    - if user_signed_in?
-      = link_to new_item_path ,method: :get  do 
-        div 出品
-        i.fas.fa-camera
-    - unless user_signed_in?   
-      = link_to new_user_session_path ,method: :get  do 
-        div 出品
-        i.fas.fa-camera
-    
+      - @following_persons.each do |following_person|
+        li.following-box
+          = link_to user_path(following_person) do
+            - if following_person.img?
+              .img-wrapper
+                = image_tag(following_person.img.url)
+              p.following_name = following_person.name              
+              i.fas.fa-chevron-right
+            - else 
+              .img-wrapper
+                = image_tag("user_img/defalut.jpg")
+              p.following_name = following_person.name              
+              i.fas.fa-chevron-right
+    .paging-link
+      = link_to path_to_prev_page(@following_persons) do 
+        i.fas.fa-chevron-left
+      = link_to path_to_next_page(@following_persons) do 
+        i.fas.fa-chevron-right
 .footer-sell-button 
   - if user_signed_in?
     = link_to new_item_path ,method: :get  do 

@@ -1,47 +1,84 @@
-.top_container   
-  = form_with model: @item, local: true do |f|
-    .form-group
-      = f.label :name
-      = f.text_field :name, class: 'form-control', id: 'item_name'
-    .form_group 
-      = f.label :img, class: 'img_upload'
-      br
-      = f.file_field :img, id: :item_img
-      - if @item.img?
-        div
-          = image_tag(@item.img.url)
-      - else 
-        div
-          = image_tag("/assets/default.png")
-    .form-group 
-      = f.collection_select(:category_id, Category.all, :id, :name ) 
-    .form-group
-      = f.label :description
-      = f.text_area :description, class: 'form-control', id: 'item_description'
-    .form-group
-      = f.label :price
-      = f.number_field :price, class: 'form-control', id: 'item_price'
-    .form-group
-      = f.label :shipping_fee
-      = f.select :shipping_fee, Item.shipping_fees.keys.map {|k| [I18n.t("enums.item.shipping_fee.#{k}"), k]}, {prompt:"選択してください"}
-    .form-group
-      = f.label :shipping_date
-      = f.select :shipping_date, Item.shipping_dates.keys.map {|k| [I18n.t("enums.item.shipping_date.#{k}"), k]}, {prompt:"選択してください"}
-    .form-group
-      = f.label :item_condition_id
-      = f.collection_select :item_condition_id, ItemCondition.all, :id, :condition, {include_blank: "選択してください"}, {class: "select-conditions"}
-    .form-group
-      = f.label :brand_id
-      = f.collection_select(:brand_id, Brand.all, :id, :name, {prompt: "ブランドを選択してください"})       
-    .form-group
-      = f.label :prefecture_id
-      = f.collection_select :prefecture_id, Prefecture.all, :id, :name, {include_blank: "発送する地域を選択してください"}, {class: "shipping-areas"}
-    .form-group
-      = f.label :shipping_way_id
-      = f.collection_select :shipping_way_id, ShippingWay.all, :id, :name, {include_blank: "発送方法を選択してください"}, {class: "shipping-way"}
-    = f.submit '出品する', class: 'btn btn-primary'
-    = f.submit '下書きに保存する', name: 'pre_published', class: 'btn btn-primary'
-  .container 
-    = link_to 'もどる', user_mypage_path(current_user)
+.top-container
+  .error__container 
+    - if @item.errors
+      ul  
+        - @item.errors.full_messages.each do |error_message|
+          li = error_message      
+  .form-container 
+    = form_with model: @item, local: true do |f|
+      .form-group.img-form 
+        .label-container
+          = f.label :img,"出品画像", class: 'item-img-label'
+          p 必須
+        = f.file_field :img, id: :item_img
+      .form-group.name-form
+        .label-container
+          = f.label :name,'商品名'
+          p 必須
+        = f.text_field :name, class: 'name-form', id: 'item_name'
+      .form-group.description-form
+        .label-container
+          = f.label :description,'商品の説明'
+          p 必須
+        = f.text_area :description, class: 'description-text', id: 'item_description'
+      .form-group
+        .label-container
+          = f.label :category_id,'カテゴリ'
+          p 必須
+        .select-box
+          = f.collection_select(:category_id, Category.all, :id, :name, {prompt: "カテゴリーを選択してください"})
+          i.fas.fa-chevron-down
+      .form-group
+        .label-container
+          = f.label :brand_id,'ブランド'
+          p.optional 任意
+        .select-box        
+          = f.collection_select(:brand_id, Brand.all, :id, :name, {include_blank: "選択してください"})
+          i.fas.fa-chevron-down
+      .form-group
+        .label-container
+          = f.label :item_condition_id,'商品の状態'
+          p 必須
+        .select-box
+          = f.collection_select :item_condition_id, ItemCondition.all, :id, :condition, {include_blank: "選択してください"}, {class: "select-conditions"}
+          i.fas.fa-chevron-down
+      .form-group
+        .label-container
+          = f.label :shipping_fee,'送料負担'
+          p 必須
+        .select-box
+          = f.select :shipping_fee, Item.shipping_fees.keys.map {|k| [I18n.t("enums.item.shipping_fee.#{k}"), k]}, {prompt:"選択してください"}
+          i.fas.fa-chevron-down
+      .form-group
+        .label-container
+          = f.label :shipping_way_id,'発送方法'
+          p 必須
+        .select-box
+          = f.collection_select :shipping_way_id, ShippingWay.all, :id, :name, {include_blank: "発送方法を選択してください"}, {class: "shipping-way"}
+          i.fas.fa-chevron-down
+      .form-group
+        .label-container
+          = f.label :prefecture_id,'発送元の地域'
+          p 必須
+        .select-box
+          = f.collection_select :prefecture_id, Prefecture.all, :id, :name, {include_blank: "発送する地域を選択してください"}, {class: "shipping-areas"}
+          i.fas.fa-chevron-down
+      .form-group
+        .label-container
+          = f.label :shipping_date,'発送までの日数'
+          p 必須
+        .select-box
+          = f.select :shipping_date, Item.shipping_dates.keys.map {|k| [I18n.t("enums.item.shipping_date.#{k}"), k]}, {prompt:"選択してください"}
+          i.fas.fa-chevron-down
+      .form-group
+        .label-container
+          = f.label :price,'商品の価格'
+          p 必須
+        = f.number_field :price, class: 'item-price', id: 'item_price'
+      .submit-btn_container
+        = f.submit '出品する', name: 'publish', class: 'submit-btn publish-btn'
+        = f.submit '下書きに保存する', name: 'pre_published', class: 'submit-btn pre-publish_btn'
+        = link_to 'もどる', user_mypage_path(current_user), class:'back-btn'
 
 
+    
