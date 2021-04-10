@@ -2,92 +2,174 @@
   .mypege-nav
     ul
       li.nav__list
-        = link_to user_mypage_path, method: :get do 
+        = link_to user_mypage_path(current_user), method: :get do 
           div マイページ
           i.fas.fa-chevron-right
       li.nav__list
-        = link_to user_like_items_path, method: :get do 
+        = link_to user_like_items_path(current_user), method: :get do 
           div いいね！一覧
           i.fas.fa-chevron-right
       li.nav__list
-        = link_to user_commented_items_path, method: :get do 
+        = link_to user_commented_items_path(current_user), method: :get do 
           div コメントした商品一覧-販売中
           i.fas.fa-chevron-right
       li.nav__list
-        = link_to new_item_path, method: :get do 
+        = link_to new_item_path(current_user), method: :get do 
           div 出品する
           i.fas.fa-chevron-right
       li.nav__list
-        = link_to user_pre_published_items_path, method: :get do 
+        = link_to user_pre_published_items_path(current_user), method: :get do 
           div 下書き一覧
           i.fas.fa-chevron-right
       li.nav__list
-        = link_to user_published_items_path, method: :get do 
+        = link_to user_published_items_path(current_user), method: :get do 
           div 出品した商品-出品中
           i.fas.fa-chevron-right
       li.nav__list
-        = link_to user_selling_items_path, method: :get do 
+        = link_to user_selling_items_path(current_user), method: :get do 
           div 出品した商品-取引中
           i.fas.fa-chevron-right
       li.nav__list
-        = link_to user_sold_items_path, method: :get do 
+        = link_to user_sold_items_path(current_user), method: :get do 
           div 出品した商品-売却済み
           i.fas.fa-chevron-right
       li.nav__list
-        = link_to user_buying_items_path, method: :get do 
+        = link_to user_buying_items_path(current_user), method: :get do 
           div 購入した商品-取引中
           i.fas.fa-chevron-right
       li.nav__list
-        = link_to user_bought_items_path, method: :get do 
+        = link_to user_bought_items_path(current_user), method: :get do 
           div 購入した商品-購入済み
           i.fas.fa-chevron-right
       li.nav__list
-        = link_to user_following_user_path, method: :get do 
+        = link_to user_following_user_path(current_user), method: :get do 
           div フォロー一覧
           i.fas.fa-chevron-right
       li.nav__list
-        = link_to user_assessments_list_path, method: :get do 
+        = link_to user_assessments_list_path(current_user), method: :get do 
           div 評価一覧
           i.fas.fa-chevron-right
       li.nav__list
-        = link_to user_profile_page_path, method: :get do 
+        = link_to edit_user_path(current_user), method: :get do 
           div プロフィール設定
           i.fas.fa-chevron-right
-  .assessment-container
-    h4 評価一覧
-    ul
-      - @assessments.where(trading_partner_id: current_user.id).each do |assessment|      
-        li.item-box
-          div
-            - if assessment.for_seller?
-              - if assessment.user_rank == 'good'
-                .container--icon.d-flex
-                  p 出品者:
-                  i.fas.fa-smile-beam style='color: red;'
-              - elsif assessment.user_rank == 'nomall'
-                .container--icon.d-flex
-                  p 出品者:
-                  i.fas.fa-meh style='color: gray'
-              - elsif assessment.user_rank == 'bad'
-                .container--icon.d-flex
-                  p 出品者:
-                  i.fas.fa-sad-tear style='color: blue;'
-                
-            - elsif assessment.for_buyer?
-              - if assessment.user_rank == 'good'
-                .container--icon.d-flex
-                  p 購入者: 
-                  i.fas.fa-smile-beam style='color: red;'
-              - elsif assessment.user_rank == 'nomall'
-                .container--icon.d-flex
-                  p 購入者:
-                  i.fas.fa-meh style='color: gray'
-              - elsif assessment.user_rank == 'bad'
-                .container--icon.d-flex
-                  p 購入者:
-                  i.fas.fa-sad-tear style='color: blue;'
-            p = assessment.message 
-            p = assessment.user.name
+  .assessment-top
+    .assessment-list
+      h4 評価一覧
+      ul
+        - @current_user_assessment.each do |assessment|      
+          li.assessment-box
+            = link_to user_path(assessment.user_id) do
+              - if assessment.for_seller?
+                - if assessment.user_rank == 'good'
+                  - if assessment.user.img?
+                    .img-wrapper
+                      = image_tag(assessment.user.img.url)
+                  - else 
+                    .img-wrapper
+                      = image_tag("user_img/defalut.jpg")
+                  .assessment-info
+                    .container-icon
+                      i.fas.fa-smile-beam style='color: red;'
+                      p 出品者
+                    p.assessmenter = assessment.user.name              
+                    p.assessment-message = assessment.message
+                    .create-time
+                      i.far.fa-clock
+                      div = assessment.created_at.to_s(:datetime_jp)
+                  i.fas.fa-chevron-right
+                - elsif assessment.user_rank == 'nomall'
+                  - if assessment.user.img?
+                    .img-wrapper
+                      = image_tag(assessment.user.img.url)
+                  - else 
+                    .img-wrapper
+                      = image_tag("user_img/defalut.jpg")
+                  .assessment-info
+                    .container-icon
+                      i.fas.fa-meh style='color: gray'
+                      p 出品者
+                    p.assessmenter = assessment.user.name              
+                    p.assessment-message = assessment.message
+                    .create-time
+                      i.far.fa-clock
+                      div = assessment.created_at.to_s(:datetime_jp)
+                  i.fas.fa-chevron-right
+                - elsif assessment.user_rank == 'bad'
+                  - if assessment.user.img?
+                    .img-wrapper
+                      = image_tag(assessment.user.img.url)
+                  - else 
+                    .img-wrapper
+                      = image_tag("user_img/defalut.jpg")
+                  .assessment-info
+                    .container-icon
+                      i.fas.fa-sad-tear style='color: blue;'
+                      p 出品者
+                    p.assessmenter = assessment.user.name              
+                    p.assessment-message = assessment.message
+                    .create-time
+                      i.far.fa-clock
+                      div = assessment.created_at.to_s(:datetime_jp)
+                  i.fas.fa-chevron-right
+
+              - elsif assessment.for_buyer?
+                - if assessment.user_rank == 'good'
+                  - if assessment.user.img?
+                    .img-wrapper
+                      = image_tag(assessment.user.img.url)
+                  - else 
+                    .img-wrapper
+                      = image_tag("user_img/defalut.jpg")
+                  .assessment-info
+                    .container-icon
+                      i.fas.fa-smile-beam style='color: red;'
+                      p 購入者
+                    p.assessmenter = assessment.user.name              
+                    p.assessment-message = assessment.message
+                    .create-time
+                      i.far.fa-clock
+                      div = assessment.created_at.to_s(:datetime_jp)
+                  i.fas.fa-chevron-right
+                - elsif assessment.user_rank == 'nomall'
+                  - if assessment.user.img?
+                    .img-wrapper
+                      = image_tag(assessment.user.img.url)
+                  - else 
+                    .img-wrapper
+                      = image_tag("user_img/defalut.jpg")
+                  .assessment-info
+                    .container-icon
+                      i.fas.fa-meh style='color: gray'
+                      p 購入者
+                    p.assessmenter = assessment.user.name              
+                    p.assessment-message = assessment.message
+                    .create-time
+                      i.far.fa-clock
+                      div = assessment.created_at.to_s(:datetime_jp)
+                  i.fas.fa-chevron-right
+                - elsif assessment.user_rank == 'bad'
+                  - if assessment.user.img?
+                    .img-wrapper
+                      = image_tag(assessment.user.img.url)
+                  - else 
+                    .img-wrapper
+                      = image_tag("user_img/defalut.jpg")
+                  .assessment-info
+                    .container-icon
+                      i.fas.fa-sad-tear style='color: blue;'
+                      p 購入者
+                    p.assessmenter = assessment.user.name              
+                    p.assessment-message = assessment.message
+                    .create-time
+                      i.far.fa-clock
+                      div = assessment.created_at.to_s(:datetime_jp)
+                  i.fas.fa-chevron-right
+      .paging-link
+        = link_to path_to_prev_page(@current_user_assessment) do 
+          i.fas.fa-chevron-left
+        = link_to path_to_next_page(@current_user_assessment) do 
+          i.fas.fa-chevron-right
             
 .footer-sell-button 
   - if user_signed_in?

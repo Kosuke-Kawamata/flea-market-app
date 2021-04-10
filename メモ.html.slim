@@ -1,13 +1,13 @@
   .item_description        
     p = @item.description
   - if user_signed_in?
-    .like_btn_container
+    #like_btn_container
       = render 'likes/like-button', item: @item
       .wrong-item-flag
         i.far.fa-flag
         div 不適切な商品の報告
   - unless user_signed_in?
-    .like_btn_container
+    #like_btn_container
       = link_to new_user_session_path, class:'fake-like_button',method: :get  do 
         i.fas.fa-heart
         div いいね！

@@ -3,12 +3,13 @@
     = link_to item_like_path(item), method: :delete, id:'like_button', remote: true do
       i.fas.fa-heart style='color: red;'
       div いいね！
-      = item.likes.count
-
+      div = item.likes.count
   - else
     = link_to item_likes_path(item), method: :post, id:'like_button', remote: true do
       i.far.fa-heart
       div いいね！
       div = item.likes.count
 
-// エラーが起こったときには､まず複数形・単数形をチェックしてみる｡あと､routes.rbも
+// エラーが起こったときには､まず複数形・単数形をチェックしてみる｡あと､routes.rbも｡
+
+/ 非同期でdeleteはできてるけど､createがリロードしないとできない状態

@@ -1,30 +1,45 @@
-.container
-  .container 
-    p ユーザー: #{@user.name}
-    - if @user.img?
-      .user-icon
-        = image_tag(@user.img.url)
-    div id="follow-button"
-      - if current_user && current_user != @user
-        - if current_user.following?(@user)
-          = render 'relationships/unfollow_button', user:@user
-        - else
-          = render 'relationships/follow_button', user:@user
-
-    i.fas.fa-smile-beam style='color: red;'
-    = "良い: #{@user_assessments.where(user_rank: "good").count}"
-    br
-    i.fas.fa-meh style='color: gray'
-    = "ふつう: #{@user_assessments.where(user_rank: "nomall").count}"
-    br
-    i.fas.fa-sad-tear style='color: blue;'
-    = "悪い: #{@user_assessments.where(user_rank: "bad").count}"
-    p プロフィール: #{@user.profile}
+.top-container_user-show
+  - if @user.img?
+    .icon-background
+      = link_to user_path(@user) do 
+        .user-icon
+          = image_tag(@user.img.url)
+        p.user-name #{@user.name}
+      .small-info
+        p = "評価#{@user.assessments.count}"
+        p = "出品数#{@user.items.count}"                 
+  - else
+    .icon-background
+      = link_to user_path(@user) do 
+        .user-icon
+          = image_tag('user_img/defalut.jpg')
+        p.user-name #{@user.name}
+      .small-info
+        p = "評価#{@user.assessments.count}"
+        p = "出品数#{@user.items.count}"            
+  .assessments-follow-container
+    .user-assessments 
+      .assessment-count
+        i.fas.fa-smile-beam style='color: red;'
+        p #{@user_assessments.where(user_rank: "good").count}
+      .assessment-count    
+        i.fas.fa-meh style='color: gray'
+        p #{@user_assessments.where(user_rank: "nomall").count}
+      .assessment-count
+        i.fas.fa-sad-tear style='color: blue;'
+        p #{@user_assessments.where(user_rank: "bad").count}
+    #follow-button
+          - if current_user && current_user != @user
+            - if current_user.following?(@user)
+              = render 'relationships/unfollow_button', user:@user
+            - else
+              = render 'relationships/follow_button', user:@user
+  p.profile #{@user.profile}
 
 .top-list-wrapper
   .item-list__container 
     h4 = "#{@user.name}さんの商品"
-    ul
+    ul.user-show_ul
       - @user_items.each do |item|
         li.item-box
           = link_to item_path(item) do 

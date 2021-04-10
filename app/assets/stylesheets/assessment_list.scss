@@ -1,0 +1,71 @@
+// Place all the styles related to the chats controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.assessment-top{
+  width: 75%;
+  min-width: 500px;
+  padding: 15px;
+  margin-left: 15px;
+  .assessment-list{
+    background-color: #ffffff;
+    h4{
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      line-height: 1.4;
+      letter-spacing: 1px;
+      border-bottom: 1px solid #eee;
+      padding: 8px 24px;
+      margin: 0;
+    }
+    ul{
+      .assessment-box{
+        padding: 15px 16px;
+        border-bottom: 1px solid #eee;
+        a{
+          display: flex;
+          align-items: center;
+          width: 100%;
+          text-decoration: none;
+          color: #333333;
+          .img-wrapper{
+            width: 48px;
+            height: 48px;
+            img{
+              width: 100%;
+            }
+          }
+          .assessment-info{
+            margin: 0 40px 0 20px;
+            overflow: hidden;
+            flex: 1;
+            .container-icon{
+              display: flex;
+              .fas{
+                margin: 4px 5px 0 0;
+              }
+            }
+            .assessmenter,.assessment-message{
+              font-size: 14px;
+              line-height: 1.5;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              word-break: break-all;
+            }
+            .create-time{
+              display: flex;
+              width: 100%;
+              font-size: 14px;
+              line-height: 1.5;
+              .fa-clock{
+                margin:4px 5px 0 0;
+              } 
+            }
+          }
+        }
+      }
+    }
+  }
+}
