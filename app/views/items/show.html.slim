@@ -88,8 +88,9 @@
   .item_description
     p = @item.description
   - if user_signed_in?
-    .like_btn_container
-      = render 'likes/like-button', item: @item
+    .three-buttons
+      #like_btn_container
+        = render 'likes/like-button', item: @item
       .wrong-item-flag
         i.far.fa-flag
         div 不適切な商品の報告
@@ -97,11 +98,12 @@
         i.fas.fa-unlock-alt
         div あんしん・あんぜんへの取り組み
   - unless user_signed_in?
-    .like_btn_container
-      = link_to new_user_session_path, class:'fake-like_button',method: :get  do
-        i.fas.fa-heart
-        div いいね！
-        div = @item.likes.count
+    .three-buttons
+      #like_btn_container
+        = link_to new_user_session_path, class:'fake-like_button',method: :get  do
+          i.far.fa-heart
+          div いいね！
+          div = @item.likes.count
       .wrong-item-flag
         i.far.fa-flag
         div 不適切な商品の報告
@@ -171,7 +173,7 @@
     .item-list__container
       h4 = "#{@item.user.name}さんのその他の出品"
       ul
-        - @item.user.items.where(sold_flag: false).order(id: "DESC").limit(3).each do |item|
+        - @item.user.items.where(sold_flag: false).where.not(id: @item.id).order(id: "DESC").limit(3).each do |item|
           li.item-box
             = link_to item_path(item) do
               div.img-wrapper
@@ -195,7 +197,7 @@
     .item-list__container
       h4 = "\"#{@item.category.name}\"のその他の出品"
       ul
-        - @item.category.items.where(sold_flag: false).limit(3).order(id: "DESC").each do |item|
+        - @item.category.items.where.not(id: @item.id).where(sold_flag: false).limit(3).order(id: "DESC").each do |item|
           li.item-box
             = link_to item_path(item) do
               div.img-wrapper

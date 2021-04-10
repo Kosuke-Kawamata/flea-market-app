@@ -5,7 +5,11 @@ class LikesController < ApplicationController
     unless @item.liked_by?(current_user)
       like = current_user.likes.new(item_id: @item.id)
       like.save!
-      redirect_to @item
+
+      # respond_to do |format|
+      #   format.js { render 'create.js.erb' }
+      # end
+      # redirect_to @item
     end
   end
 
@@ -13,6 +17,10 @@ class LikesController < ApplicationController
     @item = Item.find(params[:item_id])
     like = current_user.likes.find_by(item_id: @item.id)
     like.destroy!
-    redirect_to @item
+
+    # respond_to do |format|
+    #   format.js { render 'destroy.js.erb' }
+    # end
+    # redirect_to @item
   end
 end

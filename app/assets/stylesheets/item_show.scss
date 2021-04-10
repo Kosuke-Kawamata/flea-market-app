@@ -183,21 +183,23 @@
       padding: 0;
     }
   }
-  .like_btn_container{
-    display: flex;    
-    #like_button, .fake-like_button{
-      display: flex;  
-      text-decoration: none;
-      color: #333;
-      background: #f5f5f5;
-      border: 1px solid #f5f5f5;
-      border-radius: 15px;
-      padding: 5px;
-      .fa-heart{
-        margin-top: 5px;
-        margin-right: 3px;
-      }
-    }    
+  .three-buttons{
+    display: flex;
+    #like_btn_container{
+      #like_button, .fake-like_button{
+        display: flex;  
+        text-decoration: none;
+        color: #333;
+        background: #f5f5f5;
+        border: 1px solid #f5f5f5;
+        border-radius: 15px;
+        padding: 5px;
+        .fa-heart{
+          margin-top: 5px;
+          margin-right: 3px;
+        }
+      }    
+    }
     .wrong-item-flag{
       display: flex;  
       text-decoration: none;
