@@ -34,7 +34,7 @@
               = render 'relationships/unfollow_button', user:@user
             - else
               = render 'relationships/follow_button', user:@user
-  p.profile #{@user.profile}
+  p.profile = simple_format(@user.profile)
 
 .top-list-wrapper
   .item-list__container 
