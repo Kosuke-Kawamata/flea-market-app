@@ -1,6 +1,7 @@
 class Item < ApplicationRecord
   has_many :rooms, dependent: :destroy
   has_many :chats, dependent: :destroy
+  has_many :images, dependent: :destroy
   
   has_many :likes, dependent: :destroy
 
@@ -13,6 +14,7 @@ class Item < ApplicationRecord
   belongs_to_active_hash :item_condition
   belongs_to_active_hash :shipping_way
 
+  accepts_nested_attributes_for :images, allow_destroy: true
 
   enum status: {published: 0, in_process: 1, shipped: 2, buyer_assessed: 3, seller_assessed: 4, pre_published: 5}
   enum shipping_fee: {seller_pay: 1, buyer_pay: 2}
@@ -20,7 +22,7 @@ class Item < ApplicationRecord
 
   validates :name, presence: true
   validates :description, presence: true
-  validates :img, presence: true
+  # validates :img, presence: true ← カラムを削除した際にはバリデーションも削除すること！
   validates :category_id, presence: true
   validates :price, presence: true
   validates :item_condition_id, presence: true
@@ -29,7 +31,6 @@ class Item < ApplicationRecord
   validates :shipping_way, presence: true
   validates :prefecture_id, presence: true
 
-  mount_uploader :img, ImgUploader
 
   def liked_by?(user)
     self.likes.where(user_id: user.id).exists?

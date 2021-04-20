@@ -4,10 +4,13 @@
     .item_main_content
       .top-img_wrapper
         .img-wrapper
-          - if @item.img?
-            = image_tag(@item.img.thumb300.url)
-          - else 
-            = image_tag("item_img/default.png")
+          - if @item.images
+            ul
+              - @item.images.each do |image|
+                li
+                  = image_tag(image.img.url)
+          - else
+              = image_tag("item_img/default.png")
           - if @item.sold_flag == true
             .sold-badge-show
             p SOLD
@@ -177,9 +180,9 @@
           li.item-box
             = link_to item_path(item) do
               div.img-wrapper
-                - if item.img?
-                  = image_tag(item.img.url)
-                - else
+                - if item.images
+                  = image_tag(item.images.first.img.url)
+                - else 
                   = image_tag("item_img/default.png")
               - if item.sold_flag == true
                 div.sold-badge
@@ -201,9 +204,9 @@
           li.item-box
             = link_to item_path(item) do
               div.img-wrapper
-                - if item.img?
-                  = image_tag(item.img.url)
-                - else
+                - if item.images
+                  = image_tag(item.images.first.img.url)
+                - else 
                   = image_tag("item_img/default.png")
               - if item.sold_flag == true
                 div.sold-badge

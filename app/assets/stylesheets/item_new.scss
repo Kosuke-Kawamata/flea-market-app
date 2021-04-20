@@ -1,6 +1,27 @@
 // Place all the styles related to the admins controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.label-top{
+  display: flex;
+  div{
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4em;
+  }
+  p{
+    height: fit-content;
+    line-height: 1.4em;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 2px;
+    color: #ffffff;
+    background-color: red;
+    margin:3px 0 0 8px;
+    padding: 0 4px;
+    width: fit-content;
+  }
+} 
+
 form{  
   label{
     display: block;
@@ -34,9 +55,9 @@ form{
   min-width: 400px;
   padding: 24px 40px 15px;
   margin: 40px auto;
-  .error__container{
+  // .error__container{
     
-  }
+  // }
   .form-container{
     form{
       .form-group{
@@ -103,3 +124,76 @@ form{
     }
   }
 }
+
+// ------------jqueryのcss-------------------
+.clearfix{
+  width: 100%;
+  ul#previews{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin-top: 30px;
+    li.input{
+      width: 100%;
+      border-radius: 5px;
+      // margin: 0;
+      .upload-label{
+        width: 100%;
+        height: 100%;
+        border-radius: 6px;
+        background-color: #e7e6e6;
+        border:1px solid #e7e6e6;
+        margin:auto 0;
+        .upload-label__text{
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          min-height: 182px;
+          p{
+            overflow: hidden;
+          }
+          .image_upload{
+            display: none;
+          }
+        }
+      }
+    }
+  }
+  li.image-preview{
+    display: flex;
+    flex-direction: column;
+    min-width: 121px;
+    // height: 184px;
+    margin: 10px auto;
+    box-shadow: 0 0 4px gray;
+    .image-preview__wapper{
+      flex: 1;
+      object-fit:cover;
+      img{
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+    .image-preview_btn{
+      display: flex;
+      justify-content: space-around;
+      font-size: 15px;
+      color: rgb(107, 197, 233);
+      // box-shadow: 0 0 4px gray;
+      div{
+        background-color: #e7e6e6;    
+        width: 100%;
+        height: 100%;
+        text-align: center;
+      }
+      .image-preview_btn_edit{
+        border-right:1px solid #cecdcd;    
+      }
+    }
+  }
+}
+  
+//------js_item#new-----------------
+
+//------js_item#edit-----------------

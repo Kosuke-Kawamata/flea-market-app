@@ -9,7 +9,7 @@ class LikesController < ApplicationController
       # respond_to do |format|
       #   format.js { render 'create.js.erb' }
       # end
-      # redirect_to @item
+      redirect_to @item
     end
   end
 
@@ -21,6 +21,6 @@ class LikesController < ApplicationController
     # respond_to do |format|
     #   format.js { render 'destroy.js.erb' }
     # end
-    # redirect_to @item
+    redirect_to @item
   end
 end

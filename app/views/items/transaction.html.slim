@@ -4,8 +4,8 @@
     .item_main_content 
       .top-img_wrapper
         .img-wrapper
-          - if @item.img?
-            = image_tag(@item.img.thumb300.url)
+          - if @item.images
+            = image_tag(@item.img.url)
           - else 
             = image_tag("item_img/default.png")
           - if @item.sold_flag == true

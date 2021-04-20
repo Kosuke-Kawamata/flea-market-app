@@ -68,7 +68,7 @@
     p プロフィール: #{current_user.profile}
     - if current_user.img?
       .user-icon
-        = image_tag(current_user.img.thumb.url)
+        = image_tag(current_user.img.url)
     p = link_to 'プロフィールの編集', edit_user_path(current_user)
     p = link_to 'パスワードの編集', edit_user_registration_path      
 
