@@ -1,3 +1,26 @@
+document.addEventListener("turbolinks:load", function () {
+  var append_input = $(
+    '<li class="input">'+
+      '<label class="upload-label">'+
+        '<div class="upload-label__text">'+
+          '<p>ドラッグアンドドロップ</p>'+
+          '<p>またはクリックしてファイルをアップロード</p>'+
+          '<div class="input-area">'+
+            '<input class="hidden image_upload" type="file">'+
+          '</div>'+
+        '</div>'+
+      '</label>'+
+    '</li>'
+  );  
+  $ul = $('#previews')
+  $lis = $ul.find('.image-preview');
+  $inputs = $ul.find(".image_upload")
+  console.log('jqueryを読み込んだ');
+  if ($lis.length <= 9 && $('.input').length <= 0){
+    console.log('条件分読み込んだ！');
+    $ul.append(append_input);    
+  }
+});
 
 $(document).on("click", ".image_upload", function(){
   var preview = $(
@@ -32,7 +55,7 @@ $(document).on("click", ".image_upload", function(){
     reader.readAsDataURL(e.target.files[0]);
     reader.onload = function(e){
       $(preview).find(".preview").attr("src", e.target.result);
-      $(preview).find(".preview").css('width', '100%');
+      $(preview).find(".preview").css('width','100%');
     };
     
     $li.append(preview);
@@ -47,7 +70,6 @@ $(document).on("click", ".image_upload", function(){
     $('#previews li').css({
       width:'20%',
     });
-    // $ul.append(append_input);
     // inputタグの部分のwidthを動的に変える処理
     if ($lis.length <= 4){
       // debugger

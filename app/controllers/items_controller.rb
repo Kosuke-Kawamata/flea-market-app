@@ -75,23 +75,61 @@ class ItemsController < ApplicationController
     @categories = Category.all
   end
   
+  # def update
+  #   if params[:pre_published]
+  #     if @item.update!(item_params)
+  #       @item.pre_published!  
+  #       redirect_to item_path(@item)
+  #     else
+  #       render :edit
+  #     end
+  #   else      
+  #     if @item.update!(item_params)
+  #       @item.published!  
+  #       redirect_to item_path(@item)
+  #     else
+  #       render :edit
+  #     end
+  #   end
+
+  #   # @item.update!(item_params)
+  #   # redirect_to item_path(@item)
+  # end
   def update
-    if params[:pre_published]
-      if @item.update!(item_params)
-        @item.pre_published!  
-        redirect_to item_path(@item)
-      else
-        render :edit
-      end
-    else      
-      if @item.update!(item_params)
-        @item.published!  
-        redirect_to item_path(@item)
+    if params[:item].keys.include?("image") || params[:item].keys.include?("images_attributes")
+      if @item.valid?
+        if params[:item].keys.include?("image")
+          update_images_ids = params[:item][:image].values
+          before_images_ids = @item.images.ids
+
+          before_images_ids.each do |before_img_id|
+            Image.find(before_img_id).destroy unless update_images_ids.include?("#{before_img_id}")             
+          end
+        else          
+          before_images_ids.each do |before_img_id|
+            Image.find(before_img_id).destroy
+          end
+        end
+      
+        if params[:pre_published]
+          if @item.update!(item_params)
+            @item.pre_published!  
+            redirect_to item_path(@item)
+          else
+            render :edit
+          end
+        else      
+          if @item.update!(item_params)
+            @item.published!  
+            redirect_to item_path(@item)
+          else
+            render :edit
+          end    
+        end
       else
         render :edit
       end
     end
-
     # @item.update!(item_params)
     # redirect_to item_path(@item)
   end
@@ -144,6 +182,7 @@ class ItemsController < ApplicationController
   end
 
   private
+
   def item_params
     params.require(:item).permit(:name, :description, :category_id, :price, :prefecture_id, :item_condition_id, :brand_id, :shipping_fee, :shipping_date, :shipping_way_id, images_attributes: [:id, :img]).merge(user_id: current_user.id)
   end
