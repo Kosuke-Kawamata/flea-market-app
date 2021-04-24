@@ -4,15 +4,18 @@
     .item_main_content 
       .top-img_wrapper
         .img-wrapper
-          - if @item.img?
-            = image_tag(@item.img.thumb300.url)
-          - else 
-            = image_tag("item_img/default.png")
+          - if @item.images
+            ul
+              - @item.images.each do |image|
+                li
+                  = image_tag(image.img.url)
+          - else
+              = image_tag("item_img/default.png")
           - if @item.sold_flag == true
-            .sold-badge-show 
+            .sold-badge-show
             p SOLD
       table
-        tbody 
+        tbody
           tr 
             th 出品者
             td
@@ -31,20 +34,24 @@
             th カテゴリ
             td = @item.category.name
           tr
+            th ブランド
+            - if @item.brand
+              td = @item.brand.name
+          tr
             th 商品の状態
             td = @item.item_condition.condition
           tr
             th 配送料の負担
-            td = @item.shipping_fee
+            td = @item.shipping_fee_i18n
           tr
             th 配送の方法
-            td = @item.shipping_fee
+            td = @item.shipping_way.name
           tr
             th 配送元地域
             td = @item.prefecture.name
           tr
             th 発送日の目安
-            td = @item.shipping_date
+            td = @item.shipping_date_i18n
   .item_price 
     h5 ￥#{@item.price} 
     p （税込み）
@@ -76,15 +83,15 @@
             .radio-btn-container
               i.fas.fa-smile-beam style='color: red;'
               = f.label :good,'よかった', class:'radio-label'
-              = f.radio_button :user_rank, :good, class:'radio-btn'      
+                = f.radio_button :user_rank, :good, class:'radio-btn'
             .radio-btn-container          
               i.fas.fa-meh style='color: gray'
               = f.label :nomall,'ふつう', class:'radio-label'
-              = f.radio_button :user_rank, :nomall, class:'radio-btn'
+                = f.radio_button :user_rank, :nomall, class:'radio-btn'
             .radio-btn-container
               i.fas.fa-sad-tear style='color: blue;'
               = f.label :bad,'ざんねん', class:'radio-label'
-              = f.radio_button :user_rank, :bad, class:'radio-btn'
+                = f.radio_button :user_rank, :bad, class:'radio-btn'
           = f.text_area :message          
           = f.hidden_field :user_id, value: current_user.id
           = f.hidden_field :trading_partner_id, value: @item.buyer_id
@@ -154,7 +161,11 @@
             - if chat.user != current_user
               li
                 = link_to user_path(chat.user), class:'user-link-left', method: :get do 
-                  i.fas.fa-user-circle
+                  - if chat.user.img?
+                    .user-icon
+                      = image_tag(chat.user.img.url)
+                  - else 
+                    i.fas.fa-user-circle                    
                   p = chat.user.name
                 .balloon-left
                   p.message = chat.message
@@ -168,7 +179,11 @@
             - elsif chat.user == current_user
               li
                 = link_to user_path(chat.user), class:'user-link-right', method: :get do 
-                  i.fas.fa-user-circle
+                  - if chat.user.img?
+                    .user-icon
+                      = image_tag(chat.user.img.url)
+                  - else 
+                    i.fas.fa-user-circle  
                   p = chat.user.name
                 .balloon-right
                   p.message = chat.message

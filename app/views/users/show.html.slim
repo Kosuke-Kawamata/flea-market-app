@@ -34,7 +34,8 @@
               = render 'relationships/unfollow_button', user:@user
             - else
               = render 'relationships/follow_button', user:@user
-  p.profile #{@user.profile}
+  .profile__wrapper
+    p = simple_format(@user.profile)
 
 .top-list-wrapper
   .item-list__container 
@@ -44,10 +45,10 @@
         li.item-box
           = link_to item_path(item) do 
             div.img-wrapper
-              - if item.img?
-                = image_tag(item.img.url)
+              - if item.images.present?
+                = image_tag(item.images.first.img.url)
               - else 
-                = image_tag("item_img/default.png")
+                = image_tag("item_img/default.png", class:'default-img')
             - if item.sold_flag == true 
               div.sold-badge 
               p sold
