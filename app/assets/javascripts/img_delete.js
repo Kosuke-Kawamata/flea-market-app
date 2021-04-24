@@ -38,7 +38,8 @@ $(document).on('click','.image-preview_btn_delete',function(){
   }
   else if($lis.length == 5 ){
     $('#previews li:last-child').css({
-      'width': `100%`
+      'width':`100%`,
+      'height':'138.64px',
     })
   }
   else if($lis.length < 9 ){

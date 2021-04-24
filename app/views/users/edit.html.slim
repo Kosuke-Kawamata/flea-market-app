@@ -60,37 +60,22 @@
     / ちゃんと model: の部分には何のインスタンスが入っているのかを明確にした上で､model: 〜 を使わないとrouting がおかしなことになるから注意!! 
     = form_with model: @user do |f|
       .background-img
-        = f.label :img        
+        = f.label :img, class:'user-icon__label'
           - if current_user.img?
-            .user-icon
-              = image_tag(current_user.img.url)
-            / = f.file_field :img, id: :user_img_field, class:'user-icon__input', style:'display:none'
+            .user-icon__wrapper
+              = image_tag(current_user.img.url, class:'user-icon__img')
           - else
-            .user-icon
+            .user-icon__wrapper
               = image_tag('user_img/defalut.jpg')
           = f.file_field :img, class:'user-icon__input', style:'display:none'
-        = f.text_field :name, class: 'form-control', id: 'user-name'
-      .form-group.profile
+
+          / .user-icon-preview__wrapper
+          /   = image_tag(current_user.img.url, class:'user-icon-preview__img')
+
+        = f.text_field :name, class: 'user-name__input', id: 'user-name'
+      .profile
         = f.text_area :profile, rows: 5, class: 'form-control', id: 'user_profile'
       = f.submit '更新する',class: 'submit-btn update-btn'
-
-    / = form_with model: @user do |f|
-    /   = f.label :img
-    /     .form-group 
-    /       - if current_user.img?
-    /         .icon-background
-    /           .user-icon
-    /             = image_tag(current_user.img.url)
-    /           = f.text_field :name, class: 'form-control', id: 'user-name'
-    /       - else
-    /         .icon-background
-    /           .user-icon
-    /             = image_tag('user_img/defalut.jpg')
-    /           = f.text_field :name, class: 'form-control', id: 'user-name'
-    /     = f.file_field :img, id: :user_img_field, style:'display:none'
-    /   .form-group.profile
-    /     = f.text_area :profile, rows: 5, class: 'form-control', id: 'user_profile'
-    /   = f.submit '更新する',class: 'submit-btn update-btn'
 
 .footer-sell-button 
   - if user_signed_in?

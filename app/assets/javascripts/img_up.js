@@ -12,14 +12,34 @@ document.addEventListener("turbolinks:load", function () {
       '</label>'+
     '</li>'
   );  
+  
   $ul = $('#previews')
   $lis = $ul.find('.image-preview');
   $inputs = $ul.find(".image_upload")
-  console.log('jqueryを読み込んだ');
-  if ($lis.length <= 9 && $('.input').length <= 0){
-    console.log('条件分読み込んだ！');
-    $ul.append(append_input);    
+
+  if ($lis.length <= 4){
+    // debugger
+    console.log('4以下');
+    $ul.append(append_input);
+    $('#previews li:last-child').css({
+      width:`calc(100% - (20% * ${$lis.length}))`,
+    });
+  }else if ($lis.length == 5){
+    // $li.addClass("image-preview"); // ←これは5番目以降からli label input の li に対して､クラスを付けている｡なんで？
+    console.log('5個');
+    $ul.append(append_input);
+    $('#previews li:last-child').css({
+      width:'100%',
+    });
+  }else if ($lis.length <= 9){
+    // $li.addClass("image-preview");
+    console.log('9以下');
+    $ul.append(append_input);
+    $('#previews li:last-child').css({
+      width:`calc(100% - (20% * (${$lis.length} - 5)))`,
+    });      
   }
+
 });
 
 $(document).on("click", ".image_upload", function(){
@@ -28,7 +48,6 @@ $(document).on("click", ".image_upload", function(){
       '<img class="preview">'+
     '</div>'+
     '<div class="image-preview_btn">'+
-      '<div class="image-preview_btn_edit">編集</div>'+
       '<div class="image-preview_btn_delete">削除</div>'+
     '</div>'
   );
@@ -68,23 +87,26 @@ $(document).on("click", ".image_upload", function(){
 
     // $lisの.image-previewは$li.addClass('image-preview')をもとにfindしてる
     $('#previews li').css({
-      width:'20%',
+      width:'18%',
     });
     // inputタグの部分のwidthを動的に変える処理
     if ($lis.length <= 4){
       // debugger
+      console.log('4以下');
       $ul.append(append_input);
       $('#previews li:last-child').css({
         width:`calc(100% - (20% * ${$lis.length}))`,
       });
     }else if ($lis.length == 5){
       // $li.addClass("image-preview"); // ←これは5番目以降からli label input の li に対して､クラスを付けている｡なんで？
+      console.log('5個');
       $ul.append(append_input);
       $('#previews li:last-child').css({
         width:'100%',
       });
     }else if ($lis.length <= 9){
       // $li.addClass("image-preview");
+      console.log('9以下');
       $ul.append(append_input);
       $('#previews li:last-child').css({
         width:`calc(100% - (20% * (${$lis.length} - 5)))`,

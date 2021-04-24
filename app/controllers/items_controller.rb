@@ -106,6 +106,7 @@ class ItemsController < ApplicationController
             Image.find(before_img_id).destroy unless update_images_ids.include?("#{before_img_id}")             
           end
         else          
+          before_images_ids = @item.images.ids
           before_images_ids.each do |before_img_id|
             Image.find(before_img_id).destroy
           end
