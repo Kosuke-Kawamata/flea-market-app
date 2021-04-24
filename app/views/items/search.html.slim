@@ -9,7 +9,7 @@
         li.item-box
           = link_to item_path(item) do 
             div.img-wrapper
-              - if item.img?
+              - if item.images
                 = image_tag(item.img.url)
               - else 
                 = image_tag("item_img/default.png")

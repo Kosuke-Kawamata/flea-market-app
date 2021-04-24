@@ -59,12 +59,12 @@
       ul
         - current_user.items.pre_published.order(id: "DESC").each do |item|
           li.mypage-item-box
-            = link_to item_path(item) do 
+            = link_to edit_item_path(item) do 
               .img-wrapper
-                = image_tag(item.img.url)
-                - if item.sold_flag == true 
-                  .sold-badge-mypage
-                  p.sold-text SOLD
+                - if item.images.present?
+                  = image_tag(item.images.first.img.url)
+                - else 
+                  = image_tag("item_img/default.png", class:'default-img__mypage')
               .mypage-info
                 p.mypage-item-text = item.name                
                 p.mypage-item-text = "¥#{item.price}"              

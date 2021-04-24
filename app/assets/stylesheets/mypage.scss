@@ -44,7 +44,7 @@
   
         &:hover{
           background-color: rgb(245, 245, 245);
-    
+          border: 1px solid #eee;    
         }
         &:active{
           box-shadow: none;
@@ -85,6 +85,9 @@
               height: 48px;
               img{
                 width: 100%;
+              }
+              .default-img__mypage{
+                height: 48px;
               }
               .sold-badge-mypage{
                 content: '';

@@ -4,13 +4,41 @@
       ul  
         - @item.errors.full_messages.each do |error_message|
           li = error_message      
-  .form-container 
+  .form-container
     = form_with model: @item, local: true do |f|
-      .form-group.img-form 
-        .label-container
-          = f.label :img,"出品画像", class: 'item-img-label'
-          p 必須
-        = f.file_field :img, id: :item_img
+      .label-top
+        div 出品画像
+        p 必須
+      .clearfix 
+        ul#previews 
+          = f.fields_for :image do |f_img|
+            - @item.images.each_with_index do |image,i|
+              li.image-preview
+                = f_img.label :img, class:'upload-label', style: 'display:none'
+                  .upload-label__text
+                    p ドラッグアンドドロップ
+                    p またはクリックしてファイルをアップロード
+                  .input-area
+                    = f_img.file_field :img, value:image.img ,class: "hidden image_upload"
+                    = f_img.hidden_field :id, value:image.id ,name: "item[image][#{i}]"
+                    / name属性にindexを入れるとcontrollerで場合分け可能にできる
+                .image-preview__wapper
+                  = image_tag image.img.to_s, class:"preview"
+                .image-preview_btn
+                  .image-preview_btn_delete 削除
+                / = f_img.label :img,'出品画像' ,class:'upload-label', style: 'display:none'
+                /   .upload-label__text
+                /     p ドラッグアンドドロップ
+                /     p またはクリックしてファイルをアップロード
+                /   .input-area
+                /     = f_img.file_field :img, value:image.img ,class: "hidden image_upload"
+                /     = f_img.hidden_field :id, value:image.id ,name: "item[image][#{i}]"
+                /     / name属性を使ってitem#updateで場合分け
+                / .image-preview__wapper
+                /   = image_tag image.img.to_s, class:"preview"
+                / .image-preview_btn
+                /   .image-preview_btn_edit 編集
+                /   .image-preview_btn_delete 削除
       .form-group.name-form
         .label-container
           = f.label :name,'商品名'

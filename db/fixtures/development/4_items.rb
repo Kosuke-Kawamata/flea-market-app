@@ -3,7 +3,7 @@
     s.id = n+1
     s.name = "アイテム#{n+1}"
     s.description = 'よろしくおねがいしまっす！！！'
-    s.img = Rails.root.join("app/assets/images/item_img/sample_#{rand(1..11)}.jpeg").open
+    # s.img = Rails.root.join("app/assets/images/item_img/sample_#{rand(1..11)}.jpeg").open
     s.price = rand(300..10000)
     s.sold_flag = false
     s.status = 0

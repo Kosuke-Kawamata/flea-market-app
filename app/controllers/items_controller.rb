@@ -1,5 +1,5 @@
 class ItemsController < ApplicationController
-  before_action  :authenticate_user!, only: [:new, :edit, :delete_img, :destroy]
+  before_action  :authenticate_user!, only: [:new, :edit, :destroy]
   before_action :set_item, only: [:show, :edit, :update, :destroy, :transaction, :shipped, :recieved, :assess_buyer, :stop_publish, :restart_publish]
   before_action :set_q, only: [:index, :search]
 
@@ -12,6 +12,7 @@ class ItemsController < ApplicationController
   def new
     @categories = Category.all
     @item = Item.new    
+    @item.images.build
   end
   
   def create
@@ -35,6 +36,24 @@ class ItemsController < ApplicationController
     end
     
   end
+  # def create
+  #   @item = Item.new(item_params)
+  #   if params[:pre_published]      
+  #     # binding.pry
+  #     @item.save(validate: false)
+  #     @item.rooms.create! #アイテム作成時に､@itemに紐付いた､roomを作成・保存する
+  #     redirect_to user_pre_published_items_path(@item)
+  #   else      
+  #     if @item.save  
+  #       @item.published! #デフォルトのitemの status: をpre_published にしとく
+  #       @item.rooms.create! #アイテム作成時に､@itemに紐付いた､roomを作成・保存する  
+  #       redirect_to item_path(@item)
+  #     else
+  #       render :new
+  #     end
+  #   end
+    
+  # end
   
   # items#showがchatのformを入力する場所でもある
   def show   
@@ -56,23 +75,62 @@ class ItemsController < ApplicationController
     @categories = Category.all
   end
   
+  # def update
+  #   if params[:pre_published]
+  #     if @item.update!(item_params)
+  #       @item.pre_published!  
+  #       redirect_to item_path(@item)
+  #     else
+  #       render :edit
+  #     end
+  #   else      
+  #     if @item.update!(item_params)
+  #       @item.published!  
+  #       redirect_to item_path(@item)
+  #     else
+  #       render :edit
+  #     end
+  #   end
+
+  #   # @item.update!(item_params)
+  #   # redirect_to item_path(@item)
+  # end
   def update
-    if params[:pre_published]
-      if @item.update!(item_params)
-        @item.pre_published!  
-        redirect_to item_path(@item)
-      else
-        render :edit
-      end
-    else      
-      if @item.update!(item_params)
-        @item.published!  
-        redirect_to item_path(@item)
+    if params[:item].keys.include?("image") || params[:item].keys.include?("images_attributes")
+      if @item.valid?
+        if params[:item].keys.include?("image")
+          update_images_ids = params[:item][:image].values
+          before_images_ids = @item.images.ids
+
+          before_images_ids.each do |before_img_id|
+            Image.find(before_img_id).destroy unless update_images_ids.include?("#{before_img_id}")             
+          end
+        else          
+          before_images_ids = @item.images.ids
+          before_images_ids.each do |before_img_id|
+            Image.find(before_img_id).destroy
+          end
+        end
+      
+        if params[:pre_published]
+          if @item.update!(item_params)
+            @item.pre_published!  
+            redirect_to item_path(@item)
+          else
+            render :edit
+          end
+        else      
+          if @item.update!(item_params)
+            @item.published!  
+            redirect_to item_path(@item)
+          else
+            render :edit
+          end    
+        end
       else
         render :edit
       end
     end
-
     # @item.update!(item_params)
     # redirect_to item_path(@item)
   end
@@ -125,9 +183,11 @@ class ItemsController < ApplicationController
   end
 
   private
+
   def item_params
-    params.require(:item).permit(:name, :description, :category_id, :img, :price, :prefecture_id, :item_condition_id, :brand_id, :shipping_fee, :shipping_date, :shipping_way_id).merge(user_id: current_user.id)
+    params.require(:item).permit(:name, :description, :category_id, :price, :prefecture_id, :item_condition_id, :brand_id, :shipping_fee, :shipping_date, :shipping_way_id, images_attributes: [:id, :img]).merge(user_id: current_user.id)
   end
+
   
   def set_item
     @item = Item.find_by(id: params[:id])

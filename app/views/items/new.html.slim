@@ -6,11 +6,19 @@
           li = error_message      
   .form-container 
     = form_with model: @item, local: true do |f|
-      .form-group.img-form 
-        .label-container
-          = f.label :img,"出品画像", class: 'item-img-label'
+      = f.fields_for :images do |f_img|
+        .label-top
+          div 出品画像
           p 必須
-        = f.file_field :img, id: :item_img
+        .clearfix 
+          ul#previews 
+            li.input 
+              = f_img.label :img, class:'upload-label'
+                .upload-label__text
+                  p ドラッグアンドドロップ                  
+                  p またはクリックしてファイルをアップロード
+                  .input-area
+                    = f_img.file_field :img, class: "hidden image_upload"       
       .form-group.name-form
         .label-container
           = f.label :name,'商品名'
