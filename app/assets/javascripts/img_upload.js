@@ -18,9 +18,20 @@ document.addEventListener("turbolinks:load", function () {
   
   if ($lis.length <= 9 && $('.input').length <= 0){
     $ul.append(append_input);    
-    $('.input').css({
-      width:`calc(100% - (20% * ${$lis.length}))`,
-    });
+
+    if ($lis.length <= 4){
+      $('.input').css({
+        width:`calc(100% - (20% * ${$lis.length}))`,
+      });
+    }else if ($lis.length == 5){
+      $('.input').css({
+        width:'100%',
+      });
+    }else if ($lis.length <= 9){
+      $('.input').css({
+        width:`calc(100% - (20% * (${$lis.length} - 5)))`,
+      });      
+    }
   }
 });
 
