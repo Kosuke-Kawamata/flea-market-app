@@ -5,17 +5,13 @@ html
       | Mercari
     = csrf_meta_tags
     = csp_meta_tag
+    = include_gon
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
 
   body
     = render "layouts/header"
     .main
-      .category-list__container
-        ul
-          - @categories.each do |category|
-            li 
-              = link_to category.name, category_path(category)
       / .notifications
       /   -flash.each do |key,value|
       /     = content_tag(:div, value, class: key)

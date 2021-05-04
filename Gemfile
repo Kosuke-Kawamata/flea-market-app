@@ -89,3 +89,5 @@ gem 'enum_help'
 gem 'kaminari'
 
 gem 'ancestry'
+
+gem 'gon'
