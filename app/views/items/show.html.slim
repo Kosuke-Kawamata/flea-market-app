@@ -32,7 +32,9 @@
                   p = @user_assessments.where(user_rank: "bad").count
           tr
             th カテゴリ
-            td = @item.category.name
+            td 
+              = link_to category_path(@item.category_id) do
+                = "#{@item.category.parent.parent.name}/#{@item.category.parent.name}/#{@item.category.name}"
           tr
             th ブランド
             - if @item.brand

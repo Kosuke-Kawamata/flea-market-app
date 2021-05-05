@@ -87,3 +87,7 @@ gem 'active_hash'
 gem 'enum_help' 
 
 gem 'kaminari'
+
+gem 'ancestry'
+
+gem 'gon'

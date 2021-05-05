@@ -35,8 +35,7 @@ Rails.application.routes.draw do
   end
   resources :admins
   
-  # アイテムモデルのCRUDのルーティング
-  
+  # アイテムモデルのCRUDのルーティング  
   resources :items do 
     member do       
       get :transaction
@@ -46,6 +45,8 @@ Rails.application.routes.draw do
     end
     collection do
       get 'search'
+      get 'get_category_children', defaults: {format: 'json'}
+      get 'get_category_grandchildren', defaults: {format: 'json'}
     end
     resources :charges, only:[:create]
     resources :chats, only:[:create, :destroy]
@@ -53,13 +54,8 @@ Rails.application.routes.draw do
     resources :likes, only:[:create, :destroy]
   end
 
-
-
-# カテゴリー別に表示するためのルーティング
+  # カテゴリー別に表示するためのルーティング
   get 'categories/:id' => 'categories#show', as: 'category'
-  
-
-
 end
 
 

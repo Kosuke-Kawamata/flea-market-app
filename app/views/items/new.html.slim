@@ -29,33 +29,40 @@
           = f.label :description,'商品の説明'
           p 必須
         = f.text_area :description, class: 'description-text', id: 'item_description'
-      .form-group
+      .category-form
         .label-container
-          = f.label :category_id,'カテゴリ'
+          = f.label :category_id, 'カテゴリ',class: 'listing-default__label'
           p 必須
-        .select-box
-          = f.collection_select(:category_id, Category.all, :id, :name, {prompt: "カテゴリーを選択してください"})
+        .parent-category__wrapper
+          = f.collection_select :category_id, @category_parent_array, :id, :name, {prompt:'---'}, {class:'parent-select-box',id: 'parent_category'}
           i.fas.fa-chevron-down
+      / .form-group
+      /   .label-container
+      /     = f.label :category_id,'カテゴリ'
+      /     p 必須
+      /   .select-box
+      /     = f.collection_select(:category_id, Category.all, :id, :name, {prompt: "カテゴリーを選択してください"})
+      /     i.fas.fa-chevron-down
       .form-group
         .label-container
           = f.label :brand_id,'ブランド'
           p.optional 任意
         .select-box        
-          = f.collection_select(:brand_id, Brand.all, :id, :name, {include_blank: "選択してください"})
+          = f.collection_select(:brand_id, Brand.all, :id, :name, {include_blank: "---"})
           i.fas.fa-chevron-down
       .form-group
         .label-container
           = f.label :item_condition_id,'商品の状態'
           p 必須
         .select-box
-          = f.collection_select :item_condition_id, ItemCondition.all, :id, :condition, {include_blank: "選択してください"}, {class: "select-conditions"}
+          = f.collection_select :item_condition_id, ItemCondition.all, :id, :condition, {include_blank: "---"}, {class: "select-conditions"}
           i.fas.fa-chevron-down
       .form-group
         .label-container
           = f.label :shipping_fee,'送料負担'
           p 必須
         .select-box
-          = f.select :shipping_fee, Item.shipping_fees.keys.map {|k| [I18n.t("enums.item.shipping_fee.#{k}"), k]}, {prompt:"選択してください"}
+          = f.select :shipping_fee, Item.shipping_fees.keys.map {|k| [I18n.t("enums.item.shipping_fee.#{k}"), k]}, {prompt:"---"}
           i.fas.fa-chevron-down
       .form-group
         .label-container
@@ -76,7 +83,7 @@
           = f.label :shipping_date,'発送までの日数'
           p 必須
         .select-box
-          = f.select :shipping_date, Item.shipping_dates.keys.map {|k| [I18n.t("enums.item.shipping_date.#{k}"), k]}, {prompt:"選択してください"}
+          = f.select :shipping_date, Item.shipping_dates.keys.map {|k| [I18n.t("enums.item.shipping_date.#{k}"), k]}, {prompt:"---"}
           i.fas.fa-chevron-down
       .form-group
         .label-container

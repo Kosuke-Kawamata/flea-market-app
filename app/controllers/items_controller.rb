@@ -11,8 +11,22 @@ class ItemsController < ApplicationController
 
   def new
     @categories = Category.all
+    @category_parent_array = Category.where(ancestry: nil).to_a
     @item = Item.new    
     @item.images.build
+  end
+
+  # 親カテゴリーが選択された後に動くアクション
+  def get_category_children
+    #選択された親カテゴリーに紐付く子カテゴリーの配列を取得
+    # @category_children = Category.find_by(name: "#{params[:parent_name]}", ancestry: nil).children
+    @category_children = Category.find(params[:parent_id]).children
+  end
+  
+  # 子カテゴリーが選択された後に動くアクション
+  def get_category_grandchildren
+    #選択された子カテゴリーに紐付く孫カテゴリーの配列を取得
+    @category_grandchildren = Category.find("#{params[:child_id]}").children
   end
   
   def create
@@ -52,18 +66,19 @@ class ItemsController < ApplicationController
   #       render :new
   #     end
   #   end
-    
+  
   # end
   
   # items#showがchatのformを入力する場所でもある
   def show   
+    @item_category = Category.find(@item.category_id)
     @user_assessments = Assessment.where(trading_partner_id: @item.user_id)
     @room = @item.rooms.first
     @chats = @room.chats
     
     if current_user
       @chat = Chat.new(room_id: @room.id, user_id: current_user.id, item_id: @item.id)
-  
+      
       unless current_user.user_rooms.pluck(:room_id).include?(@item.rooms.first.id)
         UserRoom.create(room_id: @room.id, user_id: current_user.id)
       end
@@ -73,6 +88,7 @@ class ItemsController < ApplicationController
   
   def edit
     @categories = Category.all
+    @category_parent_array = Category.where(ancestry: nil).to_a
   end
   
   # def update
