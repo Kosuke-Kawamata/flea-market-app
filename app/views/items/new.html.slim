@@ -34,15 +34,8 @@
           = f.label :category_id, 'カテゴリ',class: 'listing-default__label'
           p 必須
         .parent-category__wrapper
-          = f.collection_select :category_id, @category_parent_array, :id, :name, {prompt:'---'}, {class:'parent-select-box',id: 'parent_category'}
+          = f.collection_select :category_id, @parent_category_array, :id, :name, {prompt:'---'}, {class:'parent-select-box',id: 'parent_category'}
           i.fas.fa-chevron-down
-      / .form-group
-      /   .label-container
-      /     = f.label :category_id,'カテゴリ'
-      /     p 必須
-      /   .select-box
-      /     = f.collection_select(:category_id, Category.all, :id, :name, {prompt: "カテゴリーを選択してください"})
-      /     i.fas.fa-chevron-down
       .form-group
         .label-container
           = f.label :brand_id,'ブランド'
