@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
 
       gon.parent_array << child_array
     end
-    binding.pry
+    # binding.pry
     
   end
 
