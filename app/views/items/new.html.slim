@@ -1,6 +1,6 @@
 .top-container_item-new
   .error__container 
-    - if @item.errors
+    - if @item.errors.any?
       ul  
         - @item.errors.full_messages.each do |error_message|
           li = error_message      
@@ -36,13 +36,6 @@
         .parent-category__wrapper
           = f.collection_select :category_id, @category_parent_array, :id, :name, {prompt:'---'}, {class:'parent-select-box',id: 'parent_category'}
           i.fas.fa-chevron-down
-      / .form-group
-      /   .label-container
-      /     = f.label :category_id,'カテゴリ'
-      /     p 必須
-      /   .select-box
-      /     = f.collection_select(:category_id, Category.all, :id, :name, {prompt: "カテゴリーを選択してください"})
-      /     i.fas.fa-chevron-down
       .form-group
         .label-container
           = f.label :brand_id,'ブランド'

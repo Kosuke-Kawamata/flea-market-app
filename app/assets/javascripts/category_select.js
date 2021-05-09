@@ -33,9 +33,7 @@ document.addEventListener("turbolinks:load", function() {
   $('#parent_category').on('change', function(){
     var parentCategory = $('#parent_category').val(); //選択された親カテゴリーの名前を取得
     // var parentCategory = document.getElementById('parent_category').value; //選択された親カテゴリーの名前を取得
-    console.log(parentCategory)
     if (parentCategory != '---'){ //親カテゴリーが初期値でないことを確認
-      console.log('ajaxです');
       $.ajax({
         url: '/items/get_category_children',
         type: 'GET',
@@ -46,10 +44,7 @@ document.addEventListener("turbolinks:load", function() {
       .done(function(children){
         $('#children_wrapper').remove(); //親が変更された時、子以下を削除する｡（これは､一度カテゴリを選択し直したときに必要）
         $('#grandchildren_wrapper').remove();
-        // $('#size_wrapper').remove();
-        // $('#brand_wrapper').remove();
         var insertHTML = '';
-        // console.log(children);
         children.forEach(function(child){  // ←ここの引数のchildrenは多分､ajax通信をしたあとに返ってくる値
           insertHTML += appendOption(child);
         });
@@ -61,8 +56,6 @@ document.addEventListener("turbolinks:load", function() {
     }else{
       $('#children_wrapper').remove(); //親カテゴリーが初期値になった時、子以下を削除する
       $('#grandchildren_wrapper').remove();
-      // $('#size_wrapper').remove();
-      // $('#brand_wrapper').remove();
     }
   });
   // 子カテゴリー選択後のイベント
@@ -79,8 +72,6 @@ document.addEventListener("turbolinks:load", function() {
       .done(function(grandchildren){
         if (grandchildren.length != 0) {
           $('#grandchildren_wrapper').remove(); //子が変更された時、孫以下を削除するする
-          // $('#size_wrapper').remove();
-          // $('#brand_wrapper').remove();
           var insertHTML = '';
           grandchildren.forEach(function(grandchild){
             insertHTML += appendOption(grandchild);
@@ -93,13 +84,21 @@ document.addEventListener("turbolinks:load", function() {
       })
     }else{
       $('#grandchildren_wrapper').remove(); //子カテゴリーが初期値になった時、孫以下を削除する
-      // $('#size_wrapper').remove();
-      // $('#brand_wrapper').remove();
     }
   });
   // カテゴリは孫カテゴリのみ保存されるように､親・子は送信する直前で削除
   $('.submit-btn').on('click',function(){
-    $('#child_category').remove();
-    $('#parent_category').remove();
+    console.log('ボタンが押されました')
+    var selectBox = $('select[name="item[category_id]"]')
+    if (selectBox.length < 3){
+      $('#child_category').remove();
+      // $('#parent_category').val('');
+      console.log('カテゴリ不足');
+    }else{
+      $('#child_category').remove();
+      $('#parent_category').remove();
+      console.log('正常');
+    }
+    debugger
   });
 });

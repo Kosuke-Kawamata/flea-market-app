@@ -21,7 +21,7 @@
                   .input-area
                     = f_img.file_field :img, value:image.img ,class: "hidden image_upload"
                     = f_img.hidden_field :id, value:image.id ,name: "item[image][#{i}]"
-                    / name属性にindexを入れるとcontrollerで場合分け可能にできる
+                    / name属性にindexを入れるとcontrollerで場合分けできるようになる
                 .image-preview__wapper
                   = image_tag image.img.to_s, class:"preview"
                 .image-preview_btn
