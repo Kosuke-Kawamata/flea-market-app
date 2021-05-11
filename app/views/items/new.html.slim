@@ -34,7 +34,7 @@
           = f.label :category_id, 'カテゴリ',class: 'listing-default__label'
           p 必須
         .parent-category__wrapper
-          = f.collection_select :category_id, @category_parent_array, :id, :name, {prompt:'---'}, {class:'parent-select-box',id: 'parent_category'}
+          = f.collection_select :category_id, @parent_category_array, :id, :name, {prompt:'---'}, {class:'parent-select-box',id: 'parent_category'}
           i.fas.fa-chevron-down
       .form-group
         .label-container

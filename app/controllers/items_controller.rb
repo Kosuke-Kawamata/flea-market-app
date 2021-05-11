@@ -11,7 +11,8 @@ class ItemsController < ApplicationController
 
   def new
     @categories = Category.all
-    @category_parent_array = Category.where(ancestry: nil).to_a
+    @parent_category_array = Category.where(ancestry: nil).to_a
+    
     @item = Item.new    
     @item.images.build
   end
@@ -92,7 +93,7 @@ class ItemsController < ApplicationController
   
   def edit
     @categories = Category.all
-    @category_parent_array = Category.where(ancestry: nil).to_a
+    @parent_category_array = Category.where(ancestry: nil).to_a
   end
   
   # def update
@@ -133,14 +134,14 @@ class ItemsController < ApplicationController
         end
         
         if params[:pre_published]
-          if @item.update!(item_params)
+          if @item.update(item_params)
             @item.pre_published!  
             redirect_to item_path(@item)
           else
             render :edit
           end
         else      
-          if @item.update!(item_params)
+          if @item.update(item_params)
             @item.published!  
             redirect_to item_path(@item)
           else
