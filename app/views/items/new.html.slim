@@ -1,6 +1,6 @@
 .top-container_item-new
   .error__container 
-    - if @item.errors
+    - if @item.errors.any?
       ul  
         - @item.errors.full_messages.each do |error_message|
           li = error_message      

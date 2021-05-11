@@ -23,6 +23,10 @@ class User < ApplicationRecord
 
   # また､foreign_key を指定しているのは､そういなきゃ､いつもどおり､user_idを参照してしまうから｡
   
+  validates :name, presence: true
+  validates :email, presence: true, uniqueness: true
+  validates :password, presence: true
+
   mount_uploader :img, UserImgUploader
 
   # Include default devise modules. Others available are:

@@ -30,45 +30,49 @@ class ItemsController < ApplicationController
     @category_grandchildren = Category.find("#{params[:child_id]}").children
   end
   
+  # def create
+  #   @item = Item.new(item_params)
+    
+  #   if params[:pre_published]
+  #     if @item.save
+  #       @item.pre_published!
+  #       @item.rooms.create! #アイテム作成時に､@itemに紐付いた､roomを作成・保存する
+  #       redirect_to user_pre_published_items_path(@item)
+  #     else
+  #       # binding.pry
+  #       render :new
+  #     end
+  #   else      
+  #     if @item.save  
+  #       @item.rooms.create! #アイテム作成時に､@itemに紐付いた､roomを作成・保存する  
+  #       redirect_to item_path(@item)
+  #     else
+  #       # binding.pry
+  #       render :new
+  #     end
+  #   end
+    
+  # end
+
+  # バリデーションエラーが有ると@item.published!みたいにemunでstatusを更新できないーーーーーーーーーーーーー
   def create
     @item = Item.new(item_params)
-    
-    if params[:pre_published]
-      if @item.save
-        @item.pre_published!
-        @item.rooms.create! #アイテム作成時に､@itemに紐付いた､roomを作成・保存する
-        redirect_to user_pre_published_items_path(@item)
-      else
-        render :new
-      end
+    if params[:pre_published]      
+      # binding.pry
+      @item.save(validate: false)
+      @item.rooms.create! #アイテム作成時に､@itemに紐付いた､roomを作成・保存する
+      redirect_to user_pre_published_items_path(@item)
     else      
       if @item.save  
+        @item.published! #デフォルトのitemの status: をpre_published にしとく
         @item.rooms.create! #アイテム作成時に､@itemに紐付いた､roomを作成・保存する  
         redirect_to item_path(@item)
       else
         render :new
       end
     end
-    
-  end
-  # def create
-  #   @item = Item.new(item_params)
-  #   if params[:pre_published]      
-  #     # binding.pry
-  #     @item.save(validate: false)
-  #     @item.rooms.create! #アイテム作成時に､@itemに紐付いた､roomを作成・保存する
-  #     redirect_to user_pre_published_items_path(@item)
-  #   else      
-  #     if @item.save  
-  #       @item.published! #デフォルトのitemの status: をpre_published にしとく
-  #       @item.rooms.create! #アイテム作成時に､@itemに紐付いた､roomを作成・保存する  
-  #       redirect_to item_path(@item)
-  #     else
-  #       render :new
-  #     end
-  #   end
   
-  # end
+  end
   
   # items#showがchatのformを入力する場所でもある
   def show   
@@ -115,20 +119,20 @@ class ItemsController < ApplicationController
   def update
     if params[:item].keys.include?("image") || params[:item].keys.include?("images_attributes")
       if @item.valid?
-        if params[:item].keys.include?("image")
+        if params[:item].keys.include?("image") #保存していた画像があるとき
           update_images_ids = params[:item][:image].values
           before_images_ids = @item.images.ids
 
           before_images_ids.each do |before_img_id|
             Image.find(before_img_id).destroy unless update_images_ids.include?("#{before_img_id}")             
           end
-        else          
+        else  #保存していた画像が一つもないとき
           before_images_ids = @item.images.ids
           before_images_ids.each do |before_img_id|
             Image.find(before_img_id).destroy
           end
         end
-      
+        
         if params[:pre_published]
           if @item.update(item_params)
             @item.pre_published!  

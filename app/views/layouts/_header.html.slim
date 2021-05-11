@@ -16,16 +16,6 @@ header.header
             - @parent_categories.each_with_index do |parent_category, i|
               li class="parent_category__li" data-parent="#{i}"
                 = link_to parent_category.name, category_path(parent_category)
-          / ul.child-category__ul
-          /   - @child_categories[0].each_with_index do |child_category, i|
-          /     li data-child="#{i}"
-          /       = link_to child_category.name, category_path(child_category)
-          / - binding.pry
-          /       = link_to child_category.name, category_path(child_category)
-          / ul.grandchild-category__ul
-          /   - @child_categories.each do |child_category|
-          /     li 
-          /       = link_to child_category.name, category_path(child_category)
       nav
         ul
           - if user_signed_in?

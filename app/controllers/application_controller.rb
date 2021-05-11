@@ -26,9 +26,7 @@ class ApplicationController < ActionController::Base
       end
 
       gon.parent_array << child_array
-    end
-    # binding.pry
-    
+    end    
   end
 
   def set_search

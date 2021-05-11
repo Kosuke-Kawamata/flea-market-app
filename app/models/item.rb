@@ -20,11 +20,11 @@ class Item < ApplicationRecord
   enum shipping_fee: {seller_pay: 1, buyer_pay: 2}
   enum shipping_date: {days1_2: 1, days2_3: 2, days4_7: 3}
 
-  validates :name, presence: true
+  validates :name, presence: true, length: { in: 1..25}
   validates :description, presence: true
   # validates :img, presence: true ← カラムを削除した際にはバリデーションも削除すること！
   validates :category_id, presence: true
-  validates :price, presence: true
+  validates :price, presence: true, length: { in: 1..7 }  
   validates :item_condition_id, presence: true
   validates :shipping_date, presence: true
   validates :shipping_fee, presence: true
