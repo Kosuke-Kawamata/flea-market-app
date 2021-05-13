@@ -38,14 +38,18 @@ class User < ApplicationRecord
     return if self == other_user
 
     relationships.find_or_create_by!(follower_id: other_user.id)
+    #self.relationships.find_or_create_by!(follower_id: other_user.id)
   end
 
   def following?(user)
     followings.include?(user)
+    #self.followings.include?(user)
   end
+  # .followingsでuserがフォローした人を取得できる
 
   def unfollow(relathinoship_id)
     relationships.find(relathinoship_id).destroy!
+    #self.relationships.find(relathinoship_id).destroy!
   end
 end
 

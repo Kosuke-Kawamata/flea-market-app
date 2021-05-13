@@ -9,6 +9,7 @@ class RelationshipsController < ApplicationController
   def destroy
     # @user = User.find(params[:user_id])
 
+    # unfollow_buttonを押すと､relationship_path(current_user.relationships.find_by(follower: user))というpathに行く｡ だから､ここのparams[:id]は､current_userとfollower_idに紐付いたrelationshipのレコードのidになる｡
     @user = current_user.relationships.find(params[:id]).follower # @userにフォロー相手をいれている
     current_user.unfollow(params[:id])
     # redirect_to user_path(@user)
