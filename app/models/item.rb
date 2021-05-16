@@ -24,7 +24,7 @@ class Item < ApplicationRecord
   validates :description, presence: true
   # validates :img, presence: true ← カラムを削除した際にはバリデーションも削除すること！
   validates :category_id, presence: true
-  validates :price, presence: true, length: { in: 1..7 }  
+  validates :price, numericality: { greater_than: 300, less_than: 1000000}
   validates :item_condition_id, presence: true
   validates :shipping_date, presence: true
   validates :shipping_fee, presence: true

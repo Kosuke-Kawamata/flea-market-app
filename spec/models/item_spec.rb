@@ -48,11 +48,34 @@ RSpec.describe Item, type: :model do
         expect(item).to be_invalid
       end
     end
-    context 'priceがないとき' do
-      it 'バリデーションエラーがでる' do
-        data = default.merge(price: nil)
-        item = FactoryBot.build(:item, data)
-        expect(item).to be_invalid
+    describe 'priceのバリデーションテスト' do
+      context 'priceがないとき' do
+        it 'バリデーションエラーがでる' do
+          data = default.merge(price: nil)
+          item = FactoryBot.build(:item, data)
+          expect(item).to be_invalid
+        end
+      end      
+      context 'priceが300未満のとき' do
+        it 'バリデーションエラーがでる' do
+          data = default.merge(price: 299)
+          item = FactoryBot.build(:item, data)
+          expect(item).to be_invalid
+        end
+      end      
+      context 'priceが300以上1000000未満のとき' do
+        it 'バリデーションエラーがでる' do
+          data = default.merge(price: 3000)
+          item = FactoryBot.build(:item, data)
+          expect(item).to be_valid
+        end
+      end
+      context 'priceが1000000以上のとき' do
+        it 'バリデーションエラーがでる' do
+          data = default.merge(price: 1000000)
+          item = FactoryBot.build(:item, data)
+          expect(item).to be_invalid
+        end
       end
     end
     context 'item_condition_idがないとき' do
