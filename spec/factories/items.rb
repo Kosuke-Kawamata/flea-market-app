@@ -5,6 +5,7 @@ FactoryBot.define do
     description {'説明です'}
     association :user
     association :category
+    association :brand
     price {rand(300..10000)}
     sold_flag {false}
     status {0}

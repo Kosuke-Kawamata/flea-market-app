@@ -94,3 +94,5 @@ gem 'kaminari'
 gem 'ancestry'
 
 gem 'gon'
+
+gem 'rails-controller-testing'
