@@ -1,6 +1,6 @@
 require'rails_helper'
 
-describe UsersController, type: :controller do
+RSpec.describe UsersController, type: :controller do
   describe 'GET #index' do
     let(:users) { FactoryBot.create_list :user, 2 }
 
