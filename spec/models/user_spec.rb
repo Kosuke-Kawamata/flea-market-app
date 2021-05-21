@@ -6,33 +6,28 @@ RSpec.describe  User, type: :model do
       user = User.new(name: 'テスト1', email: 'test.test@test.com', password: 'testtest')
       user.valid?
       expect(user).to be_valid
-    end
-    
+    end    
     it "nameが重複している場合､有効" do
       user_1 = FactoryBot.create(:user, name:'たろう')
       user_2 = FactoryBot.create(:user, name:'たろう')
       user_2.valid?
       expect(user_2).to be_valid
-    end
-    
+    end    
     it "nameがない場合､無効" do
       user = FactoryBot.build(:user, name:'')
       user.valid?
       expect(user).not_to be_valid
-    end
-    
+    end    
     it "emailがない場合､無効" do      
       user = FactoryBot.build(:user, email:'')
       user.valid?
       expect(user).not_to be_valid
-    end
-    
+    end    
     it "passwordがない場合､無効" do
       user = FactoryBot.build(:user, password:'')
       user.valid?
       expect(user).not_to be_valid
     end
-
     # どっちがいいの？ たぶん､保存できるか出来ないかをテストしたいから､.saveを使う方が分かりやすいかな？
     let(:user_2) {FactoryBot.build(:user, email:'test@test.com')}
     it "emailが重複している場合､無効" do
@@ -46,7 +41,6 @@ RSpec.describe  User, type: :model do
       expect(user_2.save).to be_falsey
     end
   end
-
   describe '#follow' do
     before do
       @following = FactoryBot.create(:user, name:'テスト1')
@@ -57,7 +51,6 @@ RSpec.describe  User, type: :model do
       expect(Relationship.find_by(user_id: @following.id).follower_id).to eq @followed.id
     end
   end
-
   describe '#following?' do
     before do
       @user1 = FactoryBot.create(:user)
@@ -78,7 +71,6 @@ RSpec.describe  User, type: :model do
     end
   end
 end
-
 describe '#unfollow' do
   before do
     @user1 = FactoryBot.create(:user)

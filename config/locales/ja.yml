@@ -15,31 +15,7 @@ ja:
       shipping_date:
         days1_2: "1〜2日"
         days2_3: "2〜3日"
-        days4_7: "4〜7日"
-        
-  activerecord:
-    models:
-      user: ユーザー
-    attributes:
-      user:
-        id: ID
-        name: ユーザー名
-        description: 説明
-        created_at: 登録日時
-        updated_at: 更新日時
-
-    models:
-      item: アイテム
-    attributes:
-      category_id: カテゴリー
-      name: 商品名
-      item_condition: 商品の状態
-      shipping_fee: 送料
-      brand_id: ブランド
-
-    models:
-      category: カテゴリ
-
+        days4_7: "4〜7日"    
   views:
     pagination:
       first: <i class="fas fa-angle-double-left"></i>
@@ -47,8 +23,6 @@ ja:
       previous: <i class="fas fa-angle-left"></i>
       next: <i class="fas fa-angle-right"></i>
       truncate: "..."
-
-
   errors:
     messages:
       expired: "有効期限切れです。新規登録してください"
@@ -58,7 +32,6 @@ ja:
       not_saved:
         one: "エラーにより、この %{resource} を保存できません："
         other: "%{count} 個のエラーにより、この %{resource} を保存できません："
-
   devise:
     failure:
       already_authenticated: 'ログイン済みです'

@@ -67,7 +67,9 @@ class ItemsController < ApplicationController
         @item.published! #デフォルトのitemの status: をpre_published にしとく
         @item.rooms.create! #アイテム作成時に､@itemに紐付いた､roomを作成・保存する  
         redirect_to item_path(@item)
-      else
+      else        
+        # gonを使って変数をｊｓに渡す
+        @parent_category_array = Category.where(ancestry: nil).to_a
         render :new
       end
     end
