@@ -77,7 +77,7 @@ gem 'carrierwave'
 
 gem 'seed-fu', '~> 2.3'
 
-gem "stripe", groups: [:development, :test]
+gem "stripe"
 
 gem 'dotenv-rails'
 
