@@ -26,7 +26,12 @@
     }
     .user-icon__wrapper, .user-icon-preview__wrapper{
       width: 70px;
-      .user-icon__img, .user-icon-preview__img{
+      .user-icon__img, img{
+        width: 100%;
+        border-radius: 50%;
+      }
+      .user-icon-preview__img, img{
+        height: 70px;
         width: 100%;
         border-radius: 50%;
       }

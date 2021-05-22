@@ -61,7 +61,7 @@
       - @following_persons.each do |following_person|
         li.following-box
           = link_to user_path(following_person) do
-            - if following_person.images?
+            - if following_person.img?
               .img-wrapper
                 = image_tag(following_person.img.url)
               p.following_name = following_person.name              
