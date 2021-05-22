@@ -140,6 +140,7 @@ class ItemsController < ApplicationController
             @item.pre_published!  
             redirect_to item_path(@item)
           else
+            @parent_category_array = Category.where(ancestry: nil).to_a
             render :edit
           end
         else      
@@ -147,10 +148,12 @@ class ItemsController < ApplicationController
             @item.published!  
             redirect_to item_path(@item)
           else
+            @parent_category_array = Category.where(ancestry: nil).to_a
             render :edit
           end    
         end
       else
+        @parent_category_array = Category.where(ancestry: nil).to_a
         render :edit
       end
     end

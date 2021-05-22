@@ -20,7 +20,7 @@ $(document).on("click", ".user-icon__wrapper", function(){
 
 $(document).on("click", ".user-icon-preview__wrapper", function(){
   var icon_preview = $(
-    '<div class="user-icon-preview__wapper">'+
+    '<div class="user-icon-preview__wrapper">'+
       '<img class="user-icon-preview__img">'+
     '</div>'
   );

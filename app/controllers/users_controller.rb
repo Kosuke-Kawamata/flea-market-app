@@ -10,8 +10,12 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user.update!(user_params)
-    redirect_to user_path(current_user)
+    if @user.update!(user_params)
+      redirect_to user_path(current_user)
+    else      
+      # redirect_to edit_user_path(current_user)
+      render :edit
+    end
   end
 
   def mypage    

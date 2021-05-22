@@ -61,16 +61,14 @@
         - if @commented_items
           - @commented_items.where(sold_flag: false).distinct.each do |item|
             li.mypage-item-box
-              = link_to item_path(item) do 
-                .img-wrapper
-                  = image_tag(item.img.url)
-                  - if item.sold_flag == true 
-                    .sold-badge-mypage
-                    p.sold-text SOLD
-                .mypage-info
-                  p.mypage-item-text = item.name                
-                  p.mypage-item-text = "¥#{item.price}"              
-                i.fas.fa-chevron-right
+             = link_to item_path(item) do 
+              .img-wrapper
+                = image_tag(item.images.first.img.url)
+              .mypage-info
+                p = item.name
+                .price-tag
+                  = "¥#{item.price}"              
+              i.fas.fa-chevron-right
         - else
           p 該当する商品はありません
       .paging-link
