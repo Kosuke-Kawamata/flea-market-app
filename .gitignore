@@ -29,3 +29,6 @@
 
 # 決済サービスの実装で追加したもの
 /.env
+
+# Ignore uploaded files in development
+/public/uploads/
