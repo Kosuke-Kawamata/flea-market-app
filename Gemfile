@@ -96,3 +96,5 @@ gem 'ancestry'
 gem 'gon'
 
 gem 'rails-controller-testing'
+
+gem 'fog-aws'

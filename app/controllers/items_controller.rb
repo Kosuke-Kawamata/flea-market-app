@@ -2,6 +2,7 @@ class ItemsController < ApplicationController
   before_action  :authenticate_user!, only: [:new, :edit, :destroy]
   before_action :set_item, only: [:show, :edit, :update, :destroy, :transaction, :shipped, :recieved, :assess_buyer, :stop_publish, :restart_publish]
   before_action :set_q, only: [:index, :search]
+  before_action :remove_image, only: [:destroy]
 
   def index
     @items = Item.all
@@ -225,6 +226,13 @@ class ItemsController < ApplicationController
 
   def set_q
     @q = Item.ransack(params[:q])
+  end
+
+  def remove_image
+    @item.images.each do |image|
+      image.remove_img!
+    end
+    @item.save(validate: false)
   end
   
 end

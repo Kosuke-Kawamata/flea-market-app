@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user
+  before_action :remove_image, only: [:destroy]
 
   def show
     @user_items = @user.items
@@ -91,4 +92,7 @@ class UsersController < ApplicationController
     @user = User.find_by(id: params[:id])
   end
 
+  def remove_image
+    @user.remove_img!
+  end
 end
