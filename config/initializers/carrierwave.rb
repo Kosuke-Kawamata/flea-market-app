@@ -6,10 +6,13 @@ CarrierWave.configure do |config|
     region: 'ap-northeast-1'
   }
 
+  # aws s3の容量の関係上､productionとdevelopmentで同じディレクトリを使用する
   case Rails.env
     when 'production'
-      config.fog_directory = 'flea-market-app'
-      config.asset_host = 'https://s3-ap-northeast-1.amazonaws.com/flea-market-app'
+      # config.fog_directory = 'flea-market-app'
+      # config.asset_host = 'https://s3-ap-northeast-1.amazonaws.com/flea-market-app'
+      config.fog_directory = 'dev.flea-market-app'
+      config.asset_host = 'https://s3-ap-northeast-1.amazonaws.com/dev.flea-market-app'
 
     when 'development'
       config.fog_directory = 'dev.flea-market-app'
