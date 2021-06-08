@@ -12,7 +12,7 @@
     .icon-background
       = link_to user_path(@user) do 
         .user-icon
-          = image_tag('user_img/defalut.jpg')
+          = image_tag('user_img/default.jpg')
         p.user-name #{@user.name}
       .small-info
         p = "評価#{@user.assessments.count}"

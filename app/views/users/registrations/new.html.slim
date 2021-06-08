@@ -1,28 +1,23 @@
-h2 Sign up
-.container
+.new-user__container
   = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
     = render "users/shared/error_messages", resource: resource
-    .field
-      = f.label :name
-      br
-      = f.text_field :name, autofocus: true, autocomplete: "name"
-    .field
-      = f.label :email
-      br
-      = f.email_field :email, autofocus: true, autocomplete: "email"
-    .field
-      = f.label :password
-      - if @minimum_password_length
-        em
-          | (
-          = @minimum_password_length
-          |  characters minimum)
-      br
-      = f.password_field :password, autocomplete: "new-password"
-    .field
-      = f.label :password_confirmation
-      br
-      = f.password_field :password_confirmation, autocomplete: "new-password"
-    .actions
-      = f.submit "Sign up"
-  = render "users/shared/links"
+    .user-info__input
+      = f.label :name, 'ユーザー名'
+      = f.text_field :name, autofocus: true, autocomplete: "name", placeholder:'フリマ太郎'
+    .user-info__input
+      = f.label :email, 'メールアドレス'
+      = f.email_field :email, autofocus: true, autocomplete: "email", placeholder:'flea-market@tarou.com'
+    .password__input
+      .label__container
+        = f.label :password, 'パスワード'
+        - if @minimum_password_length
+          p
+            | (
+            = @minimum_password_length
+            |  文字以上)
+      = f.password_field :password, autocomplete: "new-password", placeholder:'password'
+    .user-info__input
+      = f.label :password_confirmation, 'パスワードの再確認'
+      = f.password_field :password_confirmation, autocomplete: "new-password", placeholder:'パスワードを再入力してください'
+    .registration-btn__container
+      = f.submit "新規会員登録", class:'registration-btn'

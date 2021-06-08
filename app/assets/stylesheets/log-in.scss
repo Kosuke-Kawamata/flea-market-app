@@ -1,3 +1,4 @@
+// ログイン画面----------------------------------------
 .login__top-container{
   display: flex;
   flex-direction: column;
@@ -38,5 +39,57 @@
   }
   .forgot-password__link{
     margin-top: 20px;
+  }
+}
+
+// 新規登録画面-----------------------------------------
+.new-user__container{
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  margin: 90px auto;
+  form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .user-info__input{
+      margin: 18px 0;
+      input{
+        width: 400px;
+      }
+    }
+    .password__input{
+      .label__container{
+        display: flex;
+        p{
+          margin-left: 10px;
+        }
+      }
+      input{
+        width: 400px;
+      }
+    }
+    .registration-btn__container{
+      display: flex;
+      justify-content: center;
+      margin: 31px 0;
+      .registration-btn{
+        width: 180px;
+        padding: 0 10px;
+        text-decoration: none;
+        background-color: white;
+        border: 1px solid rgb(238, 143, 60);
+        border-radius: 4px;
+        color: rgb(238, 143, 60);
+        display: block;
+        font-size: 14px;
+        padding: 8px 10px;
+        transition: all 0.3s ease-out 0s;
+        &:hover{
+          background-color: rgb(238, 143, 60);
+          color: white;
+        }        
+      }
+    }  
   }
 }
