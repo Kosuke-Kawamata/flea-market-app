@@ -1,19 +1,9 @@
-h2 ログイン
-.container
+.login__top-container
   = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-    .form-group
-      = f.label :name
-      br
-      = f.text_field :name, autofocus: true, autocomplete: "name"
-    .form-group
-      = f.label :password
-      br
-      = f.password_field :password, autocomplete: "current-password"
-    - if devise_mapping.rememberable?
-      .form-group
-        = f.check_box :remember_me
-        = f.label :remember_me
-    .actions
-      = f.submit "Log in"
-      
+    .login-input__container
+      = f.text_field :name, autofocus: true, autocomplete:"name", class:'login__input', placeholder:'ユーザー名'
+    .login-input__container
+      = f.password_field :password, autocomplete:"current-password", class:'login__input', placeholder:'パスワード'
+    .login-btn__container
+      = f.submit "ログイン", class:'login__btn'
   = render "users/shared/links"
