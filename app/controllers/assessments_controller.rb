@@ -5,8 +5,7 @@ class AssessmentsController < ApplicationController
       assessment = Assessment.create!(assessment_params)  
       assessment.for_seller!
       @item.buyer_assessed!
-      redirect_to transaction_item_path(@item)
-    
+      redirect_to transaction_item_path(@item)    
     elsif current_user.id == @item.user_id
       assessment = Assessment.create!(assessment_params)  
       assessment.for_buyer!

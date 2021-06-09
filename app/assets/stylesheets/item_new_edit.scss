@@ -28,7 +28,6 @@ form{
     width: 100%;    
   }  
 }
-
 .top-container_item-new{
   background: #fff;
   width: 44%;
@@ -82,7 +81,7 @@ form{
           background-color: #ccc;
         }
       }
-      // カテゴリ以外のセレクトボックスで共通のもの
+      // カテゴリ以外のセレクトボックスで共通のものーーーーーーーーーーーーー
       .select-box{
         position: relative;
       }
@@ -93,7 +92,7 @@ form{
         font-size: 20px;
         color: rgb(187, 186, 186);
       }
-      // ーーーーーーーーーーーーーーーーーーーーーー
+      // ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
       .category-form{        
         .parent-category__wrapper{
           position: relative;
@@ -156,7 +155,7 @@ form{
   }
 }
 
-// ------------preview-------------------
+// ------------preview---------------------------------------------
 .clearfix{
   width: 100%;
   ul#previews{
@@ -167,7 +166,6 @@ form{
       display: flex;
       flex-direction: column;
       width: 18%;
-      // min-width: 121px;
       margin: 20px 1% 0;
       box-shadow: 0 0 4px gray;
       .image-preview__wapper{

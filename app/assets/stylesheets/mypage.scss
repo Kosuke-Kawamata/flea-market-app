@@ -6,14 +6,12 @@
 .assessment-container, .follow-list-container, .profile-container {
   width: 75%;
 }
-
 .top__container{
   display: flex;
   width: 60%;
   margin: 0 auto;
   padding-top: 30px;
   padding-bottom: 30px;
-
   .mypege-nav{
     width: 25%;
     min-width: 222px;
@@ -24,24 +22,21 @@
         display: flex;
         color: #333;
         background-color: #ffffff;
-        border-top: 1px solid #eee;
-        
+        border-top: 1px solid #eee;        
         a{
           width: 100%;
           display: flex;
           justify-content: space-between;
           color: #333333;
           text-decoration: none;
-          padding: 13px;
-  
+          padding: 13px;  
           div{
             display: block;
           }
           .fa-chevron-right{
             display: block;
           }
-        }    
-  
+        }      
         &:hover{
           background-color: rgb(245, 245, 245);
           border: 1px solid #eee;    
@@ -49,11 +44,9 @@
         &:active{
           box-shadow: none;
         }
-      }
-       
+      }       
     }
   }
-
   .mypage-top-wrapper{
     width: 75%;
     min-width: 500px;
@@ -129,7 +122,6 @@
       }      
     }
   }
-
 }
 
 
