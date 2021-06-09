@@ -5,7 +5,7 @@
       .top-img_wrapper
         .img-wrapper
           - if @item.images
-            ul
+            ul.slider
               - @item.images.each do |image|
                 li
                   = image_tag(image.img.url)

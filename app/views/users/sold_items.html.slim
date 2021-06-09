@@ -62,7 +62,7 @@
           li.mypage-item-box
             = link_to item_path(item) do 
               .img-wrapper
-                = image_tag(item.img.url)
+                = image_tag(item.images.first.img.url)
                 - if item.sold_flag == true 
                   .sold-badge-mypage
                   p.sold-text SOLD
