@@ -63,6 +63,11 @@ class ItemsController < ApplicationController
   def edit
     @categories = Category.all
     @parent_category_array = Category.where(ancestry: nil).to_a
+    @item_parent_id = Category.find(@item.category_id).parent.parent_id
+    @child_category_array = Category.find(@item.category_id).parent.parent.children.to_a
+    @item_child_id = Category.find(@item.category_id).parent_id
+    @grandchild_category_array = Category.find(@item.category_id).parent.children.to_a
+    @item_grandchild_id = @item.category_id
   end
   
   def update
