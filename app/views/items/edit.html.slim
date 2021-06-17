@@ -54,7 +54,13 @@
           = f.label :category_id, 'カテゴリ',class: 'listing-default__label'
           p 必須
         .parent-category__wrapper
-          = f.collection_select :category_id, @parent_category_array, :id, :name, {prompt:'---'}, {class:'parent-select-box',id: 'parent_category'}
+          = f.collection_select :category_id, @parent_category_array, :id, :name, {prompt:'---', selected:  @item_parent_id}, {class:'parent-select-box',id: 'parent_category'}
+          i.fas.fa-chevron-down
+        .parent-category__wrapper
+          = f.collection_select :category_id, @child_category_array, :id, :name, {prompt:'---', selected:  @item_child_id}, {class:'parent-select-box',id: 'parent_category'}
+          i.fas.fa-chevron-down
+        .parent-category__wrapper
+          = f.collection_select :category_id, @grandchild_category_array, :id, :name, {prompt:'---', selected:  @item_grandchild_id}, {class:'parent-select-box',id: 'parent_category'}
           i.fas.fa-chevron-down
       .form-group
         .label-container
